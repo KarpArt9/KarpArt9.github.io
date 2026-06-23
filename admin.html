@@ -1,0 +1,127 @@
+<!DOCTYPE HTML>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Админ-панель – Редактирование цен</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        body { background: #f4f7fa; font-family: 'Segoe UI', Roboto, sans-serif; padding: 30px 0; }
+        .container { max-width: 800px; }
+        .card { background: #fff; border-radius: 20px; padding: 30px; box-shadow: 0 8px 28px rgba(0,0,0,0.06); }
+        .form-group label { font-weight: 600; }
+        .btn-save { background: #f0b400; color: #0b2b4a; font-weight: 700; border: none; padding: 12px 40px; border-radius: 60px; }
+        .btn-save:hover { background: #ffc82e; }
+        .product-row { border-bottom: 1px solid #e8ecf0; padding: 12px 0; }
+        .product-row:last-child { border-bottom: none; }
+        .price-input { width: 150px; display: inline-block; }
+        .status { margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <h2 class="text-center" style="color:#0b2b4a;">Редактирование цен</h2>
+            <p class="text-center text-muted">Измените цены на товары. После сохранения обновите основной сайт.</p>
+            <form id="priceForm">
+                <div id="productsList"></div>
+                <div class="text-center" style="margin-top: 30px;">
+                    <button type="submit" class="btn btn-save"><i class="fa fa-save"></i> Сохранить цены</button>
+                </div>
+                <div id="status" class="status text-center text-success"></div>
+            </form>
+        </div>
+        <div class="text-center" style="margin-top: 20px;">
+            <a href="index.html" target="_blank"><i class="fa fa-eye"></i> Посмотреть сайт</a>
+        </div>
+    </div>
+
+    <script>
+        // Список товаров с их ID (соответствует data-price-id на основном сайте)
+        const products = [
+            { id: 'ballu1', name: 'Ballu BSQ-09HN1' },
+            { id: 'hisense1', name: 'Hisense AS-09UR4SYDDB1' },
+            { id: 'lg1', name: 'LG CS09AWK' },
+            { id: 'electrolux1', name: 'Electrolux EMO-12' },
+            { id: 'zanussi1', name: 'Zanussi ZACM-09' },
+            { id: 'bimatek1', name: 'Bimatek AM400' },
+            { id: 'timberk1', name: 'Timberk TCH A5N' },
+            { id: 'ballu2', name: 'Ballu BEC 1500' },
+            { id: 'noirot1', name: 'Noirot CNX-2' },
+            { id: 'electrolux2', name: 'Electrolux EWH 50' },
+            { id: 'thermex1', name: 'Thermex Flat Plus 50' },
+            { id: 'gorenje1', name: 'Gorenje OG 50' }
+        ];
+
+        // Загружаем сохранённые цены из localStorage или используем значения по умолчанию
+        function loadPrices() {
+            const stored = localStorage.getItem('productPrices');
+            if (stored) {
+                try { return JSON.parse(stored); } catch(e) {}
+            }
+            // Значения по умолчанию (соответствуют ценам на основном сайте)
+            return {
+                ballu1: '28 900',
+                hisense1: '32 500',
+                lg1: '29 900',
+                electrolux1: '23 990',
+                zanussi1: '21 500',
+                bimatek1: '18 990',
+                timberk1: '3 990',
+                ballu2: '4 900',
+                noirot1: '7 990',
+                electrolux2: '9 990',
+                thermex1: '11 500',
+                gorenje1: '10 200'
+            };
+        }
+
+        let currentPrices = loadPrices();
+
+        // Генерируем форму
+        function renderForm() {
+            const container = document.getElementById('productsList');
+            container.innerHTML = '';
+            products.forEach(p => {
+                const div = document.createElement('div');
+                div.className = 'product-row';
+                div.innerHTML = `
+                    <div class="row">
+                        <div class="col-sm-6"><strong>${p.name}</strong></div>
+                        <div class="col-sm-6 text-right">
+                            <input type="text" class="form-control price-input" id="price-${p.id}" value="${currentPrices[p.id] || ''}" placeholder="Цена">
+                            <span class="text-muted">₽</span>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        // Сохранение
+        document.getElementById('priceForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const updated = {};
+            products.forEach(p => {
+                const input = document.getElementById(`price-${p.id}`);
+                if (input) {
+                    const val = input.value.trim().replace(/\s/g, '');
+                    if (val && !isNaN(val)) {
+                        updated[p.id] = val;
+                    } else {
+                        updated[p.id] = currentPrices[p.id] || '';
+                    }
+                }
+            });
+            localStorage.setItem('productPrices', JSON.stringify(updated));
+            currentPrices = updated;
+            document.getElementById('status').textContent = '✅ Цены сохранены! Обновите основной сайт.';
+            setTimeout(() => { document.getElementById('status').textContent = ''; }, 4000);
+        });
+
+        // Загрузка при старте
+        renderForm();
+    </script>
+</body>
+</html>

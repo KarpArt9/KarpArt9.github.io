@@ -373,6 +373,9 @@
             overflow: hidden;
             box-shadow: 0 4px 12px rgba(0,0,0,0.06);
             transition: 0.3s;
+            background: #fff;
+            text-align: center;
+            padding: 10px;
         }
         .gallery-item:hover { transform: scale(1.02); }
         .gallery-item img {
@@ -380,8 +383,18 @@
             height: 180px;
             object-fit: cover;
             transition: 0.4s;
+            border-radius: 12px;
         }
         .gallery-item img:hover { transform: scale(1.05); }
+        .gallery-item .gallery-item-title {
+            font-weight: 600;
+            margin-top: 8px;
+            color: #0d4a3a;
+        }
+        .gallery-item .gallery-item-desc {
+            font-size: 13px;
+            color: #5a7a6e;
+        }
 
         /* ===== ОТЗЫВЫ ===== */
         .review-item {
@@ -948,13 +961,13 @@
     </div>
 </div>
 
-<!-- АКЦИИ (оставлены) -->
+<!-- АКЦИИ -->
 <div class="page" id="page-promo">
     <div class="container" data-aos="fade-up">
         <h2 class="section-title">Акции и спецпредложения</h2>
         <div class="row">
             <div class="col-md-3 col-sm-6">
-                <div class="product-card">
+                <div class="product-card" data-product-id="ballu1">
                     <img src="https://via.placeholder.com/300x200?text=Ballu+со+скидкой" alt="Ballu">
                     <h4>Ballu BSQ-09HN1</h4>
                     <p><span class="price-new" data-price-id="ballu1">28 900 ₽</span> <span class="price-old">34 900 ₽</span></p>
@@ -963,7 +976,7 @@
                 </div>
             </div>
             <div class="col-md-3 col-sm-6">
-                <div class="product-card">
+                <div class="product-card" data-product-id="ballu2">
                     <img src="https://via.placeholder.com/300x200?text=Обогреватель" alt="Обогреватель">
                     <h4>Инфракрасный обогреватель</h4>
                     <p><span class="price-new" data-price-id="ballu2">5 990 ₽</span> <span class="price-old">7 500 ₽</span></p>
@@ -971,7 +984,7 @@
                 </div>
             </div>
             <div class="col-md-3 col-sm-6">
-                <div class="product-card">
+                <div class="product-card" data-product-id="electrolux2">
                     <img src="https://via.placeholder.com/300x200?text=Водонагреватель" alt="Водонагреватель">
                     <h4>Electrolux EWH 50</h4>
                     <p><span class="price-new" data-price-id="electrolux2">11 990 ₽</span> <span class="price-old">14 500 ₽</span></p>
@@ -979,7 +992,7 @@
                 </div>
             </div>
             <div class="col-md-3 col-sm-6">
-                <div class="product-card">
+                <div class="product-card" data-product-id="noirot1">
                     <img src="https://via.placeholder.com/300x200?text=Очиститель" alt="Очиститель">
                     <h4>Очиститель воздуха</h4>
                     <p><span class="price-new" data-price-id="noirot1">8 490 ₽</span> <span class="price-old">9 990 ₽</span></p>
@@ -990,22 +1003,51 @@
     </div>
 </div>
 
-<!-- ГАЛЕРЕЯ (оставлена) -->
+<!-- ====== ГАЛЕРЕЯ (динамическая) ====== -->
 <div class="page" id="page-gallery">
     <div class="container" data-aos="fade-up">
         <h2 class="section-title">Примеры наших работ</h2>
-        <div class="gallery-grid">
-            <!-- ... (оставлено как ранее) ... -->
+        <div class="gallery-grid" id="galleryContainer">
+            <!-- Здесь будет заполнение из localStorage -->
         </div>
     </div>
 </div>
 
-<!-- ОТЗЫВЫ (оставлены) -->
+<!-- ОТЗЫВЫ -->
 <div class="page" id="page-reviews">
     <div class="container" data-aos="fade-up">
         <h2 class="section-title">Отзывы клиентов</h2>
         <div class="row">
-            <!-- ... -->
+            <div class="col-md-4">
+                <div class="review-item">
+                    <strong>Анна, Москва</strong>
+                    <p>«Установили сплит-систему быстро и аккуратно. Работает отлично, спасибо!»</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="review-item">
+                    <strong>Олег, Мытищи</strong>
+                    <p>«Делали вентиляцию в коттедже. Всё продумали до мелочей, доволен результатом.»</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="review-item">
+                    <strong>Марина, Москва</strong>
+                    <p>«Ремонтировали кондиционер. Приехали в тот же день, нашли поломку быстро.»</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="review-item">
+                    <strong>Дмитрий, Красногорск</strong>
+                    <p>«Монтировали тёплый пол в новостройке. Всё сделали в срок.»</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="review-item">
+                    <strong>Екатерина, Москва</strong>
+                    <p>«Обслуживание котельной – быстро, качественно. Надёжная компания.»</p>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -1042,9 +1084,235 @@
     </div>
 </div>
 
-<!-- ДЕТАЛЬНЫЕ СТРАНИЦЫ УСЛУГ И КАТЕГОРИЙ ТОВАРОВ (оставлены без изменений, но они должны быть в финальном коде) -->
-<!-- ... (page-sale, page-installation, page-repair, page-ventilation, page-splits, page-mobile, page-heaters, page-water) ... -->
-<!-- Их нужно добавить, чтобы ссылки работали. Я не повторяю их в этом ответе для экономии места, но они есть в полном файле, который вы можете получить у меня или дополнить самостоятельно. -->
+<!-- ДЕТАЛЬНЫЕ СТРАНИЦЫ УСЛУГ -->
+<div class="page" id="page-sale">
+    <div class="container" data-aos="fade-up">
+        <h2 class="section-title">Продажа кондиционеров</h2>
+        <div style="background:#fff; border-radius:24px; padding:40px; box-shadow:0 8px 28px rgba(0,0,0,0.04);">
+            <p>Мы предлагаем широкий ассортимент кондиционеров для любых помещений: от небольших квартир до больших офисов и производственных цехов в Москве.</p>
+            <h3>В нашем каталоге:</h3>
+            <ul style="list-style:none; padding:0;">
+                <li><i class="fa fa-check" style="color:#2ecc71;"></i> Сплит-системы (инверторные и on/off)</li>
+                <li><i class="fa fa-check" style="color:#2ecc71;"></i> Мульти-сплит системы (до 8 внутренних блоков)</li>
+                <li><i class="fa fa-check" style="color:#2ecc71;"></i> Кассетные и канальные кондиционеры</li>
+                <li><i class="fa fa-check" style="color:#2ecc71;"></i> Мобильные и оконные модели</li>
+                <li><i class="fa fa-check" style="color:#2ecc71;"></i> Промышленные системы (VRF, чиллеры)</li>
+            </ul>
+            <p>Все оборудование сертифицировано, на него предоставляется гарантия производителя. Мы поможем подобрать оптимальную модель с учётом ваших потребностей и бюджета.</p>
+            <div style="text-align: center; margin-top: 30px;">
+                <a href="#page-products" class="btn btn-primary">Перейти в каталог</a>
+                <a href="#" data-toggle="modal" data-target="#callbackModal" class="btn btn-primary" style="background:#2ecc71; color:#fff;">Заказать консультацию</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="page" id="page-installation">
+    <div class="container" data-aos="fade-up">
+        <h2 class="section-title">Монтаж и установка</h2>
+        <div style="background:#fff; border-radius:24px; padding:40px; box-shadow:0 8px 28px rgba(0,0,0,0.04);">
+            <p>Наши сертифицированные специалисты выполняют монтаж климатической техники любой сложности. Мы работаем аккуратно, с соблюдением всех норм и правил.</p>
+            <h3>Что входит в услугу:</h3>
+            <ul style="list-style:none; padding:0;">
+                <li><i class="fa fa-check" style="color:#2ecc71;"></i> Выезд инженера на объект для замера и консультации</li>
+                <li><i class="fa fa-check" style="color:#2ecc71;"></i> Подбор оптимального места установки</li>
+                <li><i class="fa fa-check" style="color:#2ecc71;"></i> Монтаж внутреннего и наружного блоков</li>
+                <li><i class="fa fa-check" style="color:#2ecc71;"></i> Прокладка трасс (медные трубы, дренаж, электрика)</li>
+                <li><i class="fa fa-check" style="color:#2ecc71;"></i> Вакуумирование и заправка фреоном</li>
+                <li><i class="fa fa-check" style="color:#2ecc71;"></i> Пуско-наладка и проверка работоспособности</li>
+            </ul>
+            <p>Гарантия на монтажные работы – до 3 лет. Используем только профессиональное оборудование и качественные расходные материалы.</p>
+            <div style="text-align: center; margin-top: 30px;">
+                <a href="#" data-toggle="modal" data-target="#callbackModal" class="btn btn-primary">Заказать монтаж</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="page" id="page-repair">
+    <div class="container" data-aos="fade-up">
+        <h2 class="section-title">Ремонт и обслуживание</h2>
+        <div style="background:#fff; border-radius:24px; padding:40px; box-shadow:0 8px 28px rgba(0,0,0,0.04);">
+            <p>Мы предлагаем полный спектр услуг по ремонту и сервисному обслуживанию климатической техники. Наши мастера оперативно выезжают на объект и устраняют любые неисправности.</p>
+            <h3>Что мы делаем:</h3>
+            <ul style="list-style:none; padding:0;">
+                <li><i class="fa fa-check" style="color:#2ecc71;"></i> Диагностика любой сложности</li>
+                <li><i class="fa fa-check" style="color:#2ecc71;"></i> Заправка и дозаправка фреоном</li>
+                <li><i class="fa fa-check" style="color:#2ecc71;"></i> Чистка внутренних и наружных блоков</li>
+                <li><i class="fa fa-check" style="color:#2ecc71;"></i> Замена компрессоров, вентиляторов, плат управления</li>
+                <li><i class="fa fa-check" style="color:#2ecc71;"></i> Ремонт дренажной системы</li>
+                <li><i class="fa fa-check" style="color:#2ecc71;"></i> Профилактическое обслуживание (сезонное ТО)</li>
+            </ul>
+            <p>Мы используем только оригинальные запчасти. На все работы даём гарантию. Выезд в день обращения.</p>
+            <div style="text-align: center; margin-top: 30px;">
+                <a href="#" data-toggle="modal" data-target="#callbackModal" class="btn btn-primary">Вызвать мастера</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="page" id="page-ventilation">
+    <div class="container" data-aos="fade-up">
+        <h2 class="section-title">Вентиляция и отопление</h2>
+        <div style="background:#fff; border-radius:24px; padding:40px; box-shadow:0 8px 28px rgba(0,0,0,0.04);">
+            <p>Мы проектируем и монтируем системы вентиляции и отопления для жилых, коммерческих и промышленных объектов. Работаем с любыми типами зданий.</p>
+            <h3>Наши возможности:</h3>
+            <ul style="list-style:none; padding:0;">
+                <li><i class="fa fa-check" style="color:#2ecc71;"></i> Приточная и вытяжная вентиляция</li>
+                <li><i class="fa fa-check" style="color:#2ecc71;"></i> Монтаж котельных (газовых, электрических, твердотопливных)</li>
+                <li><i class="fa fa-check" style="color:#2ecc71;"></i> Установка радиаторов и тёплых полов</li>
+                <li><i class="fa fa-check" style="color:#2ecc71;"></i> Подбор и монтаж рекуператоров</li>
+                <li><i class="fa fa-check" style="color:#2ecc71;"></i> Проектирование систем дымоудаления</li>
+                <li><i class="fa fa-check" style="color:#2ecc71;"></i> Автоматизация и диспетчеризация</li>
+            </ul>
+            <p>Используем оборудование ведущих брендов. Гарантия на работы – до 3 лет. Выполняем проекты любой сложности.</p>
+            <div style="text-align: center; margin-top: 30px;">
+                <a href="#" data-toggle="modal" data-target="#callbackModal" class="btn btn-primary">Заказать расчёт</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- КАТЕГОРИИ ТОВАРОВ (с атрибутами data-product-id) -->
+<div class="page" id="page-splits">
+    <div class="container" style="margin-top: 40px;" data-aos="fade-up">
+        <h2 class="section-title">Сплит-системы</h2>
+        <div class="row">
+            <div class="col-md-4 col-sm-6">
+                <div class="product-card" data-product-id="ballu1">
+                    <img src="https://via.placeholder.com/300x200?text=Ballu+BSQ-09HN1" alt="Ballu">
+                    <h4>Ballu BSQ-09HN1</h4>
+                    <p>Инвертор, 25 м²</p>
+                    <p><span class="price-new" data-price-id="ballu1">28 900 ₽</span> <span class="price-old">34 900 ₽</span></p>
+                    <a href="#" class="btn btn-primary btn-sm">Подробнее</a>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6">
+                <div class="product-card" data-product-id="hisense1">
+                    <img src="https://via.placeholder.com/300x200?text=Hisense+AS-09UR4SYDDB1" alt="Hisense">
+                    <h4>Hisense AS-09UR4SYDDB1</h4>
+                    <p>Инвертор, Wi-Fi, 25 м²</p>
+                    <p><span class="price-new" data-price-id="hisense1">32 500 ₽</span> <span class="price-old">39 990 ₽</span></p>
+                    <a href="#" class="btn btn-primary btn-sm">Подробнее</a>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6">
+                <div class="product-card" data-product-id="lg1">
+                    <img src="https://via.placeholder.com/300x200?text=LG+CS09AWK" alt="LG">
+                    <h4>LG CS09AWK</h4>
+                    <p>Стандарт, 25 м²</p>
+                    <p><span class="price-new" data-price-id="lg1">29 900 ₽</span> <span class="price-old">35 500 ₽</span></p>
+                    <a href="#" class="btn btn-primary btn-sm">Подробнее</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="page" id="page-mobile">
+    <div class="container" style="margin-top: 40px;" data-aos="fade-up">
+        <h2 class="section-title">Мобильные кондиционеры</h2>
+        <div class="row">
+            <div class="col-md-4 col-sm-6">
+                <div class="product-card" data-product-id="electrolux1">
+                    <img src="https://via.placeholder.com/300x200?text=Electrolux+EMO-12" alt="Electrolux">
+                    <h4>Electrolux EMO-12</h4>
+                    <p>Мобильный, 30 м²</p>
+                    <p><span class="price-new" data-price-id="electrolux1">23 990 ₽</span> <span class="price-old">27 990 ₽</span></p>
+                    <a href="#" class="btn btn-primary btn-sm">Подробнее</a>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6">
+                <div class="product-card" data-product-id="zanussi1">
+                    <img src="https://via.placeholder.com/300x200?text=Zanussi+ZACM-09" alt="Zanussi">
+                    <h4>Zanussi ZACM-09</h4>
+                    <p>Мобильный, 25 м²</p>
+                    <p><span class="price-new" data-price-id="zanussi1">21 500 ₽</span> <span class="price-old">24 900 ₽</span></p>
+                    <a href="#" class="btn btn-primary btn-sm">Подробнее</a>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6">
+                <div class="product-card" data-product-id="bimatek1">
+                    <img src="https://via.placeholder.com/300x200?text=Bimatek+AM400" alt="Bimatek">
+                    <h4>Bimatek AM400</h4>
+                    <p>Мобильный, 20 м²</p>
+                    <p><span class="price-new" data-price-id="bimatek1">18 990 ₽</span> <span class="price-old">22 000 ₽</span></p>
+                    <a href="#" class="btn btn-primary btn-sm">Подробнее</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="page" id="page-heaters">
+    <div class="container" style="margin-top: 40px;" data-aos="fade-up">
+        <h2 class="section-title">Обогреватели</h2>
+        <div class="row">
+            <div class="col-md-4 col-sm-6">
+                <div class="product-card" data-product-id="timberk1">
+                    <img src="https://via.placeholder.com/300x200?text=Timberk+TCH+A5N" alt="Timberk">
+                    <h4>Timberk TCH A5N</h4>
+                    <p>Конвектор, 1.5 кВт</p>
+                    <p><span class="price-new" data-price-id="timberk1">3 990 ₽</span> <span class="price-old">4 990 ₽</span></p>
+                    <a href="#" class="btn btn-primary btn-sm">Подробнее</a>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6">
+                <div class="product-card" data-product-id="ballu2">
+                    <img src="https://via.placeholder.com/300x200?text=Ballu+BEC+1500" alt="Ballu">
+                    <h4>Ballu BEC 1500</h4>
+                    <p>Инфракрасный</p>
+                    <p><span class="price-new" data-price-id="ballu2">4 900 ₽</span> <span class="price-old">5 800 ₽</span></p>
+                    <a href="#" class="btn btn-primary btn-sm">Подробнее</a>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6">
+                <div class="product-card" data-product-id="noirot1">
+                    <img src="https://via.placeholder.com/300x200?text=Noirot+CNX-2" alt="Noirot">
+                    <h4>Noirot CNX-2</h4>
+                    <p>Конвектор, 2 кВт</p>
+                    <p><span class="price-new" data-price-id="noirot1">7 990 ₽</span> <span class="price-old">9 500 ₽</span></p>
+                    <a href="#" class="btn btn-primary btn-sm">Подробнее</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="page" id="page-water">
+    <div class="container" style="margin-top: 40px;" data-aos="fade-up">
+        <h2 class="section-title">Водонагреватели</h2>
+        <div class="row">
+            <div class="col-md-4 col-sm-6">
+                <div class="product-card" data-product-id="electrolux2">
+                    <img src="https://via.placeholder.com/300x200?text=Electrolux+EWH+50" alt="Electrolux">
+                    <h4>Electrolux EWH 50</h4>
+                    <p>Накопительный 50 л</p>
+                    <p><span class="price-new" data-price-id="electrolux2">9 990 ₽</span> <span class="price-old">11 900 ₽</span></p>
+                    <a href="#" class="btn btn-primary btn-sm">Подробнее</a>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6">
+                <div class="product-card" data-product-id="thermex1">
+                    <img src="https://via.placeholder.com/300x200?text=Thermex+Flat+Plus" alt="Thermex">
+                    <h4>Thermex Flat Plus 50</h4>
+                    <p>Накопительный 50 л, плоский</p>
+                    <p><span class="price-new" data-price-id="thermex1">11 500 ₽</span> <span class="price-old">13 200 ₽</span></p>
+                    <a href="#" class="btn btn-primary btn-sm">Подробнее</a>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6">
+                <div class="product-card" data-product-id="gorenje1">
+                    <img src="https://via.placeholder.com/300x200?text=Gorenje+OG+50" alt="Gorenje">
+                    <h4>Gorenje OG 50</h4>
+                    <p>Накопительный 50 л</p>
+                    <p><span class="price-new" data-price-id="gorenje1">10 200 ₽</span> <span class="price-old">12 000 ₽</span></p>
+                    <a href="#" class="btn btn-primary btn-sm">Подробнее</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <!-- ФУТЕР -->
 <section class="section-footer" style="margin-top:40px;">
@@ -1094,18 +1362,9 @@
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
 <script>
-    // Инициализация AOS
-    AOS.init({ offset: 100, duration: 700 });
+    // ==================== ОСНОВНЫЕ ФУНКЦИИ ====================
 
-    // Маска для телефона
-    $('#callbackPhone').mask('+7 (000) 000-00-00');
-
-    // Бургер-меню
-    $('#burgerBtn').click(function() {
-        $('#mobileMenu').slideToggle();
-    });
-
-    // Функция загрузки цен из localStorage
+    // 1. Загрузка цен из localStorage
     function applyPricesFromStorage() {
         const stored = localStorage.getItem('productPrices');
         if (!stored) return;
@@ -1120,12 +1379,54 @@
         } catch(e) {}
     }
 
-    // Вызываем при загрузке и после переключения страниц
-    $(document).on('click', 'a[href^="#page-"]', function() {
-        setTimeout(applyPricesFromStorage, 150);
-    });
+    // 2. Загрузка фото товаров из localStorage
+    function applyProductImagesFromStorage() {
+        const stored = localStorage.getItem('productImages');
+        if (!stored) return;
+        try {
+            const images = JSON.parse(stored);
+            document.querySelectorAll('.product-card[data-product-id]').forEach(card => {
+                const id = card.dataset.productId;
+                if (images[id]) {
+                    const img = card.querySelector('img');
+                    if (img) img.src = images[id];
+                }
+            });
+        } catch(e) {}
+    }
 
-    // Переключение страниц
+    // 3. Загрузка галереи из localStorage
+    function applyGalleryFromStorage() {
+        const stored = localStorage.getItem('galleryImages');
+        const container = document.getElementById('galleryContainer');
+        if (!container) return;
+        if (!stored) {
+            container.innerHTML = '<p class="text-center text-muted">Нет изображений в галерее. Загрузите через админ-панель.</p>';
+            return;
+        }
+        try {
+            const gallery = JSON.parse(stored);
+            if (gallery.length === 0) {
+                container.innerHTML = '<p class="text-center text-muted">Нет изображений в галерее. Загрузите через админ-панель.</p>';
+                return;
+            }
+            let html = '';
+            gallery.forEach(item => {
+                html += `<div class="gallery-item">
+                            <a href="${item.image}" data-lightbox="gallery" data-title="${item.title || ''}">
+                                <img src="${item.image}" alt="${item.title || 'Фото'}">
+                            </a>
+                            ${item.title ? `<div class="gallery-item-title">${item.title}</div>` : ''}
+                            ${item.description ? `<div class="gallery-item-desc">${item.description}</div>` : ''}
+                        </div>`;
+            });
+            container.innerHTML = html;
+        } catch(e) {
+            container.innerHTML = '<p class="text-center text-muted">Ошибка загрузки галереи.</p>';
+        }
+    }
+
+    // 4. Переключение страниц
     function switchPage(hash) {
         $('.page').removeClass('active');
         const target = $(hash);
@@ -1133,35 +1434,63 @@
         else $('#page-main').addClass('active');
         $('#mobileMenu').slideUp();
         $('html, body').animate({ scrollTop: 0 }, 300);
-        setTimeout(applyPricesFromStorage, 200);
+        // После переключения применяем данные
+        setTimeout(() => {
+            applyPricesFromStorage();
+            applyProductImagesFromStorage();
+            applyGalleryFromStorage();
+        }, 200);
     }
 
-    $(document).on('click', 'a[href^="#page-"]', function(e) {
-        e.preventDefault();
-        const hash = $(this).attr('href');
-        if (hash && hash !== '#') {
-            switchPage(hash);
-            if (history.pushState) history.pushState(null, null, hash);
-        }
-    });
-
-    $(window).on('load', function() {
-        const hash = window.location.hash;
-        if (hash && hash.startsWith('#page-')) switchPage(hash);
-        else $('#page-main').addClass('active');
+    // 5. Инициализация при загрузке
+    function initSite() {
+        // Применяем цены, фото, галерею
         applyPricesFromStorage();
-    });
+        applyProductImagesFromStorage();
+        applyGalleryFromStorage();
 
-    $(window).on('hashchange', function() {
+        // Переключение по клику на меню
+        $(document).on('click', 'a[href^="#page-"]', function(e) {
+            e.preventDefault();
+            const hash = $(this).attr('href');
+            if (hash && hash !== '#') {
+                switchPage(hash);
+                if (history.pushState) history.pushState(null, null, hash);
+            }
+        });
+
+        // Обработка hash при загрузке
         const hash = window.location.hash;
-        if (hash && hash.startsWith('#page-')) switchPage(hash);
-    });
-
-    // Закрываем мобильное меню при клике вне
-    $(document).click(function(e) {
-        if (!$(e.target).closest('#mobileMenu').length && !$(e.target).closest('#burgerBtn').length) {
-            $('#mobileMenu').slideUp();
+        if (hash && hash.startsWith('#page-')) {
+            switchPage(hash);
+        } else {
+            $('#page-main').addClass('active');
         }
+
+        // Обработка кнопок браузера "назад/вперёд"
+        $(window).on('hashchange', function() {
+            const h = window.location.hash;
+            if (h && h.startsWith('#page-')) switchPage(h);
+        });
+
+        // Бургер-меню
+        $('#burgerBtn').click(function() {
+            $('#mobileMenu').slideToggle();
+        });
+
+        // Закрытие меню при клике вне
+        $(document).click(function(e) {
+            if (!$(e.target).closest('#mobileMenu').length && !$(e.target).closest('#burgerBtn').length) {
+                $('#mobileMenu').slideUp();
+            }
+        });
+    }
+
+    // Запуск после готовности DOM
+    $(document).ready(function() {
+        AOS.init({ offset: 100, duration: 700 });
+        $('#callbackPhone').mask('+7 (000) 000-00-00');
+        initSite();
     });
 </script>
 </body>

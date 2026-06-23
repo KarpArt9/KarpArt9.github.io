@@ -3,125 +3,392 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Админ-панель – Редактирование цен</title>
+    <title>Админ-панель – Райский холод</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
-        body { background: #f4f7fa; font-family: 'Segoe UI', Roboto, sans-serif; padding: 30px 0; }
-        .container { max-width: 800px; }
-        .card { background: #fff; border-radius: 20px; padding: 30px; box-shadow: 0 8px 28px rgba(0,0,0,0.06); }
-        .form-group label { font-weight: 600; }
-        .btn-save { background: #f0b400; color: #0b2b4a; font-weight: 700; border: none; padding: 12px 40px; border-radius: 60px; }
-        .btn-save:hover { background: #ffc82e; }
-        .product-row { border-bottom: 1px solid #e8ecf0; padding: 12px 0; }
-        .product-row:last-child { border-bottom: none; }
-        .price-input { width: 150px; display: inline-block; }
-        .status { margin-top: 20px; }
+        body {
+            background: #f0f7f4;
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            padding: 20px 0;
+        }
+        .container { max-width: 1100px; }
+        .login-box {
+            background: #fff;
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+            max-width: 400px;
+            margin: 100px auto;
+            text-align: center;
+        }
+        .login-box h2 { color: #0d4a3a; margin-bottom: 20px; }
+        .login-box .form-control { border-radius: 60px; padding: 12px 20px; }
+        .login-box .btn { border-radius: 60px; background: #0d4a3a; color: #fff; padding: 12px 30px; }
+        .login-box .btn:hover { background: #2ecc71; }
+        .admin-panel { display: none; }
+        .admin-header {
+            background: #0d4a3a;
+            color: #fff;
+            padding: 15px 0;
+            border-radius: 20px 20px 0 0;
+        }
+        .admin-header h2 { margin: 0; font-weight: 300; }
+        .admin-header .logout { color: #2ecc71; cursor: pointer; }
+        .admin-header .logout:hover { color: #fff; }
+        .nav-tabs { border-bottom: 2px solid #2ecc71; }
+        .nav-tabs > li.active > a {
+            background: #2ecc71;
+            color: #fff;
+            border: none;
+            border-radius: 20px 20px 0 0;
+        }
+        .nav-tabs > li > a { color: #0d4a3a; border: none; }
+        .nav-tabs > li > a:hover { background: #d5f5e3; border: none; }
+        .tab-content { background: #fff; padding: 30px; border-radius: 0 0 20px 20px; box-shadow: 0 8px 30px rgba(0,0,0,0.04); }
+        .product-row { display: flex; align-items: center; padding: 8px 0; border-bottom: 1px solid #e8f0ec; gap: 15px; flex-wrap: wrap; }
+        .product-row .name { flex: 2; min-width: 150px; font-weight: 500; }
+        .product-row .price { flex: 1; min-width: 100px; }
+        .product-row .image-upload { flex: 2; min-width: 200px; }
+        .product-row .image-preview { max-width: 80px; max-height: 80px; border-radius: 8px; object-fit: cover; }
+        .btn-sm { padding: 4px 12px; border-radius: 60px; }
+        .gallery-item { border: 1px solid #e8f0ec; border-radius: 16px; padding: 15px; text-align: center; background: #fafdfb; }
+        .gallery-item img { max-width: 100%; height: 150px; object-fit: cover; border-radius: 12px; }
+        .gallery-item .title { font-weight: 600; margin-top: 8px; }
+        .gallery-item .desc { font-size: 13px; color: #5a7a6e; }
+        .status-msg { margin-top: 15px; font-weight: 500; }
+        .status-msg.success { color: #2ecc71; }
+        .status-msg.error { color: #e74c3c; }
+        @media (max-width: 768px) {
+            .product-row { flex-direction: column; align-items: stretch; }
+            .product-row .name { text-align: center; }
+        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="card">
-            <h2 class="text-center" style="color:#0b2b4a;">Редактирование цен</h2>
-            <p class="text-center text-muted">Измените цены на товары. После сохранения обновите основной сайт.</p>
-            <form id="priceForm">
-                <div id="productsList"></div>
-                <div class="text-center" style="margin-top: 30px;">
-                    <button type="submit" class="btn btn-save"><i class="fa fa-save"></i> Сохранить цены</button>
-                </div>
-                <div id="status" class="status text-center text-success"></div>
-            </form>
-        </div>
-        <div class="text-center" style="margin-top: 20px;">
-            <a href="index.html" target="_blank"><i class="fa fa-eye"></i> Посмотреть сайт</a>
+
+<div class="container" id="loginContainer">
+    <div class="login-box">
+        <h2><i class="fa fa-lock"></i> Вход в админку</h2>
+        <form id="loginForm">
+            <div class="form-group">
+                <input type="password" class="form-control" id="adminPassword" placeholder="Введите пароль" required>
+            </div>
+            <button type="submit" class="btn btn-block">Войти</button>
+            <p class="text-muted" style="margin-top:15px; font-size:13px;">Пароль по умолчанию: <strong>admin123</strong></p>
+        </form>
+    </div>
+</div>
+
+<div class="container admin-panel" id="adminPanel">
+    <div class="admin-header">
+        <div class="row">
+            <div class="col-xs-8">
+                <h2><i class="fa fa-cog"></i> Панель управления</h2>
+            </div>
+            <div class="col-xs-4 text-right">
+                <span class="logout" id="logoutBtn"><i class="fa fa-sign-out"></i> Выйти</span>
+            </div>
         </div>
     </div>
 
-    <script>
-        // Список товаров с их ID (соответствует data-price-id на основном сайте)
-        const products = [
-            { id: 'ballu1', name: 'Ballu BSQ-09HN1' },
-            { id: 'hisense1', name: 'Hisense AS-09UR4SYDDB1' },
-            { id: 'lg1', name: 'LG CS09AWK' },
-            { id: 'electrolux1', name: 'Electrolux EMO-12' },
-            { id: 'zanussi1', name: 'Zanussi ZACM-09' },
-            { id: 'bimatek1', name: 'Bimatek AM400' },
-            { id: 'timberk1', name: 'Timberk TCH A5N' },
-            { id: 'ballu2', name: 'Ballu BEC 1500' },
-            { id: 'noirot1', name: 'Noirot CNX-2' },
-            { id: 'electrolux2', name: 'Electrolux EWH 50' },
-            { id: 'thermex1', name: 'Thermex Flat Plus 50' },
-            { id: 'gorenje1', name: 'Gorenje OG 50' }
-        ];
+    <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="active"><a href="#tabPrices" aria-controls="tabPrices" role="tab" data-toggle="tab">Цены</a></li>
+        <li role="presentation"><a href="#tabProducts" aria-controls="tabProducts" role="tab" data-toggle="tab">Фото товаров</a></li>
+        <li role="presentation"><a href="#tabGallery" aria-controls="tabGallery" role="tab" data-toggle="tab">Галерея</a></li>
+    </ul>
 
-        // Загружаем сохранённые цены из localStorage или используем значения по умолчанию
-        function loadPrices() {
-            const stored = localStorage.getItem('productPrices');
-            if (stored) {
-                try { return JSON.parse(stored); } catch(e) {}
-            }
-            // Значения по умолчанию (соответствуют ценам на основном сайте)
-            return {
-                ballu1: '28 900',
-                hisense1: '32 500',
-                lg1: '29 900',
-                electrolux1: '23 990',
-                zanussi1: '21 500',
-                bimatek1: '18 990',
-                timberk1: '3 990',
-                ballu2: '4 900',
-                noirot1: '7 990',
-                electrolux2: '9 990',
-                thermex1: '11 500',
-                gorenje1: '10 200'
-            };
+    <div class="tab-content">
+        <!-- Вкладка Цены -->
+        <div role="tabpanel" class="tab-pane active" id="tabPrices">
+            <h3>Редактирование цен</h3>
+            <div id="priceList"></div>
+            <button class="btn btn-success" id="savePricesBtn"><i class="fa fa-save"></i> Сохранить все цены</button>
+            <div id="priceStatus" class="status-msg"></div>
+        </div>
+
+        <!-- Вкладка Фото товаров -->
+        <div role="tabpanel" class="tab-pane" id="tabProducts">
+            <h3>Загрузка фото для товаров</h3>
+            <div id="productImageList"></div>
+        </div>
+
+        <!-- Вкладка Галерея -->
+        <div role="tabpanel" class="tab-pane" id="tabGallery">
+            <h3>Управление галереей работ</h3>
+            <form id="galleryForm" class="form-inline" style="margin-bottom:20px;">
+                <div class="form-group">
+                    <input type="file" id="galleryFile" accept="image/*" required>
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" id="galleryTitle" placeholder="Заголовок">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" id="galleryDesc" placeholder="Описание">
+                </div>
+                <button type="submit" class="btn btn-primary"><i class="fa fa-upload"></i> Добавить</button>
+            </form>
+            <div id="galleryList" class="row"></div>
+            <div id="galleryStatus" class="status-msg"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // ==================== НАСТРОЙКИ ====================
+    const ADMIN_PASSWORD = 'admin123'; // Смените пароль здесь
+    // ===================================================
+
+    // ------------------ Вход / Выход ------------------
+    function checkAuth() {
+        if (sessionStorage.getItem('adminLogged') === 'true') {
+            document.getElementById('loginContainer').style.display = 'none';
+            document.getElementById('adminPanel').style.display = 'block';
+            initAdmin();
+        } else {
+            document.getElementById('loginContainer').style.display = 'block';
+            document.getElementById('adminPanel').style.display = 'none';
         }
+    }
 
-        let currentPrices = loadPrices();
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const pass = document.getElementById('adminPassword').value;
+        if (pass === ADMIN_PASSWORD) {
+            sessionStorage.setItem('adminLogged', 'true');
+            checkAuth();
+        } else {
+            alert('Неверный пароль!');
+        }
+    });
 
-        // Генерируем форму
-        function renderForm() {
-            const container = document.getElementById('productsList');
-            container.innerHTML = '';
-            products.forEach(p => {
-                const div = document.createElement('div');
-                div.className = 'product-row';
-                div.innerHTML = `
-                    <div class="row">
-                        <div class="col-sm-6"><strong>${p.name}</strong></div>
-                        <div class="col-sm-6 text-right">
-                            <input type="text" class="form-control price-input" id="price-${p.id}" value="${currentPrices[p.id] || ''}" placeholder="Цена">
-                            <span class="text-muted">₽</span>
+    document.getElementById('logoutBtn').addEventListener('click', function() {
+        sessionStorage.removeItem('adminLogged');
+        checkAuth();
+    });
+
+    // ------------------ Данные ------------------
+    // Список товаров (ID и названия) – должен совпадать с index.html
+    const PRODUCTS = [
+        { id: 'ballu1', name: 'Ballu BSQ-09HN1' },
+        { id: 'hisense1', name: 'Hisense AS-09UR4SYDDB1' },
+        { id: 'lg1', name: 'LG CS09AWK' },
+        { id: 'electrolux1', name: 'Electrolux EMO-12' },
+        { id: 'zanussi1', name: 'Zanussi ZACM-09' },
+        { id: 'bimatek1', name: 'Bimatek AM400' },
+        { id: 'timberk1', name: 'Timberk TCH A5N' },
+        { id: 'ballu2', name: 'Ballu BEC 1500' },
+        { id: 'noirot1', name: 'Noirot CNX-2' },
+        { id: 'electrolux2', name: 'Electrolux EWH 50' },
+        { id: 'thermex1', name: 'Thermex Flat Plus 50' },
+        { id: 'gorenje1', name: 'Gorenje OG 50' }
+    ];
+
+    // ------------------ Загрузка / сохранение данных ------------------
+    function getPrices() {
+        const stored = localStorage.getItem('productPrices');
+        if (stored) {
+            try { return JSON.parse(stored); } catch(e) {}
+        }
+        // Значения по умолчанию
+        return {
+            ballu1: '28900', hisense1: '32500', lg1: '29900',
+            electrolux1: '23990', zanussi1: '21500', bimatek1: '18990',
+            timberk1: '3990', ballu2: '4900', noirot1: '7990',
+            electrolux2: '9990', thermex1: '11500', gorenje1: '10200'
+        };
+    }
+
+    function getProductImages() {
+        const stored = localStorage.getItem('productImages');
+        if (stored) {
+            try { return JSON.parse(stored); } catch(e) {}
+        }
+        return {};
+    }
+
+    function getGallery() {
+        const stored = localStorage.getItem('galleryImages');
+        if (stored) {
+            try { return JSON.parse(stored); } catch(e) {}
+        }
+        return [];
+    }
+
+    function savePrices(prices) {
+        localStorage.setItem('productPrices', JSON.stringify(prices));
+    }
+
+    function saveProductImages(images) {
+        localStorage.setItem('productImages', JSON.stringify(images));
+    }
+
+    function saveGallery(gallery) {
+        localStorage.setItem('galleryImages', JSON.stringify(gallery));
+    }
+
+    // ------------------ Рендеринг вкладок ------------------
+    function renderPrices() {
+        const prices = getPrices();
+        const container = document.getElementById('priceList');
+        let html = '<table class="table"><thead><tr><th>Товар</th><th>Текущая цена</th><th>Новая цена</th></tr></thead><tbody>';
+        PRODUCTS.forEach(p => {
+            const current = prices[p.id] || '';
+            html += `<tr>
+                        <td><strong>${p.name}</strong> <span class="text-muted">(${p.id})</span></td>
+                        <td>${current} ₽</td>
+                        <td><input type="text" class="form-control input-sm price-input" data-id="${p.id}" value="${current}" placeholder="Цена"></td>
+                    </tr>`;
+        });
+        html += '</tbody></table>';
+        container.innerHTML = html;
+    }
+
+    function renderProductImages() {
+        const images = getProductImages();
+        const container = document.getElementById('productImageList');
+        let html = '';
+        PRODUCTS.forEach(p => {
+            const imgSrc = images[p.id] || '';
+            html += `<div class="product-row">
+                        <div class="name">${p.name}</div>
+                        <div class="image-upload">
+                            <input type="file" class="product-image-input" accept="image/*" data-id="${p.id}">
+                            <button class="btn btn-primary btn-sm upload-product-image" data-id="${p.id}">Загрузить</button>
+                            ${imgSrc ? `<button class="btn btn-danger btn-sm delete-product-image" data-id="${p.id}">Удалить</button>` : ''}
                         </div>
-                    </div>
-                `;
-                container.appendChild(div);
-            });
-        }
+                        <div class="image-preview-container">
+                            ${imgSrc ? `<img src="${imgSrc}" class="image-preview" alt="${p.name}">` : '<span class="text-muted">Нет фото</span>'}
+                        </div>
+                    </div>`;
+        });
+        container.innerHTML = html;
+    }
 
-        // Сохранение
-        document.getElementById('priceForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const updated = {};
-            products.forEach(p => {
-                const input = document.getElementById(`price-${p.id}`);
-                if (input) {
-                    const val = input.value.trim().replace(/\s/g, '');
-                    if (val && !isNaN(val)) {
-                        updated[p.id] = val;
-                    } else {
-                        updated[p.id] = currentPrices[p.id] || '';
-                    }
+    function renderGallery() {
+        const gallery = getGallery();
+        const container = document.getElementById('galleryList');
+        if (gallery.length === 0) {
+            container.innerHTML = '<p class="text-muted">Нет изображений в галерее.</p>';
+            return;
+        }
+        let html = '';
+        gallery.forEach((item, index) => {
+            html += `<div class="col-sm-6 col-md-4 gallery-item" style="margin-bottom:20px;">
+                        <img src="${item.image}" alt="${item.title || 'Фото'}">
+                        <div class="title">${item.title || ''}</div>
+                        <div class="desc">${item.description || ''}</div>
+                        <button class="btn btn-danger btn-sm delete-gallery-item" data-index="${index}"><i class="fa fa-trash"></i> Удалить</button>
+                    </div>`;
+        });
+        container.innerHTML = html;
+    }
+
+    // ------------------ Инициализация админки ------------------
+    function initAdmin() {
+        renderPrices();
+        renderProductImages();
+        renderGallery();
+
+        // Сохранение цен
+        document.getElementById('savePricesBtn').addEventListener('click', function() {
+            const inputs = document.querySelectorAll('.price-input');
+            const prices = getPrices();
+            inputs.forEach(input => {
+                const id = input.dataset.id;
+                const val = input.value.trim().replace(/\s/g, '');
+                if (val && !isNaN(val)) {
+                    prices[id] = val;
+                } else {
+                    // Если поле пустое или не число, оставляем старую цену или удаляем?
+                    // Просто оставим как есть
                 }
             });
-            localStorage.setItem('productPrices', JSON.stringify(updated));
-            currentPrices = updated;
-            document.getElementById('status').textContent = '✅ Цены сохранены! Обновите основной сайт.';
-            setTimeout(() => { document.getElementById('status').textContent = ''; }, 4000);
+            savePrices(prices);
+            document.getElementById('priceStatus').textContent = '✅ Цены сохранены!';
+            document.getElementById('priceStatus').className = 'status-msg success';
+            setTimeout(() => {
+                document.getElementById('priceStatus').textContent = '';
+            }, 3000);
         });
 
-        // Загрузка при старте
-        renderForm();
-    </script>
+        // Загрузка фото товаров
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('upload-product-image')) {
+                const id = e.target.dataset.id;
+                const input = document.querySelector(`.product-image-input[data-id="${id}"]`);
+                if (!input || !input.files || input.files.length === 0) {
+                    alert('Выберите файл!');
+                    return;
+                }
+                const file = input.files[0];
+                const reader = new FileReader();
+                reader.onload = function(ev) {
+                    const base64 = ev.target.result;
+                    const images = getProductImages();
+                    images[id] = base64;
+                    saveProductImages(images);
+                    renderProductImages(); // обновить список
+                };
+                reader.readAsDataURL(file);
+            }
+
+            if (e.target.classList.contains('delete-product-image')) {
+                const id = e.target.dataset.id;
+                if (confirm('Удалить фото для этого товара?')) {
+                    const images = getProductImages();
+                    delete images[id];
+                    saveProductImages(images);
+                    renderProductImages();
+                }
+            }
+
+            if (e.target.classList.contains('delete-gallery-item')) {
+                const index = parseInt(e.target.dataset.index);
+                if (confirm('Удалить изображение из галереи?')) {
+                    const gallery = getGallery();
+                    gallery.splice(index, 1);
+                    saveGallery(gallery);
+                    renderGallery();
+                }
+            }
+        });
+
+        // Добавление в галерею
+        document.getElementById('galleryForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const fileInput = document.getElementById('galleryFile');
+            const title = document.getElementById('galleryTitle').value.trim();
+            const desc = document.getElementById('galleryDesc').value.trim();
+
+            if (!fileInput.files || fileInput.files.length === 0) {
+                alert('Выберите изображение!');
+                return;
+            }
+            const file = fileInput.files[0];
+            const reader = new FileReader();
+            reader.onload = function(ev) {
+                const base64 = ev.target.result;
+                const gallery = getGallery();
+                gallery.push({
+                    id: Date.now(),
+                    image: base64,
+                    title: title,
+                    description: desc
+                });
+                saveGallery(gallery);
+                renderGallery();
+                document.getElementById('galleryForm').reset();
+                document.getElementById('galleryStatus').textContent = '✅ Изображение добавлено!';
+                document.getElementById('galleryStatus').className = 'status-msg success';
+                setTimeout(() => { document.getElementById('galleryStatus').textContent = ''; }, 3000);
+            };
+            reader.readAsDataURL(file);
+        });
+    }
+
+    // При загрузке проверяем авторизацию
+    checkAuth();
+</script>
 </body>
 </html>

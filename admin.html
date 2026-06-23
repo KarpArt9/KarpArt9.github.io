@@ -7,11 +7,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
-        body {
-            background: #f0f7f4;
-            font-family: 'Segoe UI', Roboto, sans-serif;
-            padding: 20px 0;
-        }
+        body { background: #f0f7f4; font-family: 'Segoe UI', Roboto, sans-serif; padding: 20px 0; }
         .container { max-width: 1100px; }
         .login-box {
             background: #fff;
@@ -46,7 +42,14 @@
         .nav-tabs > li > a { color: #0d4a3a; border: none; }
         .nav-tabs > li > a:hover { background: #d5f5e3; border: none; }
         .tab-content { background: #fff; padding: 30px; border-radius: 0 0 20px 20px; box-shadow: 0 8px 30px rgba(0,0,0,0.04); }
-        .product-row { display: flex; align-items: center; padding: 8px 0; border-bottom: 1px solid #e8f0ec; gap: 15px; flex-wrap: wrap; }
+        .product-row {
+            display: flex;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid #e8f0ec;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
         .product-row .name { flex: 2; min-width: 150px; font-weight: 500; }
         .product-row .price { flex: 1; min-width: 100px; }
         .product-row .image-upload { flex: 2; min-width: 200px; }
@@ -59,6 +62,8 @@
         .status-msg { margin-top: 15px; font-weight: 500; }
         .status-msg.success { color: #2ecc71; }
         .status-msg.error { color: #e74c3c; }
+        .add-product-form { background: #fafdfb; padding: 20px; border-radius: 16px; margin-bottom: 30px; border: 1px dashed #2ecc71; }
+        .add-product-form .form-group { margin-bottom: 15px; }
         @media (max-width: 768px) {
             .product-row { flex-direction: column; align-items: stretch; }
             .product-row .name { text-align: center; }
@@ -96,6 +101,7 @@
         <li role="presentation" class="active"><a href="#tabPrices" aria-controls="tabPrices" role="tab" data-toggle="tab">Цены</a></li>
         <li role="presentation"><a href="#tabProducts" aria-controls="tabProducts" role="tab" data-toggle="tab">Фото товаров</a></li>
         <li role="presentation"><a href="#tabGallery" aria-controls="tabGallery" role="tab" data-toggle="tab">Галерея</a></li>
+        <li role="presentation"><a href="#tabManage" aria-controls="tabManage" role="tab" data-toggle="tab">Управление товарами</a></li>
     </ul>
 
     <div class="tab-content">
@@ -131,12 +137,58 @@
             <div id="galleryList" class="row"></div>
             <div id="galleryStatus" class="status-msg"></div>
         </div>
+
+        <!-- Вкладка Управление товарами -->
+        <div role="tabpanel" class="tab-pane" id="tabManage">
+            <h3>Управление товарами</h3>
+            <!-- Форма добавления -->
+            <div class="add-product-form">
+                <h4><i class="fa fa-plus-circle"></i> Добавить новый товар</h4>
+                <form id="addProductForm" class="row">
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label>Название товара</label>
+                            <input type="text" class="form-control" id="newProductName" placeholder="Например: Ballu BSQ-12" required>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label>Цена (₽)</label>
+                            <input type="text" class="form-control" id="newProductPrice" placeholder="29900" required>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label>Категория</label>
+                            <select class="form-control" id="newProductCategory">
+                                <option value="splits">Сплит-системы</option>
+                                <option value="mobile">Мобильные</option>
+                                <option value="heaters">Обогреватели</option>
+                                <option value="water">Водонагреватели</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label>Фото</label>
+                            <input type="file" class="form-control" id="newProductImage" accept="image/*">
+                        </div>
+                    </div>
+                    <div class="col-sm-12 text-right">
+                        <button type="submit" class="btn btn-success"><i class="fa fa-plus"></i> Добавить товар</button>
+                    </div>
+                </form>
+            </div>
+            <!-- Список товаров -->
+            <div id="productManageList"></div>
+            <div id="manageStatus" class="status-msg"></div>
+        </div>
     </div>
 </div>
 
 <script>
     // ==================== НАСТРОЙКИ ====================
-    const ADMIN_PASSWORD = 'admin123'; // Смените пароль здесь
+    const ADMIN_PASSWORD = 'admin123';
     // ===================================================
 
     // ------------------ Вход / Выход ------------------
@@ -168,35 +220,57 @@
     });
 
     // ------------------ Данные ------------------
-    // Список товаров (ID и названия) – должен совпадать с index.html
-    const PRODUCTS = [
-        { id: 'ballu1', name: 'Ballu BSQ-09HN1' },
-        { id: 'hisense1', name: 'Hisense AS-09UR4SYDDB1' },
-        { id: 'lg1', name: 'LG CS09AWK' },
-        { id: 'electrolux1', name: 'Electrolux EMO-12' },
-        { id: 'zanussi1', name: 'Zanussi ZACM-09' },
-        { id: 'bimatek1', name: 'Bimatek AM400' },
-        { id: 'timberk1', name: 'Timberk TCH A5N' },
-        { id: 'ballu2', name: 'Ballu BEC 1500' },
-        { id: 'noirot1', name: 'Noirot CNX-2' },
-        { id: 'electrolux2', name: 'Electrolux EWH 50' },
-        { id: 'thermex1', name: 'Thermex Flat Plus 50' },
-        { id: 'gorenje1', name: 'Gorenje OG 50' }
+    // Список товаров по умолчанию (используется для инициализации и как резерв)
+    const DEFAULT_PRODUCTS = [
+        { id: 'ballu1', name: 'Ballu BSQ-09HN1', price: 28900, category: 'splits', image: '' },
+        { id: 'hisense1', name: 'Hisense AS-09UR4SYDDB1', price: 32500, category: 'splits', image: '' },
+        { id: 'lg1', name: 'LG CS09AWK', price: 29900, category: 'splits', image: '' },
+        { id: 'electrolux1', name: 'Electrolux EMO-12', price: 23990, category: 'mobile', image: '' },
+        { id: 'zanussi1', name: 'Zanussi ZACM-09', price: 21500, category: 'mobile', image: '' },
+        { id: 'bimatek1', name: 'Bimatek AM400', price: 18990, category: 'mobile', image: '' },
+        { id: 'timberk1', name: 'Timberk TCH A5N', price: 3990, category: 'heaters', image: '' },
+        { id: 'ballu2', name: 'Ballu BEC 1500', price: 4900, category: 'heaters', image: '' },
+        { id: 'noirot1', name: 'Noirot CNX-2', price: 7990, category: 'heaters', image: '' },
+        { id: 'electrolux2', name: 'Electrolux EWH 50', price: 9990, category: 'water', image: '' },
+        { id: 'thermex1', name: 'Thermex Flat Plus 50', price: 11500, category: 'water', image: '' },
+        { id: 'gorenje1', name: 'Gorenje OG 50', price: 10200, category: 'water', image: '' }
     ];
 
-    // ------------------ Загрузка / сохранение данных ------------------
-    function getPrices() {
-        const stored = localStorage.getItem('productPrices');
+    // Получение списка товаров из localStorage (если нет – создаём из DEFAULT)
+    function getProducts() {
+        const stored = localStorage.getItem('products');
         if (stored) {
             try { return JSON.parse(stored); } catch(e) {}
         }
-        // Значения по умолчанию
-        return {
-            ballu1: '28900', hisense1: '32500', lg1: '29900',
-            electrolux1: '23990', zanussi1: '21500', bimatek1: '18990',
-            timberk1: '3990', ballu2: '4900', noirot1: '7990',
-            electrolux2: '9990', thermex1: '11500', gorenje1: '10200'
-        };
+        // Инициализируем товарами по умолчанию
+        const products = DEFAULT_PRODUCTS.map(p => ({ ...p }));
+        localStorage.setItem('products', JSON.stringify(products));
+        return products;
+    }
+
+    // Сохранение списка товаров
+    function saveProducts(products) {
+        localStorage.setItem('products', JSON.stringify(products));
+    }
+
+    // Получение цен (отдельно для быстрого доступа)
+    function getPrices() {
+        const products = getProducts();
+        const prices = {};
+        products.forEach(p => {
+            prices[p.id] = String(p.price);
+        });
+        return prices;
+    }
+
+    function savePrices(prices) {
+        const products = getProducts();
+        products.forEach(p => {
+            if (prices[p.id] !== undefined) {
+                p.price = parseInt(prices[p.id]) || 0;
+            }
+        });
+        saveProducts(products);
     }
 
     function getProductImages() {
@@ -207,6 +281,10 @@
         return {};
     }
 
+    function saveProductImages(images) {
+        localStorage.setItem('productImages', JSON.stringify(images));
+    }
+
     function getGallery() {
         const stored = localStorage.getItem('galleryImages');
         if (stored) {
@@ -215,29 +293,20 @@
         return [];
     }
 
-    function savePrices(prices) {
-        localStorage.setItem('productPrices', JSON.stringify(prices));
-    }
-
-    function saveProductImages(images) {
-        localStorage.setItem('productImages', JSON.stringify(images));
-    }
-
     function saveGallery(gallery) {
         localStorage.setItem('galleryImages', JSON.stringify(gallery));
     }
 
     // ------------------ Рендеринг вкладок ------------------
     function renderPrices() {
-        const prices = getPrices();
+        const products = getProducts();
         const container = document.getElementById('priceList');
         let html = '<table class="table"><thead><tr><th>Товар</th><th>Текущая цена</th><th>Новая цена</th></tr></thead><tbody>';
-        PRODUCTS.forEach(p => {
-            const current = prices[p.id] || '';
+        products.forEach(p => {
             html += `<tr>
                         <td><strong>${p.name}</strong> <span class="text-muted">(${p.id})</span></td>
-                        <td>${current} ₽</td>
-                        <td><input type="text" class="form-control input-sm price-input" data-id="${p.id}" value="${current}" placeholder="Цена"></td>
+                        <td>${p.price} ₽</td>
+                        <td><input type="text" class="form-control input-sm price-input" data-id="${p.id}" value="${p.price}" placeholder="Цена"></td>
                     </tr>`;
         });
         html += '</tbody></table>';
@@ -245,10 +314,11 @@
     }
 
     function renderProductImages() {
+        const products = getProducts();
         const images = getProductImages();
         const container = document.getElementById('productImageList');
         let html = '';
-        PRODUCTS.forEach(p => {
+        products.forEach(p => {
             const imgSrc = images[p.id] || '';
             html += `<div class="product-row">
                         <div class="name">${p.name}</div>
@@ -284,24 +354,44 @@
         container.innerHTML = html;
     }
 
+    function renderProductManage() {
+        const products = getProducts();
+        const container = document.getElementById('productManageList');
+        if (products.length === 0) {
+            container.innerHTML = '<p class="text-muted">Нет товаров.</p>';
+            return;
+        }
+        let html = '<table class="table"><thead><tr><th>Название</th><th>Цена</th><th>Категория</th><th>Действия</th></tr></thead><tbody>';
+        products.forEach((p, index) => {
+            html += `<tr>
+                        <td>${p.name}</td>
+                        <td>${p.price} ₽</td>
+                        <td>${p.category}</td>
+                        <td>
+                            <button class="btn btn-danger btn-sm delete-product" data-index="${index}"><i class="fa fa-trash"></i> Удалить</button>
+                        </td>
+                    </tr>`;
+        });
+        html += '</tbody></table>';
+        container.innerHTML = html;
+    }
+
     // ------------------ Инициализация админки ------------------
     function initAdmin() {
         renderPrices();
         renderProductImages();
         renderGallery();
+        renderProductManage();
 
         // Сохранение цен
         document.getElementById('savePricesBtn').addEventListener('click', function() {
             const inputs = document.querySelectorAll('.price-input');
-            const prices = getPrices();
+            const prices = {};
             inputs.forEach(input => {
                 const id = input.dataset.id;
                 const val = input.value.trim().replace(/\s/g, '');
                 if (val && !isNaN(val)) {
                     prices[id] = val;
-                } else {
-                    // Если поле пустое или не число, оставляем старую цену или удаляем?
-                    // Просто оставим как есть
                 }
             });
             savePrices(prices);
@@ -310,6 +400,7 @@
             setTimeout(() => {
                 document.getElementById('priceStatus').textContent = '';
             }, 3000);
+            renderProductManage(); // обновить список товаров (цены обновятся)
         });
 
         // Загрузка фото товаров
@@ -328,7 +419,7 @@
                     const images = getProductImages();
                     images[id] = base64;
                     saveProductImages(images);
-                    renderProductImages(); // обновить список
+                    renderProductImages();
                 };
                 reader.readAsDataURL(file);
             }
@@ -350,6 +441,18 @@
                     gallery.splice(index, 1);
                     saveGallery(gallery);
                     renderGallery();
+                }
+            }
+
+            if (e.target.classList.contains('delete-product')) {
+                const index = parseInt(e.target.dataset.index);
+                if (confirm('Удалить этот товар?')) {
+                    const products = getProducts();
+                    products.splice(index, 1);
+                    saveProducts(products);
+                    renderProductManage();
+                    renderPrices();
+                    renderProductImages(); // обновить список фото (если они были)
                 }
             }
         });
@@ -384,6 +487,75 @@
                 setTimeout(() => { document.getElementById('galleryStatus').textContent = ''; }, 3000);
             };
             reader.readAsDataURL(file);
+        });
+
+        // Добавление нового товара
+        document.getElementById('addProductForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const name = document.getElementById('newProductName').value.trim();
+            const price = document.getElementById('newProductPrice').value.trim();
+            const category = document.getElementById('newProductCategory').value;
+            const fileInput = document.getElementById('newProductImage');
+
+            if (!name || !price) {
+                alert('Заполните название и цену!');
+                return;
+            }
+
+            const products = getProducts();
+            const newId = 'product_' + Date.now();
+            const newProduct = {
+                id: newId,
+                name: name,
+                price: parseInt(price) || 0,
+                category: category,
+                image: ''
+            };
+
+            // Если выбрано фото – загружаем его
+            if (fileInput.files && fileInput.files.length > 0) {
+                const file = fileInput.files[0];
+                const reader = new FileReader();
+                reader.onload = function(ev) {
+                    const base64 = ev.target.result;
+                    const images = getProductImages();
+                    images[newId] = base64;
+                    saveProductImages(images);
+                    // Добавляем товар после загрузки фото
+                    products.push(newProduct);
+                    saveProducts(products);
+                    // Обновляем все интерфейсы
+                    renderProductManage();
+                    renderPrices();
+                    renderProductImages();
+                    document.getElementById('addProductForm').reset();
+                    document.getElementById('manageStatus').textContent = '✅ Товар добавлен!';
+                    document.getElementById('manageStatus').className = 'status-msg success';
+                    setTimeout(() => { document.getElementById('manageStatus').textContent = ''; }, 3000);
+                };
+                reader.readAsDataURL(file);
+            } else {
+                // Без фото
+                products.push(newProduct);
+                saveProducts(products);
+                renderProductManage();
+                renderPrices();
+                renderProductImages();
+                document.getElementById('addProductForm').reset();
+                document.getElementById('manageStatus').textContent = '✅ Товар добавлен!';
+                document.getElementById('manageStatus').className = 'status-msg success';
+                setTimeout(() => { document.getElementById('manageStatus').textContent = ''; }, 3000);
+            }
+        });
+
+        // Обработка переключения вкладок (Bootstrap сам вызывает, но можно добавить)
+        $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+            // Обновляем содержимое вкладки при показе
+            const target = $(e.target).attr('href');
+            if (target === '#tabPrices') renderPrices();
+            if (target === '#tabProducts') renderProductImages();
+            if (target === '#tabGallery') renderGallery();
+            if (target === '#tabManage') renderProductManage();
         });
     }
 

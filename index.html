@@ -5,16 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Райский холод – Климатическая техника в Москве</title>
     <meta name="description" content="Продажа, установка и ремонт кондиционеров, вентиляции, отопления в Москве и области.">
-    <!-- Шрифты -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
-    <!-- Bootstrap + Font Awesome -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <!-- Lightbox2 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css">
-    <!-- AOS -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <style>
         /* ===== ГЛОБАЛЬНЫЕ ===== */
@@ -250,7 +246,7 @@
             transform: translateY(-8px);
             box-shadow: 0 16px 40px rgba(0,0,0,0.08);
         }
-        .product-card img { border-radius: 16px; margin-bottom: 16px; width: 100%; }
+        .product-card img { border-radius: 16px; margin-bottom: 16px; width: 100%; height: auto; max-height: 200px; object-fit: cover; }
         .price-new { font-size: 24px; font-weight: 700; color: #27ae60; }
         .price-old { text-decoration: line-through; color: #888; margin-left: 8px; font-size: 16px; }
         .btn-primary {
@@ -764,48 +760,43 @@
     </div>
 </div>
 
-<!-- ТОВАРЫ (категории) -->
+<!-- ===== ТОВАРЫ (категории – динамические) ===== -->
 <div class="page" id="page-products">
     <div class="container" data-aos="fade-up">
         <h2 class="section-title">Категории товаров</h2>
-        <div class="row">
-            <div class="col-md-3 col-sm-6">
-                <div class="product-card" style="height:auto;">
-                    <i class="fa fa-snowflake-o" style="font-size:48px; color:#2ecc71;"></i>
-                    <h4>Сплит-системы</h4>
-                    <p>Настенные кондиционеры</p>
-                    <a href="#page-splits" class="btn btn-primary">Перейти</a>
-                </div>
-            </div>
-            <div class="col-md-3 col-sm-6">
-                <div class="product-card" style="height:auto;">
-                    <i class="fa fa-arrows-alt" style="font-size:48px; color:#2ecc71;"></i>
-                    <h4>Мобильные</h4>
-                    <p>Переносные модели</p>
-                    <a href="#page-mobile" class="btn btn-primary">Перейти</a>
-                </div>
-            </div>
-            <div class="col-md-3 col-sm-6">
-                <div class="product-card" style="height:auto;">
-                    <i class="fa fa-fire" style="font-size:48px; color:#2ecc71;"></i>
-                    <h4>Обогреватели</h4>
-                    <p>Конвекторы, ИК, масляные</p>
-                    <a href="#page-heaters" class="btn btn-primary">Перейти</a>
-                </div>
-            </div>
-            <div class="col-md-3 col-sm-6">
-                <div class="product-card" style="height:auto;">
-                    <i class="fa fa-tint" style="font-size:48px; color:#2ecc71;"></i>
-                    <h4>Водонагреватели</h4>
-                    <p>Накопительные, проточные</p>
-                    <a href="#page-water" class="btn btn-primary">Перейти</a>
-                </div>
-            </div>
+        <div id="dynamicCategories">
+            <!-- Сюда будет вставляться содержимое из JS -->
         </div>
     </div>
 </div>
 
-<!-- ====== СТРАНИЦА ЦЕНЫ ====== -->
+<!-- ===== ДИНАМИЧЕСКИЕ СТРАНИЦЫ КАТЕГОРИЙ ===== -->
+<div class="page" id="page-splits">
+    <div class="container" style="margin-top: 40px;" data-aos="fade-up">
+        <h2 class="section-title" id="categoryTitle">Сплит-системы</h2>
+        <div id="categoryProducts" class="row"></div>
+    </div>
+</div>
+<div class="page" id="page-mobile">
+    <div class="container" style="margin-top: 40px;" data-aos="fade-up">
+        <h2 class="section-title" id="categoryTitleMobile">Мобильные кондиционеры</h2>
+        <div id="categoryProductsMobile" class="row"></div>
+    </div>
+</div>
+<div class="page" id="page-heaters">
+    <div class="container" style="margin-top: 40px;" data-aos="fade-up">
+        <h2 class="section-title" id="categoryTitleHeaters">Обогреватели</h2>
+        <div id="categoryProductsHeaters" class="row"></div>
+    </div>
+</div>
+<div class="page" id="page-water">
+    <div class="container" style="margin-top: 40px;" data-aos="fade-up">
+        <h2 class="section-title" id="categoryTitleWater">Водонагреватели</h2>
+        <div id="categoryProductsWater" class="row"></div>
+    </div>
+</div>
+
+<!-- ===== ПРАЙС-ЛИСТ ===== -->
 <div class="page" id="page-prices">
     <div class="container" data-aos="fade-up">
         <h2 class="section-title">Прайс-лист</h2>
@@ -862,18 +853,13 @@
             </table>
         </div>
 
-        <!-- Блок 4: Цены на популярные товары -->
+        <!-- Блок 4: Цены на популярные товары (динамически обновляются из localStorage) -->
         <div class="price-table-wrap">
             <h3>📦 Популярные товары</h3>
-            <table class="price-table">
+            <table class="price-table" id="popularProductsTable">
                 <thead><tr><th>Модель</th><th>Цена, ₽</th><th>Примечание</th></tr></thead>
-                <tbody>
-                    <tr><td>Ballu BSQ-09HN1</td><td class="price-col">28 900</td><td class="note">инвертор, 25 м²</td></tr>
-                    <tr><td>Hisense AS-09UR4SYDDB1</td><td class="price-col">32 500</td><td class="note">инвертор, Wi-Fi</td></tr>
-                    <tr><td>LG CS09AWK</td><td class="price-col">29 900</td><td class="note">стандарт, 25 м²</td></tr>
-                    <tr><td>Electrolux EMO-12</td><td class="price-col">23 990</td><td class="note">мобильный, 30 м²</td></tr>
-                    <tr><td>Zanussi ZACM-09</td><td class="price-col">21 500</td><td class="note">мобильный, 25 м²</td></tr>
-                    <tr><td>Timberk TCH A5N</td><td class="price-col">3 990</td><td class="note">конвектор 1,5 кВт</td></tr>
+                <tbody id="popularProductsBody">
+                    <!-- Заполняется через JS -->
                 </tbody>
             </table>
             <p style="margin-top:15px; text-align:right;"><a href="#page-products" class="btn btn-primary btn-sm">Все товары</a></p>
@@ -895,7 +881,7 @@
     </div>
 </div>
 
-<!-- ====== СТРАНИЦА "НАШИ ОБЪЕКТЫ" ====== -->
+<!-- ===== ОБЪЕКТЫ ===== -->
 <div class="page" id="page-projects">
     <div class="container" data-aos="fade-up">
         <h2 class="section-title">Наши объекты</h2>
@@ -961,7 +947,7 @@
     </div>
 </div>
 
-<!-- АКЦИИ -->
+<!-- АКЦИИ (оставлены статичными, но цены подтягиваются через data-price-id) -->
 <div class="page" id="page-promo">
     <div class="container" data-aos="fade-up">
         <h2 class="section-title">Акции и спецпредложения</h2>
@@ -1003,12 +989,12 @@
     </div>
 </div>
 
-<!-- ====== ГАЛЕРЕЯ (динамическая) ====== -->
+<!-- ===== ГАЛЕРЕЯ (динамическая) ===== -->
 <div class="page" id="page-gallery">
     <div class="container" data-aos="fade-up">
         <h2 class="section-title">Примеры наших работ</h2>
         <div class="gallery-grid" id="galleryContainer">
-            <!-- Здесь будет заполнение из localStorage -->
+            <!-- Заполняется через JS -->
         </div>
     </div>
 </div>
@@ -1052,7 +1038,7 @@
     </div>
 </div>
 
-<!-- КОНТАКТЫ (полная) -->
+<!-- КОНТАКТЫ -->
 <div class="page" id="page-contacts">
     <div class="container" data-aos="fade-up">
         <h2 class="section-title">Контакты</h2>
@@ -1084,7 +1070,7 @@
     </div>
 </div>
 
-<!-- ДЕТАЛЬНЫЕ СТРАНИЦЫ УСЛУГ -->
+<!-- ДЕТАЛЬНЫЕ СТРАНИЦЫ УСЛУГ (статические) -->
 <div class="page" id="page-sale">
     <div class="container" data-aos="fade-up">
         <h2 class="section-title">Продажа кондиционеров</h2>
@@ -1173,147 +1159,6 @@
     </div>
 </div>
 
-<!-- КАТЕГОРИИ ТОВАРОВ (с атрибутами data-product-id) -->
-<div class="page" id="page-splits">
-    <div class="container" style="margin-top: 40px;" data-aos="fade-up">
-        <h2 class="section-title">Сплит-системы</h2>
-        <div class="row">
-            <div class="col-md-4 col-sm-6">
-                <div class="product-card" data-product-id="ballu1">
-                    <img src="https://via.placeholder.com/300x200?text=Ballu+BSQ-09HN1" alt="Ballu">
-                    <h4>Ballu BSQ-09HN1</h4>
-                    <p>Инвертор, 25 м²</p>
-                    <p><span class="price-new" data-price-id="ballu1">28 900 ₽</span> <span class="price-old">34 900 ₽</span></p>
-                    <a href="#" class="btn btn-primary btn-sm">Подробнее</a>
-                </div>
-            </div>
-            <div class="col-md-4 col-sm-6">
-                <div class="product-card" data-product-id="hisense1">
-                    <img src="https://via.placeholder.com/300x200?text=Hisense+AS-09UR4SYDDB1" alt="Hisense">
-                    <h4>Hisense AS-09UR4SYDDB1</h4>
-                    <p>Инвертор, Wi-Fi, 25 м²</p>
-                    <p><span class="price-new" data-price-id="hisense1">32 500 ₽</span> <span class="price-old">39 990 ₽</span></p>
-                    <a href="#" class="btn btn-primary btn-sm">Подробнее</a>
-                </div>
-            </div>
-            <div class="col-md-4 col-sm-6">
-                <div class="product-card" data-product-id="lg1">
-                    <img src="https://via.placeholder.com/300x200?text=LG+CS09AWK" alt="LG">
-                    <h4>LG CS09AWK</h4>
-                    <p>Стандарт, 25 м²</p>
-                    <p><span class="price-new" data-price-id="lg1">29 900 ₽</span> <span class="price-old">35 500 ₽</span></p>
-                    <a href="#" class="btn btn-primary btn-sm">Подробнее</a>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="page" id="page-mobile">
-    <div class="container" style="margin-top: 40px;" data-aos="fade-up">
-        <h2 class="section-title">Мобильные кондиционеры</h2>
-        <div class="row">
-            <div class="col-md-4 col-sm-6">
-                <div class="product-card" data-product-id="electrolux1">
-                    <img src="https://via.placeholder.com/300x200?text=Electrolux+EMO-12" alt="Electrolux">
-                    <h4>Electrolux EMO-12</h4>
-                    <p>Мобильный, 30 м²</p>
-                    <p><span class="price-new" data-price-id="electrolux1">23 990 ₽</span> <span class="price-old">27 990 ₽</span></p>
-                    <a href="#" class="btn btn-primary btn-sm">Подробнее</a>
-                </div>
-            </div>
-            <div class="col-md-4 col-sm-6">
-                <div class="product-card" data-product-id="zanussi1">
-                    <img src="https://via.placeholder.com/300x200?text=Zanussi+ZACM-09" alt="Zanussi">
-                    <h4>Zanussi ZACM-09</h4>
-                    <p>Мобильный, 25 м²</p>
-                    <p><span class="price-new" data-price-id="zanussi1">21 500 ₽</span> <span class="price-old">24 900 ₽</span></p>
-                    <a href="#" class="btn btn-primary btn-sm">Подробнее</a>
-                </div>
-            </div>
-            <div class="col-md-4 col-sm-6">
-                <div class="product-card" data-product-id="bimatek1">
-                    <img src="https://via.placeholder.com/300x200?text=Bimatek+AM400" alt="Bimatek">
-                    <h4>Bimatek AM400</h4>
-                    <p>Мобильный, 20 м²</p>
-                    <p><span class="price-new" data-price-id="bimatek1">18 990 ₽</span> <span class="price-old">22 000 ₽</span></p>
-                    <a href="#" class="btn btn-primary btn-sm">Подробнее</a>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="page" id="page-heaters">
-    <div class="container" style="margin-top: 40px;" data-aos="fade-up">
-        <h2 class="section-title">Обогреватели</h2>
-        <div class="row">
-            <div class="col-md-4 col-sm-6">
-                <div class="product-card" data-product-id="timberk1">
-                    <img src="https://via.placeholder.com/300x200?text=Timberk+TCH+A5N" alt="Timberk">
-                    <h4>Timberk TCH A5N</h4>
-                    <p>Конвектор, 1.5 кВт</p>
-                    <p><span class="price-new" data-price-id="timberk1">3 990 ₽</span> <span class="price-old">4 990 ₽</span></p>
-                    <a href="#" class="btn btn-primary btn-sm">Подробнее</a>
-                </div>
-            </div>
-            <div class="col-md-4 col-sm-6">
-                <div class="product-card" data-product-id="ballu2">
-                    <img src="https://via.placeholder.com/300x200?text=Ballu+BEC+1500" alt="Ballu">
-                    <h4>Ballu BEC 1500</h4>
-                    <p>Инфракрасный</p>
-                    <p><span class="price-new" data-price-id="ballu2">4 900 ₽</span> <span class="price-old">5 800 ₽</span></p>
-                    <a href="#" class="btn btn-primary btn-sm">Подробнее</a>
-                </div>
-            </div>
-            <div class="col-md-4 col-sm-6">
-                <div class="product-card" data-product-id="noirot1">
-                    <img src="https://via.placeholder.com/300x200?text=Noirot+CNX-2" alt="Noirot">
-                    <h4>Noirot CNX-2</h4>
-                    <p>Конвектор, 2 кВт</p>
-                    <p><span class="price-new" data-price-id="noirot1">7 990 ₽</span> <span class="price-old">9 500 ₽</span></p>
-                    <a href="#" class="btn btn-primary btn-sm">Подробнее</a>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="page" id="page-water">
-    <div class="container" style="margin-top: 40px;" data-aos="fade-up">
-        <h2 class="section-title">Водонагреватели</h2>
-        <div class="row">
-            <div class="col-md-4 col-sm-6">
-                <div class="product-card" data-product-id="electrolux2">
-                    <img src="https://via.placeholder.com/300x200?text=Electrolux+EWH+50" alt="Electrolux">
-                    <h4>Electrolux EWH 50</h4>
-                    <p>Накопительный 50 л</p>
-                    <p><span class="price-new" data-price-id="electrolux2">9 990 ₽</span> <span class="price-old">11 900 ₽</span></p>
-                    <a href="#" class="btn btn-primary btn-sm">Подробнее</a>
-                </div>
-            </div>
-            <div class="col-md-4 col-sm-6">
-                <div class="product-card" data-product-id="thermex1">
-                    <img src="https://via.placeholder.com/300x200?text=Thermex+Flat+Plus" alt="Thermex">
-                    <h4>Thermex Flat Plus 50</h4>
-                    <p>Накопительный 50 л, плоский</p>
-                    <p><span class="price-new" data-price-id="thermex1">11 500 ₽</span> <span class="price-old">13 200 ₽</span></p>
-                    <a href="#" class="btn btn-primary btn-sm">Подробнее</a>
-                </div>
-            </div>
-            <div class="col-md-4 col-sm-6">
-                <div class="product-card" data-product-id="gorenje1">
-                    <img src="https://via.placeholder.com/300x200?text=Gorenje+OG+50" alt="Gorenje">
-                    <h4>Gorenje OG 50</h4>
-                    <p>Накопительный 50 л</p>
-                    <p><span class="price-new" data-price-id="gorenje1">10 200 ₽</span> <span class="price-old">12 000 ₽</span></p>
-                    <a href="#" class="btn btn-primary btn-sm">Подробнее</a>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
 <!-- ФУТЕР -->
 <section class="section-footer" style="margin-top:40px;">
     <div class="container">
@@ -1362,71 +1207,217 @@
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
 <script>
-    // ==================== ОСНОВНЫЕ ФУНКЦИИ ====================
+    // ==================== ФУНКЦИИ РАБОТЫ С ДАННЫМИ ====================
 
-    // 1. Загрузка цен из localStorage
-    function applyPricesFromStorage() {
-        const stored = localStorage.getItem('productPrices');
-        if (!stored) return;
-        try {
-            const prices = JSON.parse(stored);
-            document.querySelectorAll('.price-new[data-price-id]').forEach(el => {
-                const id = el.dataset.priceId;
-                if (prices[id] !== undefined) {
-                    el.textContent = prices[id] + ' ₽';
-                }
-            });
-        } catch(e) {}
+    // Получение списка товаров
+    function getProductsFromStorage() {
+        const stored = localStorage.getItem('products');
+        if (stored) {
+            try { return JSON.parse(stored); } catch(e) {}
+        }
+        // Если нет – возвращаем массив по умолчанию (можно оставить пустым или задать начальный список)
+        return [];
     }
 
-    // 2. Загрузка фото товаров из localStorage
-    function applyProductImagesFromStorage() {
+    // Получение фото товаров
+    function getProductImagesFromStorage() {
         const stored = localStorage.getItem('productImages');
-        if (!stored) return;
-        try {
-            const images = JSON.parse(stored);
-            document.querySelectorAll('.product-card[data-product-id]').forEach(card => {
-                const id = card.dataset.productId;
-                if (images[id]) {
-                    const img = card.querySelector('img');
-                    if (img) img.src = images[id];
-                }
-            });
-        } catch(e) {}
+        if (stored) {
+            try { return JSON.parse(stored); } catch(e) {}
+        }
+        return {};
     }
 
-    // 3. Загрузка галереи из localStorage
-    function applyGalleryFromStorage() {
+    // Получение галереи
+    function getGalleryFromStorage() {
         const stored = localStorage.getItem('galleryImages');
+        if (stored) {
+            try { return JSON.parse(stored); } catch(e) {}
+        }
+        return [];
+    }
+
+    // Получение цен (отдельно, чтобы применять к элементам с data-price-id)
+    function getPricesFromStorage() {
+        const products = getProductsFromStorage();
+        const prices = {};
+        products.forEach(p => {
+            prices[p.id] = String(p.price);
+        });
+        return prices;
+    }
+
+    // ==================== ФУНКЦИИ ОТОБРАЖЕНИЯ ====================
+
+    // Применение цен к элементам с data-price-id
+    function applyPrices() {
+        const prices = getPricesFromStorage();
+        document.querySelectorAll('.price-new[data-price-id]').forEach(el => {
+            const id = el.dataset.priceId;
+            if (prices[id] !== undefined) {
+                el.textContent = prices[id] + ' ₽';
+            }
+        });
+    }
+
+    // Применение фото товаров к карточкам с data-product-id
+    function applyProductImages() {
+        const images = getProductImagesFromStorage();
+        document.querySelectorAll('.product-card[data-product-id]').forEach(card => {
+            const id = card.dataset.productId;
+            if (images[id]) {
+                const img = card.querySelector('img');
+                if (img) img.src = images[id];
+            }
+        });
+    }
+
+    // Отображение галереи
+    function renderGallery() {
+        const gallery = getGalleryFromStorage();
         const container = document.getElementById('galleryContainer');
         if (!container) return;
-        if (!stored) {
+        if (gallery.length === 0) {
             container.innerHTML = '<p class="text-center text-muted">Нет изображений в галерее. Загрузите через админ-панель.</p>';
             return;
         }
-        try {
-            const gallery = JSON.parse(stored);
-            if (gallery.length === 0) {
-                container.innerHTML = '<p class="text-center text-muted">Нет изображений в галерее. Загрузите через админ-панель.</p>';
-                return;
+        let html = '';
+        gallery.forEach(item => {
+            html += `<div class="gallery-item">
+                        <a href="${item.image}" data-lightbox="gallery" data-title="${item.title || ''}">
+                            <img src="${item.image}" alt="${item.title || 'Фото'}">
+                        </a>
+                        ${item.title ? `<div class="gallery-item-title">${item.title}</div>` : ''}
+                        ${item.description ? `<div class="gallery-item-desc">${item.description}</div>` : ''}
+                    </div>`;
+        });
+        container.innerHTML = html;
+        // Переинициализируем Lightbox для новых изображений
+        setTimeout(() => {
+            if (typeof lightbox !== 'undefined') {
+                lightbox.init();
             }
-            let html = '';
-            gallery.forEach(item => {
-                html += `<div class="gallery-item">
-                            <a href="${item.image}" data-lightbox="gallery" data-title="${item.title || ''}">
-                                <img src="${item.image}" alt="${item.title || 'Фото'}">
-                            </a>
-                            ${item.title ? `<div class="gallery-item-title">${item.title}</div>` : ''}
-                            ${item.description ? `<div class="gallery-item-desc">${item.description}</div>` : ''}
-                        </div>`;
-            });
-            container.innerHTML = html;
-        } catch(e) {
-            container.innerHTML = '<p class="text-center text-muted">Ошибка загрузки галереи.</p>';
-        }
+        }, 100);
     }
 
-    // 4. Переключение страниц
+    // Отображение категорий на странице "Товары"
+    function renderCategories() {
+        const products = getProductsFromStorage();
+        const images = getProductImagesFromStorage();
+        const container = document.getElementById('dynamicCategories');
+        if (!container) return;
+
+        if (products.length === 0) {
+            container.innerHTML = `<p class="text-center text-muted">Нет добавленных товаров. Используйте админ-панель для добавления.</p>`;
+            return;
+        }
+
+        // Группировка по категориям
+        const categories = {};
+        products.forEach(p => {
+            if (!categories[p.category]) categories[p.category] = [];
+            categories[p.category].push(p);
+        });
+
+        const categoryNames = {
+            'splits': 'Сплит-системы',
+            'mobile': 'Мобильные кондиционеры',
+            'heaters': 'Обогреватели',
+            'water': 'Водонагреватели'
+        };
+
+        let html = '';
+        for (const [cat, items] of Object.entries(categories)) {
+            const catName = categoryNames[cat] || cat;
+            // Ссылка на страницу категории
+            const catLink = '#page-' + cat;
+            html += `<h3 class="text-center" style="color:#0d4a3a; margin-top:30px;">${catName}</h3>
+                     <div class="row">`;
+            items.forEach(p => {
+                const imgSrc = images[p.id] || 'https://via.placeholder.com/300x200?text=' + encodeURIComponent(p.name);
+                html += `
+                    <div class="col-md-3 col-sm-6">
+                        <div class="product-card" data-product-id="${p.id}">
+                            <img src="${imgSrc}" alt="${p.name}" style="width:100%; height:auto; border-radius:16px;">
+                            <h4>${p.name}</h4>
+                            <p><span class="price-new" data-price-id="${p.id}">${p.price} ₽</span></p>
+                            <a href="#" class="btn btn-primary btn-sm">Подробнее</a>
+                        </div>
+                    </div>
+                `;
+            });
+            html += `</div>
+                     <div style="text-align:center; margin:10px 0 20px;">
+                         <a href="${catLink}" class="btn btn-primary btn-sm">Все ${catName}</a>
+                     </div>`;
+        }
+        container.innerHTML = html;
+        // Применяем цены и фото для отрисованных карточек
+        applyPrices();
+        applyProductImages();
+    }
+
+    // Отображение товаров на странице конкретной категории
+    function renderCategoryPage(categoryId, containerId, titleId) {
+        const products = getProductsFromStorage();
+        const images = getProductImagesFromStorage();
+        const container = document.getElementById(containerId);
+        const titleEl = document.getElementById(titleId);
+        if (!container) return;
+
+        const filtered = products.filter(p => p.category === categoryId);
+        if (filtered.length === 0) {
+            container.innerHTML = `<p class="text-center text-muted">Нет товаров в этой категории.</p>`;
+            return;
+        }
+
+        // Устанавливаем заголовок
+        const categoryNames = {
+            'splits': 'Сплит-системы',
+            'mobile': 'Мобильные кондиционеры',
+            'heaters': 'Обогреватели',
+            'water': 'Водонагреватели'
+        };
+        if (titleEl) titleEl.textContent = categoryNames[categoryId] || categoryId;
+
+        let html = '';
+        filtered.forEach(p => {
+            const imgSrc = images[p.id] || 'https://via.placeholder.com/300x200?text=' + encodeURIComponent(p.name);
+            html += `
+                <div class="col-md-4 col-sm-6">
+                    <div class="product-card" data-product-id="${p.id}">
+                        <img src="${imgSrc}" alt="${p.name}" style="width:100%; height:auto; border-radius:16px;">
+                        <h4>${p.name}</h4>
+                        <p><span class="price-new" data-price-id="${p.id}">${p.price} ₽</span></p>
+                        <a href="#" class="btn btn-primary btn-sm">Подробнее</a>
+                    </div>
+                </div>
+            `;
+        });
+        container.innerHTML = html;
+        applyPrices();
+        applyProductImages();
+    }
+
+    // Заполнение таблицы популярных товаров на странице прайс-листа
+    function renderPopularProducts() {
+        const products = getProductsFromStorage();
+        const tbody = document.getElementById('popularProductsBody');
+        if (!tbody) return;
+        if (products.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="3" class="text-muted">Нет товаров</td></tr>';
+            return;
+        }
+        // Берём первые 6 товаров для примера
+        const popular = products.slice(0, 6);
+        let html = '';
+        popular.forEach(p => {
+            html += `<tr><td>${p.name}</td><td class="price-col">${p.price}</td><td class="note">${p.category}</td></tr>`;
+        });
+        tbody.innerHTML = html;
+    }
+
+    // ==================== ПЕРЕКЛЮЧЕНИЕ СТРАНИЦ ====================
     function switchPage(hash) {
         $('.page').removeClass('active');
         const target = $(hash);
@@ -1434,22 +1425,41 @@
         else $('#page-main').addClass('active');
         $('#mobileMenu').slideUp();
         $('html, body').animate({ scrollTop: 0 }, 300);
-        // После переключения применяем данные
+
+        // После переключения обновляем динамический контент
         setTimeout(() => {
-            applyPricesFromStorage();
-            applyProductImagesFromStorage();
-            applyGalleryFromStorage();
+            // В зависимости от открытой страницы вызываем соответствующие рендеры
+            const pageId = hash.replace('#page-', '');
+            if (pageId === 'products') {
+                renderCategories();
+            } else if (pageId === 'splits') {
+                renderCategoryPage('splits', 'categoryProducts', 'categoryTitle');
+            } else if (pageId === 'mobile') {
+                renderCategoryPage('mobile', 'categoryProductsMobile', 'categoryTitleMobile');
+            } else if (pageId === 'heaters') {
+                renderCategoryPage('heaters', 'categoryProductsHeaters', 'categoryTitleHeaters');
+            } else if (pageId === 'water') {
+                renderCategoryPage('water', 'categoryProductsWater', 'categoryTitleWater');
+            } else if (pageId === 'gallery') {
+                renderGallery();
+            } else if (pageId === 'prices') {
+                renderPopularProducts();
+            }
+            // Всегда применяем цены и фото (на случай, если есть элементы с data-*)
+            applyPrices();
+            applyProductImages();
         }, 200);
     }
 
-    // 5. Инициализация при загрузке
+    // ==================== ИНИЦИАЛИЗАЦИЯ ====================
     function initSite() {
-        // Применяем цены, фото, галерею
-        applyPricesFromStorage();
-        applyProductImagesFromStorage();
-        applyGalleryFromStorage();
+        // Применяем данные при загрузке
+        applyPrices();
+        applyProductImages();
+        renderGallery();
+        renderPopularProducts();
 
-        // Переключение по клику на меню
+        // Обработка кликов по ссылкам меню
         $(document).on('click', 'a[href^="#page-"]', function(e) {
             e.preventDefault();
             const hash = $(this).attr('href');
@@ -1464,6 +1474,7 @@
         if (hash && hash.startsWith('#page-')) {
             switchPage(hash);
         } else {
+            // Показываем главную
             $('#page-main').addClass('active');
         }
 
@@ -1486,7 +1497,7 @@
         });
     }
 
-    // Запуск после готовности DOM
+    // Запуск
     $(document).ready(function() {
         AOS.init({ offset: 100, duration: 700 });
         $('#callbackPhone').mask('+7 (000) 000-00-00');

@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Райский холод – Каталог кондиционеров</title>
     <meta name="description" content="Продажа, установка и ремонт кондиционеров в Москве. Более 500 моделей.">
-    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M50 10 L55 40 L80 40 L62 58 L70 88 L50 72 L30 88 L38 58 L20 40 L45 40 Z' fill='%232ecc71'/%3E%3C/svg%3E" type="image/svg+xml">
-    
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M50 10 L55 40 L80 40 L62 58 L70 88 L50 72 L30 88 L38 58 L20 40 L45 40 Z' fill='%2310b981'/%3E%3C/svg%3E" type="image/svg+xml">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
@@ -14,543 +14,150 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    
+
     <style>
-        /* ===== ГЛОБАЛЬНЫЕ ===== */
-        * { box-sizing: border-box; }
-        body {
-            font-family: 'Inter', sans-serif;
-            background: #f2f9f5;
-            color: #1a2e28;
-            margin: 0;
-            padding: 0;
+        :root{
+            --emerald-950:#04231b;
+            --emerald-900:#064e3b;
+            --emerald-800:#0a6650;
+            --emerald-600:#059669;
+            --emerald-500:#10b981;
+            --emerald-400:#34d399;
+            --emerald-100:#d1fae5;
+            --emerald-50:#ecfdf5;
+            --gold:#f0c419;
         }
+        * { box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: #f2f9f5; color: #12241f; margin: 0; padding: 0; }
         .container { max-width: 1200px; }
         a { transition: 0.2s; }
-        .section-title {
-            font-size: 36px;
-            font-weight: 700;
-            text-align: center;
-            margin: 60px 0 30px;
-            color: #0d4a3a;
-            position: relative;
-        }
-        .section-title::after {
-            content: '';
-            display: block;
-            width: 70px;
-            height: 4px;
-            background: #2ecc71;
-            margin: 12px auto 0;
-            border-radius: 4px;
-        }
-        .btn-primary {
-            background: #0d4a3a;
-            border: none;
-            padding: 8px 24px;
-            border-radius: 60px;
-            font-weight: 600;
-            transition: 0.3s;
-            color: #fff;
-        }
-        .btn-primary:hover {
-            background: #2ecc71;
-            color: #0d4a3a;
-            transform: scale(1.03);
-        }
+        .section-title { font-size: 36px; font-weight: 700; text-align: center; margin: 60px 0 30px; color: var(--emerald-900); position: relative; }
+        .section-title::after { content: ''; display: block; width: 70px; height: 4px; background: linear-gradient(90deg, var(--emerald-500), var(--gold)); margin: 12px auto 0; border-radius: 4px; }
+        .btn-primary { background: var(--emerald-900); border: none; padding: 8px 24px; border-radius: 60px; font-weight: 600; transition: 0.3s; color: #fff; }
+        .btn-primary:hover { background: var(--emerald-500); color: var(--emerald-900); transform: scale(1.03); }
 
-        /* ===== ШАПКА ===== */
-        .section-header {
-            background: rgba(13, 74, 58, 0.95);
-            backdrop-filter: blur(6px);
-            padding: 12px 0;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-        }
-        .logo-text {
-            font-size: 26px;
-            font-weight: 600;
-            color: #fff;
-        }
-        .logo-text span { color: #2ecc71; }
-        .contact-phone a {
-            color: #fff;
-            font-size: 16px;
-            font-weight: 500;
-            margin-right: 20px;
-        }
-        .contact-phone a:hover { color: #2ecc71; text-decoration: none; }
-        .block-work-hours {
-            color: #a8c9b8;
-            font-size: 13px;
-            margin-top: 4px;
-        }
+        .section-header { background: rgba(6, 78, 59, 0.96); backdrop-filter: blur(6px); padding: 12px 0; position: sticky; top: 0; z-index: 1000; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
+        .logo-text { font-size: 26px; font-weight: 600; color: #fff; }
+        .logo-text span { background: linear-gradient(90deg, var(--emerald-400), var(--gold)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        .contact-phone a { color: #fff; font-size: 16px; font-weight: 500; margin-right: 20px; }
+        .contact-phone a:hover { color: var(--emerald-400); text-decoration: none; }
+        .block-work-hours { color: #a7c4b5; font-size: 13px; margin-top: 4px; }
 
-        /* ===== МЕНЮ ===== */
-        .section-main-menu {
-            background: #0d4a3a;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-        }
-        .main-menu {
-            list-style: none;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px 30px;
-        }
-        .main-menu > li > a {
-            display: block;
-            padding: 14px 0;
-            color: #e0f0e8;
-            font-weight: 500;
-            text-decoration: none;
-            border-bottom: 3px solid transparent;
-            transition: 0.2s;
-        }
-        .main-menu > li > a:hover {
-            border-bottom-color: #2ecc71;
-            color: #fff;
-        }
+        .section-main-menu { background: var(--emerald-900); box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+        .main-menu { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 10px 30px; }
+        .main-menu > li > a { display: block; padding: 14px 0; color: #dcf3e8; font-weight: 500; text-decoration: none; border-bottom: 3px solid transparent; transition: 0.2s; }
+        .main-menu > li > a:hover { border-bottom-color: var(--emerald-400); color: #fff; }
 
-        /* ===== БУРГЕР ===== */
-        .burger-menu {
-            display: none;
-            background: #0d4a3a;
-            padding: 10px 15px;
-            cursor: pointer;
-            color: #fff;
-            font-size: 22px;
-            text-align: right;
-        }
-        .mobile-menu {
-            display: none;
-            background: #0d4a3a;
-            padding: 10px 0;
-        }
-        .mobile-menu ul {
-            list-style: none;
-            margin: 0;
-            padding: 0;
-        }
-        .mobile-menu li a {
-            display: block;
-            padding: 12px 20px;
-            color: #e0f0e8;
-            text-decoration: none;
-            border-bottom: 1px solid #1a6b53;
-        }
-        .mobile-menu li a:hover { background: #1a6b53; }
+        .burger-menu { display: none; background: var(--emerald-900); padding: 10px 15px; cursor: pointer; color: #fff; font-size: 22px; text-align: right; }
+        .mobile-menu { display: none; background: var(--emerald-900); padding: 10px 0; }
+        .mobile-menu ul { list-style: none; margin: 0; padding: 0; }
+        .mobile-menu li a { display: block; padding: 12px 20px; color: #dcf3e8; text-decoration: none; border-bottom: 1px solid var(--emerald-800); }
+        .mobile-menu li a:hover { background: var(--emerald-800); }
 
-        /* ===== СТРАНИЦЫ ===== */
         .page { display: none; }
         .page.active { display: block; }
 
-        /* ===== БАННЕР ===== */
-        .banner {
-            background: linear-gradient(135deg, #0d4a3a, #1a6b53);
-            border-radius: 24px;
-            padding: 50px;
-            margin: 30px 0;
-            color: #fff;
-        }
+        .banner { background: linear-gradient(135deg, var(--emerald-900), var(--emerald-800)); border-radius: 24px; padding: 50px; margin: 30px 0; color: #fff; position: relative; overflow: hidden; }
+        .banner::before{ content:''; position:absolute; right:-60px; top:-60px; width:220px; height:220px; background: radial-gradient(circle, rgba(240,196,25,0.25), transparent 70%); border-radius:50%; }
         .banner h1 { font-size: 44px; font-weight: 700; }
         .banner p { font-size: 18px; max-width: 500px; }
-        .btn-banner {
-            display: inline-block;
-            background: #2ecc71;
-            color: #0d4a3a;
-            padding: 14px 36px;
-            border-radius: 60px;
-            font-weight: 700;
-            text-decoration: none;
-            margin-top: 10px;
-            transition: 0.3s;
-        }
-        .btn-banner:hover {
-            background: #58d68d;
-            transform: scale(1.03);
-            color: #0d4a3a;
-        }
+        .btn-banner { display: inline-block; background: linear-gradient(90deg, var(--emerald-500), var(--emerald-400)); color: var(--emerald-950); padding: 14px 36px; border-radius: 60px; font-weight: 700; text-decoration: none; margin-top: 10px; transition: 0.3s; }
+        .btn-banner:hover { background: linear-gradient(90deg, var(--emerald-400), var(--gold)); transform: scale(1.03); color: var(--emerald-950); }
 
-        /* ===== СЧЁТЧИК ===== */
-        .counter-wrap {
-            background: linear-gradient(135deg, #0d4a3a, #1a6b53);
-            color: #fff;
-            border-radius: 24px;
-            padding: 30px;
-            text-align: center;
-            margin: 30px 0;
-        }
-        .counter-wrap .number { font-size: 48px; font-weight: 700; color: #2ecc71; }
+        .counter-wrap { background: linear-gradient(135deg, var(--emerald-900), var(--emerald-800)); color: #fff; border-radius: 24px; padding: 30px; text-align: center; margin: 30px 0; }
+        .counter-wrap .number { font-size: 48px; font-weight: 700; color: var(--emerald-400); }
 
-        /* ===== ПРЕИМУЩЕСТВА ===== */
-        .work-item {
-            background: #fff;
-            border-radius: 20px;
-            padding: 20px;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.04);
-            text-align: center;
-            transition: 0.3s;
-            margin-bottom: 20px;
-        }
-        .work-item:hover { transform: translateY(-6px); box-shadow: 0 12px 32px rgba(0,0,0,0.08); }
-        .work-item .count { font-size: 38px; font-weight: 700; color: #2ecc71; }
+        .work-item { background: #fff; border-radius: 20px; padding: 20px; box-shadow: 0 8px 24px rgba(6,78,59,0.06); text-align: center; transition: 0.3s; margin-bottom: 20px; border-top: 3px solid var(--emerald-500); }
+        .work-item:hover { transform: translateY(-6px); box-shadow: 0 12px 32px rgba(6,78,59,0.12); }
+        .work-item .count { font-size: 38px; font-weight: 700; color: var(--emerald-600); }
 
-        /* ===== ФИЛЬТРЫ ===== */
-        .filter-wrap {
-            background: #fff;
-            border-radius: 24px;
-            padding: 25px 30px;
-            box-shadow: 0 8px 28px rgba(0,0,0,0.04);
-            margin-bottom: 30px;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            align-items: center;
-        }
-        .filter-wrap select,
-        .filter-wrap input {
-            border-radius: 60px;
-            padding: 10px 20px;
-            border: 1px solid #dde2e8;
-            flex: 1;
-            min-width: 140px;
-        }
-        .filter-wrap .btn-filter {
-            background: #2ecc71;
-            color: #fff;
-            border: none;
-            padding: 10px 30px;
-            border-radius: 60px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-        .filter-wrap .btn-filter:hover { background: #58d68d; }
-        .filter-wrap .btn-reset {
-            background: #e8f0ec;
-            color: #0d4a3a;
-            border: none;
-            padding: 10px 30px;
-            border-radius: 60px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-        .filter-wrap .btn-reset:hover { background: #d5e8df; }
+        .filter-wrap { background: #fff; border-radius: 24px; padding: 25px 30px; box-shadow: 0 8px 28px rgba(6,78,59,0.06); margin-bottom: 30px; display: flex; flex-wrap: wrap; gap: 15px; align-items: center; }
+        .filter-wrap select, .filter-wrap input { border-radius: 60px; padding: 10px 20px; border: 1px solid #dde8e2; flex: 1; min-width: 140px; }
+        .filter-wrap select:focus, .filter-wrap input:focus { outline: none; border-color: var(--emerald-500); }
+        .filter-wrap .btn-filter { background: var(--emerald-500); color: #fff; border: none; padding: 10px 30px; border-radius: 60px; font-weight: 600; cursor: pointer; transition: 0.3s; }
+        .filter-wrap .btn-filter:hover { background: var(--emerald-600); }
+        .filter-wrap .btn-reset { background: var(--emerald-50); color: var(--emerald-900); border: none; padding: 10px 30px; border-radius: 60px; font-weight: 600; cursor: pointer; transition: 0.3s; }
+        .filter-wrap .btn-reset:hover { background: var(--emerald-100); }
 
-        /* ===== КАРТОЧКИ ТОВАРОВ ===== */
-        .products-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 30px;
-            margin: 30px 0;
-        }
-        .product-card {
-            background: #fff;
-            border-radius: 24px;
-            padding: 20px;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.04);
-            transition: 0.3s;
-            display: flex;
-            flex-direction: column;
-        }
-        .product-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 16px 40px rgba(0,0,0,0.08);
-        }
-        .product-card img {
-            border-radius: 16px;
-            margin-bottom: 16px;
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-        }
-        .product-card .product-name {
-            font-size: 18px;
-            font-weight: 600;
-            color: #0d4a3a;
-            margin-bottom: 6px;
-            min-height: 50px;
-            cursor: pointer;
-        }
-        .product-card .product-price {
-            font-size: 24px;
-            font-weight: 700;
-            color: #27ae60;
-            margin: 8px 0;
-        }
-        .product-card .product-features {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-            margin: 8px 0 12px;
-        }
-        .product-card .product-features .badge {
-            background: #eafaf1;
-            color: #0d4a3a;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 600;
-        }
-        .product-card .product-features .badge.inverter { background: #2ecc71; color: #fff; }
+        .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 30px; margin: 30px 0; }
+        .product-card { background: #fff; border-radius: 24px; padding: 20px; box-shadow: 0 8px 24px rgba(6,78,59,0.06); transition: 0.3s; display: flex; flex-direction: column; border: 1px solid transparent; }
+        .product-card:hover { transform: translateY(-8px); box-shadow: 0 16px 40px rgba(6,78,59,0.14); border-color: var(--emerald-100); }
+        .product-card .product-image-wrap{ width:100%; height:200px; border-radius: 16px; margin-bottom: 16px; overflow:hidden; background: linear-gradient(135deg, var(--emerald-50), #fff); }
+        .product-card img { width:100%; height:100%; object-fit: cover; display:block; }
+        .product-card .product-name { font-size: 18px; font-weight: 600; color: var(--emerald-900); margin-bottom: 6px; min-height: 50px; cursor: pointer; }
+        .product-card .product-price { font-size: 24px; font-weight: 700; color: var(--emerald-600); margin: 8px 0; }
+        .product-card .product-features { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0 12px; }
+        .product-card .product-features .badge { background: var(--emerald-50); color: var(--emerald-900); padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; }
+        .product-card .product-features .badge.inverter { background: var(--emerald-500); color: #fff; }
         .product-card .product-features .badge.wifi { background: #3498db; color: #fff; }
-        .product-card .product-features .badge.silent { background: #f1c40f; color: #333; }
-        .product-card .btn-group-card {
-            display: flex;
-            gap: 8px;
-            margin-top: auto;
-        }
-        .product-card .btn-group-card button {
-            flex: 1;
-            padding: 10px;
-            border: none;
-            border-radius: 60px;
-            font-weight: 600;
-            transition: 0.3s;
-            cursor: pointer;
-        }
-        .product-card .btn-group-card .btn-detail {
-            background: #0d4a3a;
-            color: #fff;
-        }
-        .product-card .btn-group-card .btn-detail:hover {
-            background: #2ecc71;
-            color: #0d4a3a;
-        }
-        .product-card .btn-group-card .btn-specs {
-            background: #e8f0ec;
-            color: #0d4a3a;
-        }
-        .product-card .btn-group-card .btn-specs:hover {
-            background: #2ecc71;
-            color: #0d4a3a;
-        }
+        .product-card .product-features .badge.silent { background: var(--gold); color: #3a2f00; }
+        .product-card .btn-group-card { display: flex; gap: 8px; margin-top: auto; }
+        .product-card .btn-group-card button { flex: 1; padding: 10px; border: none; border-radius: 60px; font-weight: 600; transition: 0.3s; cursor: pointer; }
+        .product-card .btn-group-card .btn-detail { background: var(--emerald-900); color: #fff; }
+        .product-card .btn-group-card .btn-detail:hover { background: var(--emerald-500); color: var(--emerald-950); }
+        .product-card .btn-group-card .btn-specs { background: var(--emerald-50); color: var(--emerald-900); }
+        .product-card .btn-group-card .btn-specs:hover { background: var(--emerald-500); color: #fff; }
 
-        /* ===== КОНТАКТЫ ===== */
-        .contacts-section {
-            background: #e8f5ed;
-            border-radius: 24px;
-            padding: 40px;
-            margin: 40px 0;
-        }
-        .contact-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 30px;
-            text-align: center;
-        }
-        .contact-item i {
-            font-size: 36px;
-            color: #2ecc71;
-            margin-bottom: 12px;
-            background: #fff;
-            padding: 16px;
-            border-radius: 60px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.04);
-        }
-        .contact-item a { color: #0d4a3a; font-weight: 500; }
-        .contact-item a:hover { color: #2ecc71; text-decoration: none; }
+        .contacts-section { background: var(--emerald-50); border-radius: 24px; padding: 40px; margin: 40px 0; }
+        .contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px; text-align: center; }
+        .contact-item i { font-size: 36px; color: var(--emerald-500); margin-bottom: 12px; background: #fff; padding: 16px; border-radius: 60px; box-shadow: 0 4px 12px rgba(6,78,59,0.06); }
+        .contact-item a { color: var(--emerald-900); font-weight: 500; }
+        .contact-item a:hover { color: var(--emerald-500); text-decoration: none; }
 
-        /* ===== КАРТА ===== */
-        .map-container {
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.06);
-            margin-top: 30px;
-        }
+        .map-container { border-radius: 20px; overflow: hidden; box-shadow: 0 8px 24px rgba(6,78,59,0.08); margin-top: 30px; }
 
-        /* ===== ПРАЙС-ЛИСТ ===== */
-        .price-table-wrap {
-            background: #fff;
-            border-radius: 24px;
-            padding: 30px;
-            box-shadow: 0 8px 28px rgba(0,0,0,0.04);
-            margin: 30px 0;
-            overflow-x: auto;
-        }
-        .price-table-wrap h3 {
-            color: #0d4a3a;
-            font-weight: 600;
-            margin-top: 0;
-            margin-bottom: 20px;
-        }
-        .price-table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 15px;
-        }
-        .price-table th {
-            background: #0d4a3a;
-            color: #fff;
-            padding: 12px 15px;
-            text-align: left;
-            font-weight: 600;
-        }
-        .price-table td {
-            padding: 10px 15px;
-            border-bottom: 1px solid #e8f0ec;
-        }
-        .price-table .price-col { font-weight: 600; color: #27ae60; white-space: nowrap; }
+        .price-table-wrap { background: #fff; border-radius: 24px; padding: 30px; box-shadow: 0 8px 28px rgba(6,78,59,0.06); margin: 30px 0; overflow-x: auto; }
+        .price-table-wrap h3 { color: var(--emerald-900); font-weight: 600; margin-top: 0; margin-bottom: 20px; }
+        .price-table { width: 100%; border-collapse: collapse; font-size: 15px; }
+        .price-table th { background: var(--emerald-900); color: #fff; padding: 12px 15px; text-align: left; font-weight: 600; }
+        .price-table td { padding: 10px 15px; border-bottom: 1px solid var(--emerald-50); }
+        .price-table .price-col { font-weight: 600; color: var(--emerald-600); white-space: nowrap; }
 
-        /* ===== МОДАЛКА ===== */
-        .modal-content {
-            border-radius: 24px;
-            border: none;
-        }
-        .modal-body img {
-            width: 100%;
-            border-radius: 16px;
-            margin-bottom: 20px;
-            max-height: 400px;
-            object-fit: cover;
-        }
-        .modal-body .detail-price { font-size: 32px; font-weight: 700; color: #27ae60; }
-        .modal-body .detail-features {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin: 15px 0;
-        }
-        .modal-body .detail-features .badge {
-            padding: 6px 16px;
-            border-radius: 20px;
-            font-size: 14px;
-            background: #eafaf1;
-            color: #0d4a3a;
-        }
+        .modal-content { border-radius: 24px; border: none; }
+        .modal-body .product-detail-image-wrap{ width:100%; border-radius: 16px; margin-bottom: 20px; max-height: 400px; height: 320px; overflow:hidden; background: linear-gradient(135deg, var(--emerald-50), #fff); }
+        .modal-body .product-detail-image-wrap img{ width:100%; height:100%; object-fit: cover; display:block; }
+        .modal-body .detail-price { font-size: 32px; font-weight: 700; color: var(--emerald-600); }
+        .modal-body .detail-features { display: flex; flex-wrap: wrap; gap: 8px; margin: 15px 0; }
+        .modal-body .detail-features .badge { padding: 6px 16px; border-radius: 20px; font-size: 14px; background: var(--emerald-50); color: var(--emerald-900); }
 
-        /* ===== ВКЛАДКИ ===== */
-        .tab-wrap {
-            margin: 15px 0;
-        }
-        .tab-wrap .tab-buttons {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 15px;
-            border-bottom: 2px solid #e8f0ec;
-            padding-bottom: 10px;
-        }
-        .tab-wrap .tab-buttons button {
-            padding: 10px 24px;
-            border: none;
-            background: none;
-            font-weight: 600;
-            color: #888;
-            border-radius: 30px;
-            transition: 0.3s;
-            cursor: pointer;
-        }
-        .tab-wrap .tab-buttons button.active {
-            background: #0d4a3a;
-            color: #fff;
-        }
-        .tab-wrap .tab-buttons button:hover:not(.active) {
-            background: #e8f0ec;
-            color: #0d4a3a;
-        }
-        .tab-wrap .tab-content {
-            display: none;
-        }
-        .tab-wrap .tab-content.active {
-            display: block;
-        }
+        .tab-wrap { margin: 15px 0; }
+        .tab-wrap .tab-buttons { display: flex; gap: 8px; margin-bottom: 15px; border-bottom: 2px solid var(--emerald-50); padding-bottom: 10px; }
+        .tab-wrap .tab-buttons button { padding: 10px 24px; border: none; background: none; font-weight: 600; color: #888; border-radius: 30px; transition: 0.3s; cursor: pointer; }
+        .tab-wrap .tab-buttons button.active { background: var(--emerald-900); color: #fff; }
+        .tab-wrap .tab-buttons button:hover:not(.active) { background: var(--emerald-50); color: var(--emerald-900); }
+        .tab-wrap .tab-content { display: none; }
+        .tab-wrap .tab-content.active { display: block; }
 
-        /* ===== ОПИСАНИЕ ===== */
-        .detail-description h4 {
-            color: #0d4a3a;
-            margin-top: 0;
-            margin-bottom: 8px;
-        }
-        .detail-description ul {
-            padding-left: 20px;
-            margin-top: 5px;
-        }
-        .detail-description ul li {
-            margin-bottom: 4px;
-        }
+        .detail-description h4 { color: var(--emerald-900); margin-top: 0; margin-bottom: 8px; }
+        .detail-description ul { padding-left: 20px; margin-top: 5px; }
+        .detail-description ul li { margin-bottom: 4px; }
 
-        /* ===== ТАБЛИЦА ХАРАКТЕРИСТИК ===== */
-        .detail-specs-full {
-            margin: 15px 0;
-        }
-        .detail-specs-full table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 14px;
-        }
-        .detail-specs-full table tr {
-            border-bottom: 1px solid #f0f0f0;
-        }
-        .detail-specs-full table td {
-            padding: 8px 12px;
-            vertical-align: top;
-        }
-        .detail-specs-full table td:first-child {
-            font-weight: 600;
-            color: #0d4a3a;
-            width: 40%;
-            background: #f8f9fa;
-        }
-        .detail-specs-full table td:last-child {
-            color: #333;
-        }
-        .detail-specs-full table tr:last-child {
-            border-bottom: none;
-        }
+        .detail-specs-full { margin: 15px 0; }
+        .detail-specs-full table { width: 100%; border-collapse: collapse; font-size: 14px; }
+        .detail-specs-full table tr { border-bottom: 1px solid #f0f0f0; }
+        .detail-specs-full table td { padding: 8px 12px; vertical-align: top; }
+        .detail-specs-full table td:first-child { font-weight: 600; color: var(--emerald-900); width: 40%; background: var(--emerald-50); }
+        .detail-specs-full table td:last-child { color: #333; }
+        .detail-specs-full table tr:last-child { border-bottom: none; }
 
-        /* ===== КНОПКА НАВЕРХ ===== */
-        #scrollTopBtn {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            background: #2ecc71;
-            color: #fff;
-            border: none;
-            border-radius: 60px;
-            padding: 12px 18px;
-            font-size: 18px;
-            cursor: pointer;
-            box-shadow: 0 8px 20px rgba(46, 204, 113, 0.4);
-            display: none;
-            transition: 0.3s;
-            z-index: 999;
-        }
-        #scrollTopBtn:hover { background: #58d68d; transform: scale(1.1); }
+        #scrollTopBtn { position: fixed; bottom: 30px; right: 30px; background: var(--emerald-500); color: #fff; border: none; border-radius: 60px; padding: 12px 18px; font-size: 18px; cursor: pointer; box-shadow: 0 8px 20px rgba(16, 185, 129, 0.4); display: none; transition: 0.3s; z-index: 999; }
+        #scrollTopBtn:hover { background: var(--emerald-600); transform: scale(1.1); }
 
-        /* ===== ФУТЕР ===== */
-        .section-footer {
-            background: #0d4a3a;
-            color: #b0d0c0;
-            padding: 30px 0;
-            margin-top: 40px;
-        }
-        .footer-links a {
-            color: #b0d0c0;
-            margin-right: 20px;
-            font-weight: 400;
-            text-decoration: none;
-        }
-        .footer-links a:hover { color: #2ecc71; text-decoration: none; }
+        .section-footer { background: var(--emerald-900); color: #a7c4b5; padding: 30px 0; margin-top: 40px; }
+        .footer-links a { color: #a7c4b5; margin-right: 20px; font-weight: 400; text-decoration: none; }
+        .footer-links a:hover { color: var(--emerald-400); text-decoration: none; }
 
-        /* ===== АНИМАЦИИ ===== */
         [data-aos] { opacity: 0; transition: opacity 0.8s ease, transform 0.8s ease; }
         [data-aos].aos-animate { opacity: 1; transform: translateY(0) !important; }
         [data-aos="fade-up"] { transform: translateY(30px); }
 
-        /* ===== АДАПТИВ ===== */
         @media (max-width: 768px) {
             .main-menu { display: none; }
             .burger-menu { display: block; }
             .banner h1 { font-size: 30px; }
             .section-title { font-size: 28px; }
             .filter-wrap { flex-direction: column; }
-            .filter-wrap select,
-            .filter-wrap input { width: 100%; }
+            .filter-wrap select, .filter-wrap input { width: 100%; }
             .products-grid { grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); }
             .product-card .btn-group-card { flex-direction: column; }
             .detail-specs-full table td:first-child { width: 50%; }
@@ -560,7 +167,6 @@
 </head>
 <body>
 
-<!-- ===== ШАПКА ===== -->
 <section class="section-header">
     <div class="container">
         <div class="row">
@@ -578,7 +184,6 @@
     </div>
 </section>
 
-<!-- ===== БУРГЕР ===== -->
 <div class="burger-menu" id="burgerBtn"><i class="fa fa-bars"></i> Меню</div>
 <div class="mobile-menu" id="mobileMenu">
     <ul>
@@ -590,7 +195,6 @@
     </ul>
 </div>
 
-<!-- ===== МЕНЮ ДЕСКТОП ===== -->
 <section class="section-main-menu">
     <div class="container">
         <ul class="main-menu">
@@ -603,9 +207,6 @@
     </div>
 </section>
 
-<!-- ========== СТРАНИЦЫ ========== -->
-
-<!-- ГЛАВНАЯ -->
 <div class="page active" id="page-main">
     <div class="container">
         <div class="banner" data-aos="fade-up">
@@ -662,7 +263,6 @@
     </div>
 </div>
 
-<!-- КАТАЛОГ -->
 <div class="page" id="page-catalog">
     <div class="container" data-aos="fade-up">
         <h2 class="section-title">Каталог кондиционеров</h2>
@@ -705,28 +305,26 @@
     </div>
 </div>
 
-<!-- О КОМПАНИИ -->
 <div class="page" id="page-about">
     <div class="container" data-aos="fade-up">
         <h2 class="section-title">О компании</h2>
-        <div style="background:#fff; border-radius:24px; padding:40px; box-shadow:0 8px 28px rgba(0,0,0,0.04);">
+        <div style="background:#fff; border-radius:24px; padding:40px; box-shadow:0 8px 28px rgba(6,78,59,0.06);">
             <p>Мы работаем в сфере климатической техники с 2015 года. За это время мы выполнили более 500 проектов – от установки отдельных сплит-систем до комплексных систем вентиляции и отопления для коттеджей и коммерческих объектов в Москве и Московской области.</p>
             <p>Наша команда – это сертифицированные инженеры и монтажники с опытом работы не менее 5 лет. Мы постоянно повышаем квалификацию и следим за новыми технологиями.</p>
             <ul style="list-style:none; padding:0;">
-                <li><i class="fa fa-check-circle" style="color:#2ecc71;"></i> <strong>Бесплатный выезд</strong> инженера на объект</li>
-                <li><i class="fa fa-check-circle" style="color:#2ecc71;"></i> <strong>Работаем с любыми брендами</strong> – от бюджетных до премиум</li>
-                <li><i class="fa fa-check-circle" style="color:#2ecc71;"></i> <strong>Гарантия</strong> на все виды работ – до 3 лет</li>
-                <li><i class="fa fa-check-circle" style="color:#2ecc71;"></i> <strong>Собственная сервисная служба</strong></li>
+                <li><i class="fa fa-check-circle" style="color:#10b981;"></i> <strong>Бесплатный выезд</strong> инженера на объект</li>
+                <li><i class="fa fa-check-circle" style="color:#10b981;"></i> <strong>Работаем с любыми брендами</strong> – от бюджетных до премиум</li>
+                <li><i class="fa fa-check-circle" style="color:#10b981;"></i> <strong>Гарантия</strong> на все виды работ – до 3 лет</li>
+                <li><i class="fa fa-check-circle" style="color:#10b981;"></i> <strong>Собственная сервисная служба</strong></li>
             </ul>
         </div>
     </div>
 </div>
 
-<!-- ЦЕНЫ -->
 <div class="page" id="page-prices">
     <div class="container" data-aos="fade-up">
         <h2 class="section-title">Прайс-лист</h2>
-        <p class="text-center" style="font-size:16px; color:#3a5a4e;">Актуальные цены на услуги и оборудование. Все цены указаны в рублях с учётом НДС.</p>
+        <p class="text-center" style="font-size:16px; color:#2f5749;">Актуальные цены на услуги и оборудование. Все цены указаны в рублях с учётом НДС.</p>
         <div class="price-table-wrap">
             <h3>🛠️ Монтаж и установка</h3>
             <table class="price-table">
@@ -762,7 +360,6 @@
     </div>
 </div>
 
-<!-- КОНТАКТЫ -->
 <div class="page" id="page-contacts">
     <div class="container" data-aos="fade-up">
         <h2 class="section-title">Контакты</h2>
@@ -790,7 +387,6 @@
     </div>
 </div>
 
-<!-- ===== МОДАЛКА ТОВАРА ===== -->
 <div class="modal fade" id="productModal" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
@@ -801,12 +397,12 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-md-6">
-                        <img id="modalProductImage" src="" alt="Фото товара">
+                        <div class="product-detail-image-wrap" id="modalProductImageWrap"></div>
                     </div>
                     <div class="col-md-6">
                         <div class="detail-price" id="modalProductPrice">0 ₽</div>
                         <div class="detail-features" id="modalProductFeatures"></div>
-                        
+
                         <div class="tab-wrap">
                             <div class="tab-buttons">
                                 <button class="active" data-tab="tab-description">Описание</button>
@@ -819,7 +415,7 @@
                                 <div class="detail-specs-full" id="modalProductFullSpecs"></div>
                             </div>
                         </div>
-                        
+
                         <a href="#" class="btn btn-primary" style="width:100%; text-align:center; padding:12px; margin-top:10px;" data-dismiss="modal" onclick="alert('Заявка отправлена!')">Заказать</a>
                     </div>
                 </div>
@@ -828,7 +424,6 @@
     </div>
 </div>
 
-<!-- ===== МОДАЛКА ОБРАТНОГО ЗВОНКА ===== -->
 <div class="modal fade" id="callbackModal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -845,7 +440,7 @@
                     <div class="form-group">
                         <input type="text" class="form-control" id="callbackName" placeholder="Ваше имя">
                     </div>
-                    <button type="submit" class="btn" style="width:100%; background:#2ecc71; color:#fff; border:none; padding:12px; border-radius:60px;">Перезвоните мне</button>
+                    <button type="submit" class="btn" style="width:100%; background:#10b981; color:#fff; border:none; padding:12px; border-radius:60px;">Перезвоните мне</button>
                 </form>
                 <p style="margin-top:15px; font-size:12px; color:#888;">Нажимая на кнопку, вы соглашаетесь на обработку персональных данных.</p>
             </div>
@@ -853,19 +448,17 @@
     </div>
 </div>
 
-<!-- ===== ВСПЛЫВАЮЩЕЕ ОКНО ===== -->
-<div class="welcome-overlay" id="welcomeOverlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:9999; align-items:center; justify-content:center; backdrop-filter:blur(4px);">
+<div class="welcome-overlay" id="welcomeOverlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(4,35,27,0.55); z-index:9999; align-items:center; justify-content:center; backdrop-filter:blur(4px);">
     <div class="welcome-box" style="background:#fff; border-radius:32px; padding:40px; max-width:500px; width:90%; text-align:center; box-shadow:0 20px 60px rgba(0,0,0,0.3); position:relative; animation:popIn 0.5s ease;">
         <button class="close-welcome" onclick="closeWelcome()" style="position:absolute; top:15px; right:20px; font-size:28px; color:#888; cursor:pointer; background:none; border:none;">×</button>
         <div style="font-size:60px; margin-bottom:10px;">❄️</div>
-        <h2 style="color:#0d4a3a; font-weight:700;">Добро пожаловать!</h2>
+        <h2 style="color:#064e3b; font-weight:700;">Добро пожаловать!</h2>
         <p>Мы — <strong>Райский холод</strong>, ваш надёжный партнёр в создании идеального микроклимата.</p>
         <p style="font-size:14px; color:#888;">✅ Бесплатный выезд инженера<br>✅ Гарантия до 3 лет<br>✅ Более 500 реализованных проектов</p>
-        <button class="btn" onclick="closeWelcome()" style="background:#2ecc71; color:#fff; border:none; padding:12px 40px; border-radius:60px; font-weight:600; font-size:18px;">Начать</button>
+        <button class="btn" onclick="closeWelcome()" style="background:#10b981; color:#fff; border:none; padding:12px 40px; border-radius:60px; font-weight:600; font-size:18px;">Начать</button>
     </div>
 </div>
 
-<!-- ===== ФУТЕР ===== -->
 <section class="section-footer">
     <div class="container">
         <div class="row">
@@ -882,12 +475,8 @@
     </div>
 </section>
 
-<!-- ===== КНОПКА НАВЕРХ ===== -->
 <button id="scrollTopBtn" title="Наверх"><i class="fa fa-arrow-up"></i></button>
 
-<!-- ============================================================ -->
-<!-- ====================== СКРИПТЫ ============================== -->
-<!-- ============================================================ -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"></script>
@@ -895,408 +484,88 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
 
 <script>
-    // ==================== ИНИЦИАЛИЗАЦИЯ ====================
     AOS.init({ offset: 100, duration: 700 });
     $('#callbackPhone').mask('+7 (000) 000-00-00');
 
-    // ==================== ДАННЫЕ ТОВАРОВ ====================
+    function getProductImageUrl(product) {
+        return `images/${product.brand}/${product.id}.jpg`;
+    }
+
+    function brandPlaceholderSvg(brandLabel) {
+        const svg = `
+            <svg xmlns="http://www.w3.org/2000/svg" width="400" height="300" viewBox="0 0 400 300">
+                <defs>
+                    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+                        <stop offset="0%" stop-color="#0a6650"/>
+                        <stop offset="100%" stop-color="#064e3b"/>
+                    </linearGradient>
+                </defs>
+                <rect width="400" height="300" fill="url(#g)"/>
+                <circle cx="335" cy="35" r="70" fill="#10b981" opacity="0.18"/>
+                <circle cx="30" cy="270" r="50" fill="#f0c419" opacity="0.12"/>
+                <g transform="translate(200,120)" fill="#34d399" opacity="0.9">
+                    <path d="M0 -34 L6 -14 L26 -14 L9 -2 L15 18 L0 6 L-15 18 L-9 -2 L-26 -14 L-6 -14 Z"/>
+                </g>
+                <text x="200" y="200" font-family="Inter, Arial, sans-serif" font-size="26" font-weight="700" fill="#ffffff" text-anchor="middle">${brandLabel}</text>
+                <text x="200" y="228" font-family="Inter, Arial, sans-serif" font-size="13" fill="#a7f3d0" text-anchor="middle">Сплит-система</text>
+            </svg>`;
+        return 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(svg);
+    }
+
     const products = [
-        // === BALLU ===
-        { 
-            id: 'ballu1', 
-            name: 'Ballu BSQ-09HN1', 
-            brand: 'ballu', 
-            price: 27700, 
-            area: 20, 
-            type: 'inverter', 
-            features: [], 
-            specs: { 'Мощность охлаждения': '2.5 кВт', 'Площадь': '20 м²', 'Уровень шума': '22 дБ', 'Тип': 'Инвертор' }
-        },
-        { 
-            id: 'ballu2', 
-            name: 'Ballu BSU-12HN1', 
-            brand: 'ballu', 
-            price: 33900, 
-            area: 25, 
-            type: 'inverter', 
-            features: [], 
-            specs: { 'Мощность охлаждения': '3.2 кВт', 'Площадь': '25 м²', 'Уровень шума': '24 дБ', 'Тип': 'Инвертор' }
-        },
-        { 
-            id: 'ballu3', 
-            name: 'Ballu BSQ-07HN1', 
-            brand: 'ballu', 
-            price: 22988, 
-            area: 25, 
-            type: 'standard', 
-            features: [], 
-            specs: { 'Мощность охлаждения': '2.0 кВт', 'Площадь': '20 м²', 'Уровень шума': '26 дБ', 'Тип': 'Стандартный' }
-        },
-        { 
-            id: 'ballu4', 
-            name: 'Ballu BSU-24HN1', 
-            brand: 'ballu', 
-            price: 35600, 
-            area: 35, 
-            type: 'inverter', 
-            features: [], 
-            specs: { 'Мощность охлаждения': '6.5 кВт', 'Площадь': '35 м²', 'Уровень шума': '28 дБ', 'Тип': 'Инвертор' }
-        },
-        { 
-            id: 'ballu5', 
-            name: 'Ballu BSW-09HN1', 
-            brand: 'ballu', 
-            price: 27300, 
-            area: 20, 
-            type: 'standard', 
-            features: ['silent'], 
-            specs: { 'Мощность охлаждения': '2.5 кВт', 'Площадь': '20 м²', 'Уровень шума': '20 дБ', 'Тип': 'Стандартный' }
-        },
-        { 
-            id: 'ballu6', 
-            name: 'Ballu BSW-18HN1', 
-            brand: 'ballu', 
-            price: 32900, 
-            area: 25, 
-            type: 'inverter', 
-            features: ['silent'], 
-            specs: { 'Мощность охлаждения': '5.0 кВт', 'Площадь': '25 м²', 'Уровень шума': '22 дБ', 'Тип': 'Инвертор' }
-        },
-        { 
-            id: 'ballu7', 
-            name: 'Ballu BSQ-12HN1', 
-            brand: 'ballu', 
-            price: 35100, 
-            area: 20, 
-            type: 'inverter', 
-            features: ['silent'], 
-            specs: { 'Мощность охлаждения': '3.2 кВт', 'Площадь': '20 м²', 'Уровень шума': '21 дБ', 'Тип': 'Инвертор' }
-        },
-        { 
-            id: 'ballu8', 
-            name: 'Ballu BSU-36HN1', 
-            brand: 'ballu', 
-            price: 91900, 
-            area: 70, 
-            type: 'inverter', 
-            features: [], 
-            specs: { 'Мощность охлаждения': '9.5 кВт', 'Площадь': '70 м²', 'Уровень шума': '30 дБ', 'Тип': 'Инвертор' }
-        },
-        { 
-            id: 'ballu9', 
-            name: 'Ballu BSW-12HN1', 
-            brand: 'ballu', 
-            price: 41200, 
-            area: 25, 
-            type: 'inverter', 
-            features: ['silent'], 
-            specs: { 'Мощность охлаждения': '3.2 кВт', 'Площадь': '25 м²', 'Уровень шума': '20 дБ', 'Тип': 'Инвертор' }
-        },
-        { 
-            id: 'ballu10', 
-            name: 'Ballu BSQ-09HN1 Wi-Fi', 
-            brand: 'ballu', 
-            price: 39800, 
-            area: 20, 
-            type: 'inverter', 
-            features: ['wifi', 'silent'], 
-            specs: { 'Мощность охлаждения': '2.5 кВт', 'Площадь': '20 м²', 'Уровень шума': '21 дБ', 'Тип': 'Инвертор' }
-        },
-        { 
-            id: 'ballu11', 
-            name: 'Ballu BSU-18HN1', 
-            brand: 'ballu', 
-            price: 49900, 
-            area: 25, 
-            type: 'inverter', 
-            features: ['silent'], 
-            specs: { 'Мощность охлаждения': '5.0 кВт', 'Площадь': '25 м²', 'Уровень шума': '22 дБ', 'Тип': 'Инвертор' }
-        },
-        
-        // === HISENSE ===
-        { 
-            id: 'hisense1', 
-            name: 'Hisense AS-09UR4S', 
-            brand: 'hisense', 
-            price: 31900, 
-            area: 25, 
-            type: 'inverter', 
-            features: ['wifi'], 
-            specs: { 'Мощность охлаждения': '2.5 кВт', 'Площадь': '25 м²', 'Уровень шума': '22 дБ', 'Тип': 'Инвертор' }
-        },
-        { 
-            id: 'hisense2', 
-            name: 'Hisense AS-12UR4S', 
-            brand: 'hisense', 
-            price: 37900, 
-            area: 25, 
-            type: 'inverter', 
-            features: [], 
-            specs: { 'Мощность охлаждения': '3.2 кВт', 'Площадь': '25 м²', 'Уровень шума': '24 дБ', 'Тип': 'Инвертор' }
-        },
-        { 
-            id: 'hisense3', 
-            name: 'Hisense AS-07UR4S', 
-            brand: 'hisense', 
-            price: 27300, 
-            area: 20, 
-            type: 'standard', 
-            features: [], 
-            specs: { 'Мощность охлаждения': '2.0 кВт', 'Площадь': '20 м²', 'Уровень шума': '26 дБ', 'Тип': 'Стандартный' }
-        },
-        { 
-            id: 'hisense4', 
-            name: 'Hisense AS-18UR4S', 
-            brand: 'hisense', 
-            price: 43900, 
-            area: 35, 
-            type: 'inverter', 
-            features: [], 
-            specs: { 'Мощность охлаждения': '5.0 кВт', 'Площадь': '35 м²', 'Уровень шума': '26 дБ', 'Тип': 'Инвертор' }
-        },
-        { 
-            id: 'hisense5', 
-            name: 'Hisense AS-24UR4S', 
-            brand: 'hisense', 
-            price: 54900, 
-            area: 50, 
-            type: 'inverter', 
-            features: [], 
-            specs: { 'Мощность охлаждения': '6.5 кВт', 'Площадь': '50 м²', 'Уровень шума': '28 дБ', 'Тип': 'Инвертор' }
-        },
-        
-        // === LG ===
-        { 
-            id: 'lg1', 
-            name: 'LG CS09AWK', 
-            brand: 'lg', 
-            price: 32900, 
-            area: 25, 
-            type: 'inverter', 
-            features: [], 
-            specs: { 'Мощность охлаждения': '2.5 кВт', 'Площадь': '25 м²', 'Уровень шума': '23 дБ', 'Тип': 'Инвертор' }
-        },
-        { 
-            id: 'lg2', 
-            name: 'LG CS12AWK', 
-            brand: 'lg', 
-            price: 37900, 
-            area: 35, 
-            type: 'inverter', 
-            features: ['silent'], 
-            specs: { 'Мощность охлаждения': '3.2 кВт', 'Площадь': '35 м²', 'Уровень шума': '21 дБ', 'Тип': 'Инвертор' }
-        },
-        { 
-            id: 'lg3', 
-            name: 'LG CS07AWK', 
-            brand: 'lg', 
-            price: 27900, 
-            area: 20, 
-            type: 'standard', 
-            features: [], 
-            specs: { 'Мощность охлаждения': '2.0 кВт', 'Площадь': '20 м²', 'Уровень шума': '25 дБ', 'Тип': 'Стандартный' }
-        },
-        { 
-            id: 'lg4', 
-            name: 'LG CS18AWK', 
-            brand: 'lg', 
-            price: 49900, 
-            area: 50, 
-            type: 'inverter', 
-            features: ['wifi', 'silent'], 
-            specs: { 'Мощность охлаждения': '5.0 кВт', 'Площадь': '50 м²', 'Уровень шума': '22 дБ', 'Тип': 'Инвертор' }
-        },
-        
-        // === ELECTROLUX ===
-        { 
-            id: 'electrolux1', 
-            name: 'Electrolux EMO-12', 
-            brand: 'electrolux', 
-            price: 23990, 
-            area: 25, 
-            type: 'standard', 
-            features: [], 
-            specs: { 'Мощность охлаждения': '3.2 кВт', 'Площадь': '25 м²', 'Уровень шума': '28 дБ', 'Тип': 'Стандартный' }
-        },
-        { 
-            id: 'electrolux2', 
-            name: 'Electrolux EMO-09', 
-            brand: 'electrolux', 
-            price: 21990, 
-            area: 20, 
-            type: 'standard', 
-            features: [], 
-            specs: { 'Мощность охлаждения': '2.5 кВт', 'Площадь': '20 м²', 'Уровень шума': '26 дБ', 'Тип': 'Стандартный' }
-        },
-        { 
-            id: 'electrolux3', 
-            name: 'Electrolux EMO-18', 
-            brand: 'electrolux', 
-            price: 31990, 
-            area: 35, 
-            type: 'inverter', 
-            features: [], 
-            specs: { 'Мощность охлаждения': '5.0 кВт', 'Площадь': '35 м²', 'Уровень шума': '27 дБ', 'Тип': 'Инвертор' }
-        },
-        
-        // === ZANUSSI ===
-        { 
-            id: 'zanussi1', 
-            name: 'Zanussi ZACM-09', 
-            brand: 'zanussi', 
-            price: 21500, 
-            area: 20, 
-            type: 'standard', 
-            features: [], 
-            specs: { 'Мощность охлаждения': '2.5 кВт', 'Площадь': '20 м²', 'Уровень шума': '26 дБ', 'Тип': 'Стандартный' }
-        },
-        { 
-            id: 'zanussi2', 
-            name: 'Zanussi ZACM-12', 
-            brand: 'zanussi', 
-            price: 24900, 
-            area: 25, 
-            type: 'standard', 
-            features: [], 
-            specs: { 'Мощность охлаждения': '3.2 кВт', 'Площадь': '25 м²', 'Уровень шума': '28 дБ', 'Тип': 'Стандартный' }
-        },
-        { 
-            id: 'zanussi3', 
-            name: 'Zanussi ZACM-18', 
-            brand: 'zanussi', 
-            price: 33900, 
-            area: 35, 
-            type: 'inverter', 
-            features: ['wifi'], 
-            specs: { 'Мощность охлаждения': '5.0 кВт', 'Площадь': '35 м²', 'Уровень шума': '25 дБ', 'Тип': 'Инвертор' }
-        },
-        
-        // === BIMATEK ===
-        { 
-            id: 'bimatek1', 
-            name: 'Bimatek AM400', 
-            brand: 'bimatek', 
-            price: 18990, 
-            area: 20, 
-            type: 'standard', 
-            features: [], 
-            specs: { 'Мощность охлаждения': '2.0 кВт', 'Площадь': '20 м²', 'Уровень шума': '29 дБ', 'Тип': 'Стандартный' }
-        },
-        { 
-            id: 'bimatek2', 
-            name: 'Bimatek AM500', 
-            brand: 'bimatek', 
-            price: 22990, 
-            area: 25, 
-            type: 'standard', 
-            features: [], 
-            specs: { 'Мощность охлаждения': '2.5 кВт', 'Площадь': '25 м²', 'Уровень шума': '28 дБ', 'Тип': 'Стандартный' }
-        },
-        { 
-            id: 'bimatek3', 
-            name: 'Bimatek AM700', 
-            brand: 'bimatek', 
-            price: 28990, 
-            area: 35, 
-            type: 'inverter', 
-            features: ['wifi'], 
-            specs: { 'Мощность охлаждения': '3.2 кВт', 'Площадь': '35 м²', 'Уровень шума': '25 дБ', 'Тип': 'Инвертор' }
-        },
-        
-        // === DAIKIN ===
-        { 
-            id: 'daikin1', 
-            name: 'Daikin FTX20', 
-            brand: 'daikin', 
-            price: 45900, 
-            area: 20, 
-            type: 'inverter', 
-            features: ['silent'], 
-            specs: { 'Мощность охлаждения': '2.0 кВт', 'Площадь': '20 м²', 'Уровень шума': '19 дБ', 'Тип': 'Инвертор' }
-        },
-        { 
-            id: 'daikin2', 
-            name: 'Daikin FTX25', 
-            brand: 'daikin', 
-            price: 52900, 
-            area: 25, 
-            type: 'inverter', 
-            features: ['wifi', 'silent'], 
-            specs: { 'Мощность охлаждения': '2.5 кВт', 'Площадь': '25 м²', 'Уровень шума': '19 дБ', 'Тип': 'Инвертор' }
-        },
-        { 
-            id: 'daikin3', 
-            name: 'Daikin FTX35', 
-            brand: 'daikin', 
-            price: 62900, 
-            area: 35, 
-            type: 'inverter', 
-            features: ['wifi', 'silent'], 
-            specs: { 'Мощность охлаждения': '3.2 кВт', 'Площадь': '35 м²', 'Уровень шума': '20 дБ', 'Тип': 'Инвертор' }
-        },
-        { 
-            id: 'daikin4', 
-            name: 'Daikin FTX50', 
-            brand: 'daikin', 
-            price: 78900, 
-            area: 50, 
-            type: 'inverter', 
-            features: ['wifi', 'silent'], 
-            specs: { 'Мощность охлаждения': '5.0 кВт', 'Площадь': '50 м²', 'Уровень шума': '22 дБ', 'Тип': 'Инвертор' }
-        },
-        { 
-            id: 'daikin5', 
-            name: 'Daikin FTX70', 
-            brand: 'daikin', 
-            price: 91900, 
-            area: 70, 
-            type: 'inverter', 
-            features: ['wifi', 'silent'], 
-            specs: { 'Мощность охлаждения': '7.0 кВт', 'Площадь': '70 м²', 'Уровень шума': '24 дБ', 'Тип': 'Инвертор' }
-        },
-        
-        // === MITSUBISHI ===
-        { 
-            id: 'mitsubishi1', 
-            name: 'Mitsubishi MSZ-AP20', 
-            brand: 'mitsubishi', 
-            price: 48900, 
-            area: 20, 
-            type: 'inverter', 
-            features: ['silent'], 
-            specs: { 'Мощность охлаждения': '2.0 кВт', 'Площадь': '20 м²', 'Уровень шума': '19 дБ', 'Тип': 'Инвертор' }
-        },
-        { 
-            id: 'mitsubishi2', 
-            name: 'Mitsubishi MSZ-AP25', 
-            brand: 'mitsubishi', 
-            price: 54900, 
-            area: 25, 
-            type: 'inverter', 
-            features: ['wifi', 'silent'], 
-            specs: { 'Мощность охлаждения': '2.5 кВт', 'Площадь': '25 м²', 'Уровень шума': '19 дБ', 'Тип': 'Инвертор' }
-        },
-        { 
-            id: 'mitsubishi3', 
-            name: 'Mitsubishi MSZ-AP35', 
-            brand: 'mitsubishi', 
-            price: 65900, 
-            area: 35, 
-            type: 'inverter', 
-            features: ['wifi', 'silent'], 
-            specs: { 'Мощность охлаждения': '3.5 кВт', 'Площадь': '35 м²', 'Уровень шума': '20 дБ', 'Тип': 'Инвертор' }
-        }
+        { id: 'ballu1', name: 'Ballu BSQ-09HN1', brand: 'ballu', price: 27700, area: 20, type: 'inverter', features: [], specs: { 'Мощность охлаждения': '2.5 кВт', 'Площадь': '20 м²', 'Уровень шума': '22 дБ', 'Тип': 'Инвертор' } },
+        { id: 'ballu2', name: 'Ballu BSU-12HN1', brand: 'ballu', price: 33900, area: 25, type: 'inverter', features: [], specs: { 'Мощность охлаждения': '3.2 кВт', 'Площадь': '25 м²', 'Уровень шума': '24 дБ', 'Тип': 'Инвертор' } },
+        { id: 'ballu3', name: 'Ballu BSQ-07HN1', brand: 'ballu', price: 22988, area: 25, type: 'standard', features: [], specs: { 'Мощность охлаждения': '2.0 кВт', 'Площадь': '20 м²', 'Уровень шума': '26 дБ', 'Тип': 'Стандартный' } },
+        { id: 'ballu4', name: 'Ballu BSU-24HN1', brand: 'ballu', price: 35600, area: 35, type: 'inverter', features: [], specs: { 'Мощность охлаждения': '6.5 кВт', 'Площадь': '35 м²', 'Уровень шума': '28 дБ', 'Тип': 'Инвертор' } },
+        { id: 'ballu5', name: 'Ballu BSW-09HN1', brand: 'ballu', price: 27300, area: 20, type: 'standard', features: ['silent'], specs: { 'Мощность охлаждения': '2.5 кВт', 'Площадь': '20 м²', 'Уровень шума': '20 дБ', 'Тип': 'Стандартный' } },
+        { id: 'ballu6', name: 'Ballu BSW-18HN1', brand: 'ballu', price: 32900, area: 25, type: 'inverter', features: ['silent'], specs: { 'Мощность охлаждения': '5.0 кВт', 'Площадь': '25 м²', 'Уровень шума': '22 дБ', 'Тип': 'Инвертор' } },
+        { id: 'ballu7', name: 'Ballu BSQ-12HN1', brand: 'ballu', price: 35100, area: 20, type: 'inverter', features: ['silent'], specs: { 'Мощность охлаждения': '3.2 кВт', 'Площадь': '20 м²', 'Уровень шума': '21 дБ', 'Тип': 'Инвертор' } },
+        { id: 'ballu8', name: 'Ballu BSU-36HN1', brand: 'ballu', price: 91900, area: 70, type: 'inverter', features: [], specs: { 'Мощность охлаждения': '9.5 кВт', 'Площадь': '70 м²', 'Уровень шума': '30 дБ', 'Тип': 'Инвертор' } },
+        { id: 'ballu9', name: 'Ballu BSW-12HN1', brand: 'ballu', price: 41200, area: 25, type: 'inverter', features: ['silent'], specs: { 'Мощность охлаждения': '3.2 кВт', 'Площадь': '25 м²', 'Уровень шума': '20 дБ', 'Тип': 'Инвертор' } },
+        { id: 'ballu10', name: 'Ballu BSQ-09HN1 Wi-Fi', brand: 'ballu', price: 39800, area: 20, type: 'inverter', features: ['wifi', 'silent'], specs: { 'Мощность охлаждения': '2.5 кВт', 'Площадь': '20 м²', 'Уровень шума': '21 дБ', 'Тип': 'Инвертор' } },
+        { id: 'ballu11', name: 'Ballu BSU-18HN1', brand: 'ballu', price: 49900, area: 25, type: 'inverter', features: ['silent'], specs: { 'Мощность охлаждения': '5.0 кВт', 'Площадь': '25 м²', 'Уровень шума': '22 дБ', 'Тип': 'Инвертор' } },
+
+        { id: 'hisense1', name: 'Hisense AS-09UR4S', brand: 'hisense', price: 31900, area: 25, type: 'inverter', features: ['wifi'], specs: { 'Мощность охлаждения': '2.5 кВт', 'Площадь': '25 м²', 'Уровень шума': '22 дБ', 'Тип': 'Инвертор' } },
+        { id: 'hisense2', name: 'Hisense AS-12UR4S', brand: 'hisense', price: 37900, area: 25, type: 'inverter', features: [], specs: { 'Мощность охлаждения': '3.2 кВт', 'Площадь': '25 м²', 'Уровень шума': '24 дБ', 'Тип': 'Инвертор' } },
+        { id: 'hisense3', name: 'Hisense AS-07UR4S', brand: 'hisense', price: 27300, area: 20, type: 'standard', features: [], specs: { 'Мощность охлаждения': '2.0 кВт', 'Площадь': '20 м²', 'Уровень шума': '26 дБ', 'Тип': 'Стандартный' } },
+        { id: 'hisense4', name: 'Hisense AS-18UR4S', brand: 'hisense', price: 43900, area: 35, type: 'inverter', features: [], specs: { 'Мощность охлаждения': '5.0 кВт', 'Площадь': '35 м²', 'Уровень шума': '26 дБ', 'Тип': 'Инвертор' } },
+        { id: 'hisense5', name: 'Hisense AS-24UR4S', brand: 'hisense', price: 54900, area: 50, type: 'inverter', features: [], specs: { 'Мощность охлаждения': '6.5 кВт', 'Площадь': '50 м²', 'Уровень шума': '28 дБ', 'Тип': 'Инвертор' } },
+
+        { id: 'lg1', name: 'LG CS09AWK', brand: 'lg', price: 32900, area: 25, type: 'inverter', features: [], specs: { 'Мощность охлаждения': '2.5 кВт', 'Площадь': '25 м²', 'Уровень шума': '23 дБ', 'Тип': 'Инвертор' } },
+        { id: 'lg2', name: 'LG CS12AWK', brand: 'lg', price: 37900, area: 35, type: 'inverter', features: ['silent'], specs: { 'Мощность охлаждения': '3.2 кВт', 'Площадь': '35 м²', 'Уровень шума': '21 дБ', 'Тип': 'Инвертор' } },
+        { id: 'lg3', name: 'LG CS07AWK', brand: 'lg', price: 27900, area: 20, type: 'standard', features: [], specs: { 'Мощность охлаждения': '2.0 кВт', 'Площадь': '20 м²', 'Уровень шума': '25 дБ', 'Тип': 'Стандартный' } },
+        { id: 'lg4', name: 'LG CS18AWK', brand: 'lg', price: 49900, area: 50, type: 'inverter', features: ['wifi', 'silent'], specs: { 'Мощность охлаждения': '5.0 кВт', 'Площадь': '50 м²', 'Уровень шума': '22 дБ', 'Тип': 'Инвертор' } },
+
+        { id: 'electrolux1', name: 'Electrolux EMO-12', brand: 'electrolux', price: 23990, area: 25, type: 'standard', features: [], specs: { 'Мощность охлаждения': '3.2 кВт', 'Площадь': '25 м²', 'Уровень шума': '28 дБ', 'Тип': 'Стандартный' } },
+        { id: 'electrolux2', name: 'Electrolux EMO-09', brand: 'electrolux', price: 21990, area: 20, type: 'standard', features: [], specs: { 'Мощность охлаждения': '2.5 кВт', 'Площадь': '20 м²', 'Уровень шума': '26 дБ', 'Тип': 'Стандартный' } },
+        { id: 'electrolux3', name: 'Electrolux EMO-18', brand: 'electrolux', price: 31990, area: 35, type: 'inverter', features: [], specs: { 'Мощность охлаждения': '5.0 кВт', 'Площадь': '35 м²', 'Уровень шума': '27 дБ', 'Тип': 'Инвертор' } },
+
+        { id: 'zanussi1', name: 'Zanussi ZACM-09', brand: 'zanussi', price: 21500, area: 20, type: 'standard', features: [], specs: { 'Мощность охлаждения': '2.5 кВт', 'Площадь': '20 м²', 'Уровень шума': '26 дБ', 'Тип': 'Стандартный' } },
+        { id: 'zanussi2', name: 'Zanussi ZACM-12', brand: 'zanussi', price: 24900, area: 25, type: 'standard', features: [], specs: { 'Мощность охлаждения': '3.2 кВт', 'Площадь': '25 м²', 'Уровень шума': '28 дБ', 'Тип': 'Стандартный' } },
+        { id: 'zanussi3', name: 'Zanussi ZACM-18', brand: 'zanussi', price: 33900, area: 35, type: 'inverter', features: ['wifi'], specs: { 'Мощность охлаждения': '5.0 кВт', 'Площадь': '35 м²', 'Уровень шума': '25 дБ', 'Тип': 'Инвертор' } },
+
+        { id: 'bimatek1', name: 'Bimatek AM400', brand: 'bimatek', price: 18990, area: 20, type: 'standard', features: [], specs: { 'Мощность охлаждения': '2.0 кВт', 'Площадь': '20 м²', 'Уровень шума': '29 дБ', 'Тип': 'Стандартный' } },
+        { id: 'bimatek2', name: 'Bimatek AM500', brand: 'bimatek', price: 22990, area: 25, type: 'standard', features: [], specs: { 'Мощность охлаждения': '2.5 кВт', 'Площадь': '25 м²', 'Уровень шума': '28 дБ', 'Тип': 'Стандартный' } },
+        { id: 'bimatek3', name: 'Bimatek AM700', brand: 'bimatek', price: 28990, area: 35, type: 'inverter', features: ['wifi'], specs: { 'Мощность охлаждения': '3.2 кВт', 'Площадь': '35 м²', 'Уровень шума': '25 дБ', 'Тип': 'Инвертор' } },
+
+        { id: 'daikin1', name: 'Daikin FTX20', brand: 'daikin', price: 45900, area: 20, type: 'inverter', features: ['silent'], specs: { 'Мощность охлаждения': '2.0 кВт', 'Площадь': '20 м²', 'Уровень шума': '19 дБ', 'Тип': 'Инвертор' } },
+        { id: 'daikin2', name: 'Daikin FTX25', brand: 'daikin', price: 52900, area: 25, type: 'inverter', features: ['wifi', 'silent'], specs: { 'Мощность охлаждения': '2.5 кВт', 'Площадь': '25 м²', 'Уровень шума': '19 дБ', 'Тип': 'Инвертор' } },
+        { id: 'daikin3', name: 'Daikin FTX35', brand: 'daikin', price: 62900, area: 35, type: 'inverter', features: ['wifi', 'silent'], specs: { 'Мощность охлаждения': '3.2 кВт', 'Площадь': '35 м²', 'Уровень шума': '20 дБ', 'Тип': 'Инвертор' } },
+        { id: 'daikin4', name: 'Daikin FTX50', brand: 'daikin', price: 78900, area: 50, type: 'inverter', features: ['wifi', 'silent'], specs: { 'Мощность охлаждения': '5.0 кВт', 'Площадь': '50 м²', 'Уровень шума': '22 дБ', 'Тип': 'Инвертор' } },
+        { id: 'daikin5', name: 'Daikin FTX70', brand: 'daikin', price: 91900, area: 70, type: 'inverter', features: ['wifi', 'silent'], specs: { 'Мощность охлаждения': '7.0 кВт', 'Площадь': '70 м²', 'Уровень шума': '24 дБ', 'Тип': 'Инвертор' } },
+
+        { id: 'mitsubishi1', name: 'Mitsubishi MSZ-AP20', brand: 'mitsubishi', price: 48900, area: 20, type: 'inverter', features: ['silent'], specs: { 'Мощность охлаждения': '2.0 кВт', 'Площадь': '20 м²', 'Уровень шума': '19 дБ', 'Тип': 'Инвертор' } },
+        { id: 'mitsubishi2', name: 'Mitsubishi MSZ-AP25', brand: 'mitsubishi', price: 54900, area: 25, type: 'inverter', features: ['wifi', 'silent'], specs: { 'Мощность охлаждения': '2.5 кВт', 'Площадь': '25 м²', 'Уровень шума': '19 дБ', 'Тип': 'Инвертор' } },
+        { id: 'mitsubishi3', name: 'Mitsubishi MSZ-AP35', brand: 'mitsubishi', price: 65900, area: 35, type: 'inverter', features: ['wifi', 'silent'], specs: { 'Мощность охлаждения': '3.5 кВт', 'Площадь': '35 м²', 'Уровень шума': '20 дБ', 'Тип': 'Инвертор' } }
     ];
 
-    // ==================== ГЕНЕРАЦИЯ ПОЛНЫХ ХАРАКТЕРИСТИК ====================
     function generateFullSpecs(product) {
         const brandName = product.brand.charAt(0).toUpperCase() + product.brand.slice(1);
         const isInverter = product.type === 'inverter';
         const noise = product.specs['Уровень шума'] || '22';
         const area = product.area;
         const powerCool = product.specs['Мощность охлаждения'] || '2.5 кВт';
-        
-        // Базовая таблица характеристик (как в примере Casarte)
+
         const specs = {
             'На площадь (м²)': `${area-5}-${area}`,
             'Инвертор': isInverter ? 'Да' : 'Нет',
@@ -1335,9 +604,9 @@
             'Самодиагностика': 'Есть',
             'Самоочистка внут. блока': isInverter ? 'Есть' : 'Нет',
             'Сенсор движения': isInverter ? 'Есть' : 'Нет',
-            'Страна бренда': brandName === 'Daikin' || brandName === 'Mitsubishi' ? 'Япония' : 
-                             brandName === 'LG' ? 'Южная Корея' : 
-                             brandName === 'Hisense' ? 'Китай' : 
+            'Страна бренда': brandName === 'Daikin' || brandName === 'Mitsubishi' ? 'Япония' :
+                             brandName === 'LG' ? 'Южная Корея' :
+                             brandName === 'Hisense' ? 'Китай' :
                              brandName === 'Electrolux' ? 'Швеция' : 'Китай',
             'Таймер': 'Есть',
             'Турборежим': 'Есть',
@@ -1345,24 +614,21 @@
             'Ширина, см': '89.5',
             'Энергоэффективность': isInverter ? 'A++' : 'A+'
         };
-        
-        // Дополнительные параметры для мощных моделей
+
         if (product.area >= 50) {
             specs['Max длина трассы, м'] = '30';
             specs['Max перепад высот, м'] = '15';
             specs['Вес, кг'] = '18';
         }
-        
+
         return specs;
     }
 
-    // ==================== ГЕНЕРАЦИЯ ОПИСАНИЯ ====================
     function getFullDescription(product) {
         const brandName = product.brand.charAt(0).toUpperCase() + product.brand.slice(1);
         const typeText = product.type === 'inverter' ? 'инверторный' : 'стандартный (on/off)';
         const areaText = product.area;
         const noiseText = product.specs['Уровень шума'] || 'не указан';
-        const powerText = product.specs['Мощность охлаждения'] || 'не указана';
 
         let featuresList = [];
         if (product.type === 'inverter') {
@@ -1395,27 +661,29 @@
                 <ul>${featuresList.map(item => `<li>${item}</li>`).join('')}</ul>`;
     }
 
-    // ==================== РЕНДЕРИНГ ТОВАРОВ ====================
     function renderProducts(filteredProducts) {
         const container = document.getElementById('productsContainer');
         if (!filteredProducts || filteredProducts.length === 0) {
             container.innerHTML = '<div class="text-center" style="padding:60px 0; color:#888;">Товары не найдены. Попробуйте изменить фильтры.</div>';
             return;
         }
-        
+
         let html = '';
         filteredProducts.forEach(p => {
             const featuresHtml = p.features.map(f => {
                 const labels = { 'wifi': 'Wi-Fi', 'silent': 'Бесшумный' };
                 return `<span class="badge ${f}">${labels[f] || f}</span>`;
             }).join('');
-            
+
             const brandLabel = p.brand.charAt(0).toUpperCase() + p.brand.slice(1);
-            
+            const placeholder = brandPlaceholderSvg(brandLabel).replace(/'/g, "\\'");
+
             html += `
                 <div class="product-card">
                     <div class="product-name" onclick="openProductDetail('${p.id}', 'description')">
-                        <img src="https://via.placeholder.com/300x200/2ecc71/ffffff?text=${brandLabel}" alt="${p.name}">
+                        <div class="product-image-wrap">
+                            <img src="${getProductImageUrl(p)}" alt="${p.name}" onerror="this.onerror=null; this.src='${placeholder}';">
+                        </div>
                         ${p.name}
                     </div>
                     <div class="product-price">${p.price.toLocaleString()} ₽</div>
@@ -1434,47 +702,42 @@
         container.innerHTML = html;
     }
 
-    // ==================== ОТКРЫТИЕ ДЕТАЛЕЙ ====================
     function openProductDetail(productId, activeTab) {
         const product = products.find(p => p.id === productId);
         if (!product) return;
-        
+
         const brandLabel = product.brand.charAt(0).toUpperCase() + product.brand.slice(1);
-        
+        const placeholder = brandPlaceholderSvg(brandLabel);
+
         document.getElementById('modalProductName').textContent = product.name;
-        document.getElementById('modalProductImage').src = `https://via.placeholder.com/600x400/2ecc71/ffffff?text=${brandLabel}`;
-        document.getElementById('modalProductImage').alt = product.name;
+        document.getElementById('modalProductImageWrap').innerHTML =
+            `<img src="${getProductImageUrl(product)}" alt="${product.name}" onerror="this.onerror=null; this.src='${placeholder.replace(/'/g, "\\'")}';">`;
         document.getElementById('modalProductPrice').textContent = product.price.toLocaleString() + ' ₽';
-        
-        // Фичи
+
         const featuresContainer = document.getElementById('modalProductFeatures');
         const allFeatures = ['inverter', ...product.features];
         const labels = { 'inverter': 'Инвертор', 'wifi': 'Wi-Fi', 'silent': 'Бесшумный' };
-        featuresContainer.innerHTML = allFeatures.map(f => 
-            `<span class="badge" style="background:#2ecc71; color:#fff; padding:6px 16px; border-radius:20px;">${labels[f] || f}</span>`
+        featuresContainer.innerHTML = allFeatures.map(f =>
+            `<span class="badge" style="background:#10b981; color:#fff; padding:6px 16px; border-radius:20px;">${labels[f] || f}</span>`
         ).join('');
-        
-        // Описание
+
         document.getElementById('modalProductDescription').innerHTML = getFullDescription(product);
-        
-        // Полные характеристики
+
         const fullSpecs = generateFullSpecs(product);
-        const specsHtml = Object.entries(fullSpecs).map(([key, value]) => 
+        const specsHtml = Object.entries(fullSpecs).map(([key, value]) =>
             `<tr><td>${key}</td><td>${value}</td></tr>`
         ).join('');
         document.getElementById('modalProductFullSpecs').innerHTML = `<table>${specsHtml}</table>`;
-        
-        // Активируем нужную вкладку
+
         activateTab(activeTab || 'description');
-        
+
         $('#productModal').modal('show');
     }
 
-    // ==================== ВКЛАДКИ ====================
     function activateTab(tabId) {
         $('.tab-buttons button').removeClass('active');
         $('.tab-content').removeClass('active');
-        
+
         $(`.tab-buttons button[data-tab="tab-${tabId}"]`).addClass('active');
         $(`#tab-${tabId}`).addClass('active');
     }
@@ -1484,7 +747,6 @@
         activateTab(tabId.replace('tab-', ''));
     });
 
-    // ==================== ФИЛЬТРЫ ====================
     function applyFilters() {
         const brand = document.getElementById('filterBrand').value;
         const area = parseInt(document.getElementById('filterArea').value) || Infinity;
@@ -1492,7 +754,7 @@
         const features = document.getElementById('filterFeatures').value;
         const minPrice = parseFloat(document.getElementById('filterMinPrice').value) || 0;
         const maxPrice = parseFloat(document.getElementById('filterMaxPrice').value) || Infinity;
-        
+
         let filtered = products.filter(p => {
             const matchBrand = brand === 'all' || p.brand === brand;
             const matchArea = p.area <= area;
@@ -1514,7 +776,6 @@
         renderProducts(products);
     }
 
-    // ==================== СЧЁТЧИК ЗАЯВОК ====================
     function getRequestCount() {
         let count = localStorage.getItem('requestCount');
         if (!count) { count = 0; localStorage.setItem('requestCount', count); }
@@ -1529,7 +790,6 @@
         updateRequestCounter();
     }
 
-    // ==================== ОТПРАВКА ЗАЯВОК ====================
     function sendToTelegram(message) {
         const token = '7896261573:AAF4a2hP2gC2Y-8Ebyi9Vx86Z1J4m9Fv3_E';
         const chatId = '1504704541';
@@ -1556,7 +816,6 @@
             .fail(function() { alert('❌ Ошибка отправки. Пожалуйста, позвоните нам по телефону.'); });
     });
 
-    // ==================== НАВИГАЦИЯ ====================
     function switchPage(hash) {
         $('.page').removeClass('active');
         const target = $(hash);
@@ -1588,7 +847,6 @@
         if (h && h.startsWith('#page-')) switchPage(h);
     });
 
-    // ===== БУРГЕР =====
     $('#burgerBtn').click(function() { $('#mobileMenu').slideToggle(); });
     $(document).click(function(e) {
         if (!$(e.target).closest('#mobileMenu').length && !$(e.target).closest('#burgerBtn').length) {
@@ -1596,14 +854,12 @@
         }
     });
 
-    // ===== КНОПКА НАВЕРХ =====
     $(window).scroll(function() {
         if ($(this).scrollTop() > 200) $('#scrollTopBtn').fadeIn();
         else $('#scrollTopBtn').fadeOut();
     });
     $('#scrollTopBtn').click(function() { $('html, body').animate({ scrollTop: 0 }, 400); });
 
-    // ===== ВСПЛЫВАЮЩЕЕ ОКНО =====
     let welcomeShown = localStorage.getItem('welcomeShown');
     function showWelcome() {
         if (!welcomeShown) {

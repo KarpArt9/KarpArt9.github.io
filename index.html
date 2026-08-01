@@ -151,6 +151,71 @@
         [data-aos].aos-animate { opacity: 1; transform: translateY(0) !important; }
         [data-aos="fade-up"] { transform: translateY(30px); }
 
+        /* Стили для блока мессенджеров */
+        .messenger-block {
+            background: #f8fdfa;
+            border-radius: 24px;
+            padding: 30px 20px;
+            margin: 40px 0;
+            text-align: center;
+            box-shadow: 0 8px 28px rgba(6,78,59,0.06);
+        }
+        .messenger-block h3 {
+            color: #064e3b;
+            font-weight: 700;
+            margin-bottom: 10px;
+            font-size: 22px;
+        }
+        .messenger-block .subtitle {
+            color: #2f5749;
+            margin-bottom: 25px;
+            font-size: 16px;
+        }
+        .messenger-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+        }
+        .messenger-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 30px;
+            border-radius: 60px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            transition: 0.3s;
+            border: none;
+            color: #fff;
+        }
+        .messenger-btn:hover {
+            transform: scale(1.05);
+            color: #fff;
+            text-decoration: none;
+        }
+        .messenger-btn.whatsapp {
+            background: #25D366;
+            box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
+        }
+        .messenger-btn.telegram {
+            background: #0088cc;
+            box-shadow: 0 4px 12px rgba(0, 136, 204, 0.3);
+        }
+        .messenger-btn.phone {
+            background: #064e3b;
+            box-shadow: 0 4px 12px rgba(6, 78, 59, 0.3);
+        }
+        .messenger-btn i {
+            font-size: 24px;
+        }
+        .messenger-footer-text {
+            margin-top: 20px;
+            font-size: 13px;
+            color: #888;
+        }
+
         @media (max-width: 768px) {
             .main-menu { display: none; }
             .burger-menu { display: block; }
@@ -161,6 +226,16 @@
             .products-grid { grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); }
             .product-card .btn-group-card { flex-direction: column; }
             .detail-specs-full table td:first-child { width: 50%; }
+            .messenger-btn {
+                padding: 12px 20px;
+                font-size: 14px;
+                width: 100%;
+                justify-content: center;
+            }
+            .messenger-buttons {
+                flex-direction: column;
+                align-items: stretch;
+            }
         }
         @media (min-width: 769px) { .mobile-menu { display: none !important; } }
     </style>
@@ -255,6 +330,25 @@
                         <p>г. Москва, ул. Тверская, д. 1</p>
                     </div>
                 </div>
+                
+                <!-- НОВЫЙ БЛОК МЕССЕНДЖЕРОВ -->
+                <div class="messenger-block">
+                    <h3><i class="fa fa-comments" style="color: #10b981; margin-right: 10px;"></i>Свяжитесь с нами в мессенджере</h3>
+                    <p class="subtitle">Напишите нам — мы ответим на все вопросы и поможем с выбором!</p>
+                    <div class="messenger-buttons">
+                        <a href="https://wa.me/79162331749" target="_blank" class="messenger-btn whatsapp">
+                            <i class="fa fa-whatsapp"></i> WhatsApp
+                        </a>
+                        <a href="https://t.me/rayskiy070" target="_blank" class="messenger-btn telegram">
+                            <i class="fa fa-telegram"></i> Telegram
+                        </a>
+                        <a href="tel:+79162331749" class="messenger-btn phone">
+                            <i class="fa fa-phone"></i> Позвонить
+                        </a>
+                    </div>
+                    <p class="messenger-footer-text">📍 Работаем в Москве и Московской области с 9:00 до 21:00</p>
+                </div>
+
                 <div class="map-container">
                     <iframe src="https://yandex.ru/map-widget/v1/?ll=37.6184%2C55.7512&z=16&pt=37.6184,55.7512,pm2rdl&l=map" width="100%" height="400" frameborder="0" allowfullscreen="true"></iframe>
                 </div>
@@ -362,6 +456,25 @@
 <div class="page" id="page-contacts">
     <div class="container" data-aos="fade-up">
         <h2 class="section-title">Контакты</h2>
+        
+        <!-- НОВЫЙ БЛОК МЕССЕНДЖЕРОВ (дублируется и здесь, если нужно) -->
+        <div class="messenger-block">
+            <h3><i class="fa fa-comments" style="color: #10b981; margin-right: 10px;"></i>Свяжитесь с нами в мессенджере</h3>
+            <p class="subtitle">Напишите нам — мы ответим на все вопросы и поможем с выбором!</p>
+            <div class="messenger-buttons">
+                <a href="https://wa.me/79162331749" target="_blank" class="messenger-btn whatsapp">
+                    <i class="fa fa-whatsapp"></i> WhatsApp
+                </a>
+                <a href="https://t.me/rayskiy070" target="_blank" class="messenger-btn telegram">
+                    <i class="fa fa-telegram"></i> Telegram
+                </a>
+                <a href="tel:+79162331749" class="messenger-btn phone">
+                    <i class="fa fa-phone"></i> Позвонить
+                </a>
+            </div>
+            <p class="messenger-footer-text">📍 Работаем в Москве и Московской области с 9:00 до 21:00</p>
+        </div>
+
         <div class="contact-grid">
             <div class="contact-item">
                 <i class="fa fa-phone"></i>
@@ -567,8 +680,7 @@
         { id: 'mitsubishi7', name: 'Mitsubishi Electric MSZ-GF71VE / MUZ-GF71VE', brand: 'mitsubishi', price: 199900, area: 70, type: 'inverter', features: ['silent'], specs: { 'Мощность охлаждения': '7.1 кВт', 'Площадь': '70 м²', 'Уровень шума': '30 дБ', 'Тип': 'Инвертор' } },
     ];
 
-    // ------------- ВСЕ ОСТАЛЬНЫЕ ФУНКЦИИ (renderProducts, openProductDetail, generateFullSpecs и т.д.) ОСТАЮТСЯ БЕЗ ИЗМЕНЕНИЙ -------------
-    // (они уже есть в вашем коде, ниже я привожу их полностью, чтобы код был целостным)
+    // ==================== ВСЕ ОСТАЛЬНЫЕ ФУНКЦИИ ====================
 
     function generateFullSpecs(product) {
         const brandName = product.brand.charAt(0).toUpperCase() + product.brand.slice(1);

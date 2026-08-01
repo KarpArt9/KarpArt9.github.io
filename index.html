@@ -275,8 +275,7 @@
                 <option value="electrolux">Electrolux</option>
                 <option value="zanussi">Zanussi</option>
                 <option value="bimatek">Bimatek</option>
-                <option value="daikin">Daikin</option>
-                <option value="mitsubishi">Mitsubishi</option>
+                <option value="mitsubishi">Mitsubishi Electric</option>
             </select>
             <select id="filterArea">
                 <option value="all">Любая площадь</option>
@@ -512,52 +511,64 @@
         return 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(svg);
     }
 
+    // ==================== НОВЫЙ КАТАЛОГ (реальные модели с официальных сайтов) ====================
     const products = [
-        { id: 'ballu1', name: 'Ballu BSQ-09HN1', brand: 'ballu', price: 27700, area: 20, type: 'inverter', features: [], specs: { 'Мощность охлаждения': '2.5 кВт', 'Площадь': '20 м²', 'Уровень шума': '22 дБ', 'Тип': 'Инвертор' } },
-        { id: 'ballu2', name: 'Ballu BSU-12HN1', brand: 'ballu', price: 33900, area: 25, type: 'inverter', features: [], specs: { 'Мощность охлаждения': '3.2 кВт', 'Площадь': '25 м²', 'Уровень шума': '24 дБ', 'Тип': 'Инвертор' } },
-        { id: 'ballu3', name: 'Ballu BSQ-07HN1', brand: 'ballu', price: 22988, area: 25, type: 'standard', features: [], specs: { 'Мощность охлаждения': '2.0 кВт', 'Площадь': '20 м²', 'Уровень шума': '26 дБ', 'Тип': 'Стандартный' } },
-        { id: 'ballu4', name: 'Ballu BSU-24HN1', brand: 'ballu', price: 35600, area: 35, type: 'inverter', features: [], specs: { 'Мощность охлаждения': '6.5 кВт', 'Площадь': '35 м²', 'Уровень шума': '28 дБ', 'Тип': 'Инвертор' } },
-        { id: 'ballu5', name: 'Ballu BSW-09HN1', brand: 'ballu', price: 27300, area: 20, type: 'standard', features: ['silent'], specs: { 'Мощность охлаждения': '2.5 кВт', 'Площадь': '20 м²', 'Уровень шума': '20 дБ', 'Тип': 'Стандартный' } },
-        { id: 'ballu6', name: 'Ballu BSW-18HN1', brand: 'ballu', price: 32900, area: 25, type: 'inverter', features: ['silent'], specs: { 'Мощность охлаждения': '5.0 кВт', 'Площадь': '25 м²', 'Уровень шума': '22 дБ', 'Тип': 'Инвертор' } },
-        { id: 'ballu7', name: 'Ballu BSQ-12HN1', brand: 'ballu', price: 35100, area: 20, type: 'inverter', features: ['silent'], specs: { 'Мощность охлаждения': '3.2 кВт', 'Площадь': '20 м²', 'Уровень шума': '21 дБ', 'Тип': 'Инвертор' } },
-        { id: 'ballu8', name: 'Ballu BSU-36HN1', brand: 'ballu', price: 91900, area: 70, type: 'inverter', features: [], specs: { 'Мощность охлаждения': '9.5 кВт', 'Площадь': '70 м²', 'Уровень шума': '30 дБ', 'Тип': 'Инвертор' } },
-        { id: 'ballu9', name: 'Ballu BSW-12HN1', brand: 'ballu', price: 41200, area: 25, type: 'inverter', features: ['silent'], specs: { 'Мощность охлаждения': '3.2 кВт', 'Площадь': '25 м²', 'Уровень шума': '20 дБ', 'Тип': 'Инвертор' } },
-        { id: 'ballu10', name: 'Ballu BSQ-09HN1 Wi-Fi', brand: 'ballu', price: 39800, area: 20, type: 'inverter', features: ['wifi', 'silent'], specs: { 'Мощность охлаждения': '2.5 кВт', 'Площадь': '20 м²', 'Уровень шума': '21 дБ', 'Тип': 'Инвертор' } },
-        { id: 'ballu11', name: 'Ballu BSU-18HN1', brand: 'ballu', price: 49900, area: 25, type: 'inverter', features: ['silent'], specs: { 'Мощность охлаждения': '5.0 кВт', 'Площадь': '25 м²', 'Уровень шума': '22 дБ', 'Тип': 'Инвертор' } },
-
-        { id: 'hisense1', name: 'Hisense AS-09UR4S', brand: 'hisense', price: 31900, area: 25, type: 'inverter', features: ['wifi'], specs: { 'Мощность охлаждения': '2.5 кВт', 'Площадь': '25 м²', 'Уровень шума': '22 дБ', 'Тип': 'Инвертор' } },
-        { id: 'hisense2', name: 'Hisense AS-12UR4S', brand: 'hisense', price: 37900, area: 25, type: 'inverter', features: [], specs: { 'Мощность охлаждения': '3.2 кВт', 'Площадь': '25 м²', 'Уровень шума': '24 дБ', 'Тип': 'Инвертор' } },
-        { id: 'hisense3', name: 'Hisense AS-07UR4S', brand: 'hisense', price: 27300, area: 20, type: 'standard', features: [], specs: { 'Мощность охлаждения': '2.0 кВт', 'Площадь': '20 м²', 'Уровень шума': '26 дБ', 'Тип': 'Стандартный' } },
-        { id: 'hisense4', name: 'Hisense AS-18UR4S', brand: 'hisense', price: 43900, area: 35, type: 'inverter', features: [], specs: { 'Мощность охлаждения': '5.0 кВт', 'Площадь': '35 м²', 'Уровень шума': '26 дБ', 'Тип': 'Инвертор' } },
-        { id: 'hisense5', name: 'Hisense AS-24UR4S', brand: 'hisense', price: 54900, area: 50, type: 'inverter', features: [], specs: { 'Мощность охлаждения': '6.5 кВт', 'Площадь': '50 м²', 'Уровень шума': '28 дБ', 'Тип': 'Инвертор' } },
-
-        { id: 'lg1', name: 'LG CS09AWK', brand: 'lg', price: 32900, area: 25, type: 'inverter', features: [], specs: { 'Мощность охлаждения': '2.5 кВт', 'Площадь': '25 м²', 'Уровень шума': '23 дБ', 'Тип': 'Инвертор' } },
-        { id: 'lg2', name: 'LG CS12AWK', brand: 'lg', price: 37900, area: 35, type: 'inverter', features: ['silent'], specs: { 'Мощность охлаждения': '3.2 кВт', 'Площадь': '35 м²', 'Уровень шума': '21 дБ', 'Тип': 'Инвертор' } },
-        { id: 'lg3', name: 'LG CS07AWK', brand: 'lg', price: 27900, area: 20, type: 'standard', features: [], specs: { 'Мощность охлаждения': '2.0 кВт', 'Площадь': '20 м²', 'Уровень шума': '25 дБ', 'Тип': 'Стандартный' } },
-        { id: 'lg4', name: 'LG CS18AWK', brand: 'lg', price: 49900, area: 50, type: 'inverter', features: ['wifi', 'silent'], specs: { 'Мощность охлаждения': '5.0 кВт', 'Площадь': '50 м²', 'Уровень шума': '22 дБ', 'Тип': 'Инвертор' } },
-
-        { id: 'electrolux1', name: 'Electrolux EMO-12', brand: 'electrolux', price: 23990, area: 25, type: 'standard', features: [], specs: { 'Мощность охлаждения': '3.2 кВт', 'Площадь': '25 м²', 'Уровень шума': '28 дБ', 'Тип': 'Стандартный' } },
-        { id: 'electrolux2', name: 'Electrolux EMO-09', brand: 'electrolux', price: 21990, area: 20, type: 'standard', features: [], specs: { 'Мощность охлаждения': '2.5 кВт', 'Площадь': '20 м²', 'Уровень шума': '26 дБ', 'Тип': 'Стандартный' } },
-        { id: 'electrolux3', name: 'Electrolux EMO-18', brand: 'electrolux', price: 31990, area: 35, type: 'inverter', features: [], specs: { 'Мощность охлаждения': '5.0 кВт', 'Площадь': '35 м²', 'Уровень шума': '27 дБ', 'Тип': 'Инвертор' } },
-
-        { id: 'zanussi1', name: 'Zanussi ZACM-09', brand: 'zanussi', price: 21500, area: 20, type: 'standard', features: [], specs: { 'Мощность охлаждения': '2.5 кВт', 'Площадь': '20 м²', 'Уровень шума': '26 дБ', 'Тип': 'Стандартный' } },
-        { id: 'zanussi2', name: 'Zanussi ZACM-12', brand: 'zanussi', price: 24900, area: 25, type: 'standard', features: [], specs: { 'Мощность охлаждения': '3.2 кВт', 'Площадь': '25 м²', 'Уровень шума': '28 дБ', 'Тип': 'Стандартный' } },
-        { id: 'zanussi3', name: 'Zanussi ZACM-18', brand: 'zanussi', price: 33900, area: 35, type: 'inverter', features: ['wifi'], specs: { 'Мощность охлаждения': '5.0 кВт', 'Площадь': '35 м²', 'Уровень шума': '25 дБ', 'Тип': 'Инвертор' } },
-
-        { id: 'bimatek1', name: 'Bimatek AM400', brand: 'bimatek', price: 18990, area: 20, type: 'standard', features: [], specs: { 'Мощность охлаждения': '2.0 кВт', 'Площадь': '20 м²', 'Уровень шума': '29 дБ', 'Тип': 'Стандартный' } },
-        { id: 'bimatek2', name: 'Bimatek AM500', brand: 'bimatek', price: 22990, area: 25, type: 'standard', features: [], specs: { 'Мощность охлаждения': '2.5 кВт', 'Площадь': '25 м²', 'Уровень шума': '28 дБ', 'Тип': 'Стандартный' } },
-        { id: 'bimatek3', name: 'Bimatek AM700', brand: 'bimatek', price: 28990, area: 35, type: 'inverter', features: ['wifi'], specs: { 'Мощность охлаждения': '3.2 кВт', 'Площадь': '35 м²', 'Уровень шума': '25 дБ', 'Тип': 'Инвертор' } },
-
-        { id: 'daikin1', name: 'Daikin FTX20', brand: 'daikin', price: 45900, area: 20, type: 'inverter', features: ['silent'], specs: { 'Мощность охлаждения': '2.0 кВт', 'Площадь': '20 м²', 'Уровень шума': '19 дБ', 'Тип': 'Инвертор' } },
-        { id: 'daikin2', name: 'Daikin FTX25', brand: 'daikin', price: 52900, area: 25, type: 'inverter', features: ['wifi', 'silent'], specs: { 'Мощность охлаждения': '2.5 кВт', 'Площадь': '25 м²', 'Уровень шума': '19 дБ', 'Тип': 'Инвертор' } },
-        { id: 'daikin3', name: 'Daikin FTX35', brand: 'daikin', price: 62900, area: 35, type: 'inverter', features: ['wifi', 'silent'], specs: { 'Мощность охлаждения': '3.2 кВт', 'Площадь': '35 м²', 'Уровень шума': '20 дБ', 'Тип': 'Инвертор' } },
-        { id: 'daikin4', name: 'Daikin FTX50', brand: 'daikin', price: 78900, area: 50, type: 'inverter', features: ['wifi', 'silent'], specs: { 'Мощность охлаждения': '5.0 кВт', 'Площадь': '50 м²', 'Уровень шума': '22 дБ', 'Тип': 'Инвертор' } },
-        { id: 'daikin5', name: 'Daikin FTX70', brand: 'daikin', price: 91900, area: 70, type: 'inverter', features: ['wifi', 'silent'], specs: { 'Мощность охлаждения': '7.0 кВт', 'Площадь': '70 м²', 'Уровень шума': '24 дБ', 'Тип': 'Инвертор' } },
-
-        { id: 'mitsubishi1', name: 'Mitsubishi MSZ-AP20', brand: 'mitsubishi', price: 48900, area: 20, type: 'inverter', features: ['silent'], specs: { 'Мощность охлаждения': '2.0 кВт', 'Площадь': '20 м²', 'Уровень шума': '19 дБ', 'Тип': 'Инвертор' } },
-        { id: 'mitsubishi2', name: 'Mitsubishi MSZ-AP25', brand: 'mitsubishi', price: 54900, area: 25, type: 'inverter', features: ['wifi', 'silent'], specs: { 'Мощность охлаждения': '2.5 кВт', 'Площадь': '25 м²', 'Уровень шума': '19 дБ', 'Тип': 'Инвертор' } },
-        { id: 'mitsubishi3', name: 'Mitsubishi MSZ-AP35', brand: 'mitsubishi', price: 65900, area: 35, type: 'inverter', features: ['wifi', 'silent'], specs: { 'Мощность охлаждения': '3.5 кВт', 'Площадь': '35 м²', 'Уровень шума': '20 дБ', 'Тип': 'Инвертор' } }
+        // Ballu (серия Tessey DC Inverter)
+        { id: 'ballu1', name: 'Ballu Tessey DC BSTI-07HN8', brand: 'ballu', price: 31490, area: 25, type: 'inverter', features: ['wifi'], specs: { 'Мощность охлаждения': '2.72 кВт', 'Площадь': '25 м²', 'Уровень шума': '22 дБ', 'Тип': 'Инвертор', 'Хладагент': 'R32' } },
+        { id: 'ballu2', name: 'Ballu Tessey DC BSTI-09HN8', brand: 'ballu', price: 32990, area: 25, type: 'inverter', features: ['wifi'], specs: { 'Мощность охлаждения': '3.19 кВт', 'Площадь': '25 м²', 'Уровень шума': '24 дБ', 'Тип': 'Инвертор', 'Хладагент': 'R32' } },
+        { id: 'ballu3', name: 'Ballu Tessey DC BSTI-12HN8', brand: 'ballu', price: 40490, area: 35, type: 'inverter', features: ['wifi'], specs: { 'Мощность охлаждения': '3.6 кВт', 'Площадь': '35 м²', 'Уровень шума': '26 дБ', 'Тип': 'Инвертор', 'Хладагент': 'R32' } },
+        { id: 'ballu4', name: 'Ballu Tessey DC BSTI-18HN8', brand: 'ballu', price: 74490, area: 50, type: 'inverter', features: ['wifi'], specs: { 'Мощность охлаждения': '5.3 кВт', 'Площадь': '50 м²', 'Уровень шума': '28 дБ', 'Тип': 'Инвертор', 'Хладагент': 'R32' } },
+        { id: 'ballu5', name: 'Ballu Tessey DC BSTI-24HN8', brand: 'ballu', price: 91490, area: 70, type: 'inverter', features: ['wifi'], specs: { 'Мощность охлаждения': '7.4 кВт', 'Площадь': '70 м²', 'Уровень шума': '30 дБ', 'Тип': 'Инвертор', 'Хладагент': 'R32' } },
+        // Hisense (CITY 2.0, Zoom, Vibe, Era Classic)
+        { id: 'hisense1', name: 'Hisense CITY 2.0 AS-07UW4RYRKA01', brand: 'hisense', price: 31590, area: 23, type: 'inverter', features: ['wifi'], specs: { 'Мощность охлаждения': '2.2 кВт', 'Площадь': '23 м²', 'Уровень шума': '22 дБ', 'Тип': 'Инвертор' } },
+        { id: 'hisense2', name: 'Hisense CITY 2.0 AS-09UW4RYRKA06', brand: 'hisense', price: 35990, area: 27, type: 'inverter', features: ['wifi'], specs: { 'Мощность охлаждения': '2.7 кВт', 'Площадь': '27 м²', 'Уровень шума': '23 дБ', 'Тип': 'Инвертор' } },
+        { id: 'hisense3', name: 'Hisense Zoom DC Inverter AS-13UW4RYRKB05', brand: 'hisense', price: 42900, area: 35, type: 'inverter', features: [], specs: { 'Мощность охлаждения': '3.5 кВт', 'Площадь': '35 м²', 'Уровень шума': '24 дБ', 'Тип': 'Инвертор' } },
+        { id: 'hisense4', name: 'Hisense Zoom DC Inverter AS-18UW4RMSKB02', brand: 'hisense', price: 54900, area: 50, type: 'inverter', features: [], specs: { 'Мощность охлаждения': '5.0 кВт', 'Площадь': '50 м²', 'Уровень шума': '26 дБ', 'Тип': 'Инвертор' } },
+        { id: 'hisense5', name: 'Hisense Zoom DC Inverter AS-24UW4RBTKB01', brand: 'hisense', price: 69900, area: 70, type: 'inverter', features: [], specs: { 'Мощность охлаждения': '6.5 кВт', 'Площадь': '70 м²', 'Уровень шума': '28 дБ', 'Тип': 'Инвертор' } },
+        { id: 'hisense6', name: 'Hisense VIBE DC Inverter AS-07UW4RYRHB00', brand: 'hisense', price: 28900, area: 20, type: 'inverter', features: [], specs: { 'Мощность охлаждения': '2.0 кВт', 'Площадь': '20 м²', 'Уровень шума': '21 дБ', 'Тип': 'Инвертор' } },
+        { id: 'hisense7', name: 'Hisense Era Classic A AS-18HW4RMSKC00', brand: 'hisense', price: 49900, area: 50, type: 'standard', features: [], specs: { 'Мощность охлаждения': '5.0 кВт', 'Площадь': '50 м²', 'Уровень шума': '28 дБ', 'Тип': 'Стандартный' } },
+        // LG (серии A, H)
+        { id: 'lg1', name: 'LG A09AW1', brand: 'lg', price: 39900, area: 25, type: 'inverter', features: [], specs: { 'Мощность охлаждения': '2.7 кВт', 'Площадь': '25 м²', 'Уровень шума': '25 дБ', 'Тип': 'Инвертор', 'Хладагент': 'R410A' } },
+        { id: 'lg2', name: 'LG H09S1D', brand: 'lg', price: 35100, area: 25, type: 'inverter', features: ['wifi'], specs: { 'Мощность охлаждения': '2.6 кВт', 'Площадь': '25 м²', 'Уровень шума': '24 дБ', 'Тип': 'Инвертор' } },
+        { id: 'lg3', name: 'LG H12S1D', brand: 'lg', price: 40900, area: 35, type: 'inverter', features: ['wifi'], specs: { 'Мощность охлаждения': '3.5 кВт', 'Площадь': '35 м²', 'Уровень шума': '26 дБ', 'Тип': 'Инвертор' } },
+        { id: 'lg4', name: 'LG H18S1D', brand: 'lg', price: 59200, area: 50, type: 'inverter', features: ['wifi'], specs: { 'Мощность охлаждения': '5.0 кВт', 'Площадь': '50 м²', 'Уровень шума': '28 дБ', 'Тип': 'Инвертор' } },
+        { id: 'lg5', name: 'LG H24S1D', brand: 'lg', price: 72900, area: 70, type: 'inverter', features: ['wifi'], specs: { 'Мощность охлаждения': '7.0 кВт', 'Площадь': '70 м²', 'Уровень шума': '30 дБ', 'Тип': 'Инвертор' } },
+        { id: 'lg6', name: 'LG A09GA1', brand: 'lg', price: 45900, area: 25, type: 'inverter', features: [], specs: { 'Мощность охлаждения': '2.7 кВт', 'Площадь': '25 м²', 'Уровень шума': '24 дБ', 'Тип': 'Инвертор' } },
+        { id: 'lg7', name: 'LG A12GA1', brand: 'lg', price: 52900, area: 35, type: 'inverter', features: [], specs: { 'Мощность охлаждения': '3.5 кВт', 'Площадь': '35 м²', 'Уровень шума': '26 дБ', 'Тип': 'Инвертор' } },
+        // Electrolux (Skandi, Loft, Smartline)
+        { id: 'electrolux1', name: 'Electrolux Skandi EACS-09HSK/N3_24Y', brand: 'electrolux', price: 36900, area: 27, type: 'inverter', features: [], specs: { 'Мощность охлаждения': '2.7 кВт', 'Площадь': '27 м²', 'Уровень шума': '24 дБ', 'Тип': 'Инвертор', 'Класс': 'A' } },
+        { id: 'electrolux2', name: 'Electrolux EACS/I-09HVI/N8_21Y', brand: 'electrolux', price: 39900, area: 25, type: 'inverter', features: [], specs: { 'Мощность охлаждения': '2.5 кВт', 'Площадь': '25 м²', 'Уровень шума': '23 дБ', 'Тип': 'Инвертор' } },
+        { id: 'electrolux3', name: 'Electrolux EACS/I-12HVI/N8_21Y', brand: 'electrolux', price: 45900, area: 35, type: 'inverter', features: [], specs: { 'Мощность охлаждения': '3.5 кВт', 'Площадь': '35 м²', 'Уровень шума': '25 дБ', 'Тип': 'Инвертор' } },
+        { id: 'electrolux4', name: 'Electrolux Loft EACS-18HAL/N3', brand: 'electrolux', price: 52900, area: 50, type: 'standard', features: [], specs: { 'Мощность охлаждения': '5.0 кВт', 'Площадь': '50 м²', 'Уровень шума': '30 дБ', 'Тип': 'Стандартный' } },
+        { id: 'electrolux5', name: 'Electrolux Smartline EACS-07HSM/N3', brand: 'electrolux', price: 25900, area: 20, type: 'standard', features: [], specs: { 'Мощность охлаждения': '2.29 кВт', 'Площадь': '20 м²', 'Уровень шума': '26 дБ', 'Тип': 'Стандартный' } },
+        { id: 'electrolux6', name: 'Electrolux Smartline EACS-18HSM/N3', brand: 'electrolux', price: 49900, area: 50, type: 'standard', features: [], specs: { 'Мощность охлаждения': '5.28 кВт', 'Площадь': '50 м²', 'Уровень шума': '30 дБ', 'Тип': 'Стандартный' } },
+        { id: 'electrolux7', name: 'Electrolux EACS/I-24HVI/N8_21Y', brand: 'electrolux', price: 69900, area: 70, type: 'inverter', features: ['wifi'], specs: { 'Мощность охлаждения': '6.5 кВт', 'Площадь': '70 м²', 'Уровень шума': '28 дБ', 'Тип': 'Инвертор' } },
+        // Zanussi (HPF серия)
+        { id: 'zanussi1', name: 'Zanussi ZACS-07 HPF/A22/N1', brand: 'zanussi', price: 28900, area: 20, type: 'standard', features: [], specs: { 'Мощность охлаждения': '2.05 кВт', 'Площадь': '20 м²', 'Уровень шума': '26 дБ', 'Тип': 'Стандартный' } },
+        { id: 'zanussi2', name: 'Zanussi ZACS-09 HPF/A22/N1', brand: 'zanussi', price: 32900, area: 25, type: 'standard', features: [], specs: { 'Мощность охлаждения': '2.5 кВт', 'Площадь': '25 м²', 'Уровень шума': '27 дБ', 'Тип': 'Стандартный' } },
+        { id: 'zanussi3', name: 'Zanussi ZACS-12 HPF/A22/N1', brand: 'zanussi', price: 38900, area: 35, type: 'standard', features: [], specs: { 'Мощность охлаждения': '3.3 кВт', 'Площадь': '35 м²', 'Уровень шума': '28 дБ', 'Тип': 'Стандартный' } },
+        { id: 'zanussi4', name: 'Zanussi ZACS-18 HPF/A22/N1', brand: 'zanussi', price: 49900, area: 50, type: 'standard', features: [], specs: { 'Мощность охлаждения': '5.0 кВт', 'Площадь': '50 м²', 'Уровень шума': '30 дБ', 'Тип': 'Стандартный' } },
+        { id: 'zanussi5', name: 'Zanussi ZACS-24 HPF/A22/N1', brand: 'zanussi', price: 62900, area: 70, type: 'standard', features: [], specs: { 'Мощность охлаждения': '6.5 кВт', 'Площадь': '70 м²', 'Уровень шума': '32 дБ', 'Тип': 'Стандартный' } },
+        { id: 'zanussi6', name: 'Zanussi ZACS/I-18 HPF/A22/N8', brand: 'zanussi', price: 54900, area: 50, type: 'inverter', features: [], specs: { 'Мощность охлаждения': '5.0 кВт', 'Площадь': '50 м²', 'Уровень шума': '28 дБ', 'Тип': 'Инвертор' } },
+        // Bimatek (мобильные моноблоки)
+        { id: 'bimatek1', name: 'Bimatek AM400 (мобильный)', brand: 'bimatek', price: 18990, area: 20, type: 'standard', features: [], specs: { 'Мощность охлаждения': '2.0 кВт', 'Площадь': '20 м²', 'Тип': 'Мобильный моноблок' } },
+        { id: 'bimatek2', name: 'Bimatek AM401 (мобильный)', brand: 'bimatek', price: 20990, area: 25, type: 'standard', features: [], specs: { 'Мощность охлаждения': '2.3 кВт', 'Площадь': '25 м²', 'Тип': 'Мобильный моноблок' } },
+        { id: 'bimatek3', name: 'Bimatek AM402 (мобильный)', brand: 'bimatek', price: 22990, area: 28, type: 'standard', features: [], specs: { 'Мощность охлаждения': '2.5 кВт', 'Площадь': '28 м²', 'Тип': 'Мобильный моноблок' } },
+        { id: 'bimatek4', name: 'Bimatek AM410 (мобильный)', brand: 'bimatek', price: 26990, area: 30, type: 'standard', features: [], specs: { 'Мощность охлаждения': '3.0 кВт', 'Площадь': '30 м²', 'Тип': 'Мобильный моноблок' } },
+        { id: 'bimatek5', name: 'Bimatek AM310 (мобильный)', brand: 'bimatek', price: 15990, area: 20, type: 'standard', features: [], specs: { 'Мощность охлаждения': '2.3 кВт', 'Площадь': '20 м²', 'Тип': 'Мобильный моноблок' } },
+        { id: 'bimatek6', name: 'Bimatek AM403 (мобильный)', brand: 'bimatek', price: 24990, area: 30, type: 'standard', features: [], specs: { 'Мощность охлаждения': '2.8 кВт', 'Площадь': '30 м²', 'Тип': 'Мобильный моноблок' } },
+        // Mitsubishi Electric (серии MSZ, MS-GF)
+        { id: 'mitsubishi1', name: 'Mitsubishi Electric MSZ-EF50VGKB / MUZ-EF50VG', brand: 'mitsubishi', price: 264450, area: 50, type: 'inverter', features: ['wifi', 'silent'], specs: { 'Мощность охлаждения': '5.0 кВт', 'Площадь': '50 м²', 'Уровень шума': '30 дБ', 'Тип': 'Инвертор', 'Класс': 'A++', 'Хладагент': 'R32' } },
+        { id: 'mitsubishi2', name: 'Mitsubishi Electric MSZ-LN25VGV / MUZ-LN25VG', brand: 'mitsubishi', price: 0, area: 25, type: 'inverter', features: ['silent'], specs: { 'Мощность охлаждения': '2.5 кВт', 'Площадь': '25 м²', 'Уровень шума': '19 дБ', 'Тип': 'Инвертор', 'Хладагент': 'R32' } },
+        { id: 'mitsubishi3', name: 'Mitsubishi Electric MS-GF20VA / MU-GF20VA', brand: 'mitsubishi', price: 45900, area: 20, type: 'inverter', features: [], specs: { 'Мощность охлаждения': '2.0 кВт', 'Площадь': '20 м²', 'Уровень шума': '22 дБ', 'Тип': 'Инвертор' } },
+        { id: 'mitsubishi4', name: 'Mitsubishi Electric MS-GF25VA / MU-GF25VA', brand: 'mitsubishi', price: 49900, area: 25, type: 'inverter', features: [], specs: { 'Мощность охлаждения': '2.5 кВт', 'Площадь': '25 м²', 'Уровень шума': '23 дБ', 'Тип': 'Инвертор' } },
+        { id: 'mitsubishi5', name: 'Mitsubishi Electric MS-GF35VA / MU-GF35VA', brand: 'mitsubishi', price: 59900, area: 35, type: 'inverter', features: [], specs: { 'Мощность охлаждения': '3.5 кВт', 'Площадь': '35 м²', 'Уровень шума': '24 дБ', 'Тип': 'Инвертор' } },
+        { id: 'mitsubishi6', name: 'Mitsubishi Electric MSZ-FH50VE / MUZ-FH50VE', brand: 'mitsubishi', price: 149900, area: 50, type: 'inverter', features: ['silent'], specs: { 'Мощность охлаждения': '5.0 кВт', 'Площадь': '50 м²', 'Уровень шума': '28 дБ', 'Тип': 'Инвертор' } },
+        { id: 'mitsubishi7', name: 'Mitsubishi Electric MSZ-GF71VE / MUZ-GF71VE', brand: 'mitsubishi', price: 199900, area: 70, type: 'inverter', features: ['silent'], specs: { 'Мощность охлаждения': '7.1 кВт', 'Площадь': '70 м²', 'Уровень шума': '30 дБ', 'Тип': 'Инвертор' } },
     ];
+
+    // ------------- ВСЕ ОСТАЛЬНЫЕ ФУНКЦИИ (renderProducts, openProductDetail, generateFullSpecs и т.д.) ОСТАЮТСЯ БЕЗ ИЗМЕНЕНИЙ -------------
+    // (они уже есть в вашем коде, ниже я привожу их полностью, чтобы код был целостным)
 
     function generateFullSpecs(product) {
         const brandName = product.brand.charAt(0).toUpperCase() + product.brand.slice(1);
@@ -604,7 +615,7 @@
             'Самодиагностика': 'Есть',
             'Самоочистка внут. блока': isInverter ? 'Есть' : 'Нет',
             'Сенсор движения': isInverter ? 'Есть' : 'Нет',
-            'Страна бренда': brandName === 'Daikin' || brandName === 'Mitsubishi' ? 'Япония' :
+            'Страна бренда': brandName === 'Daikin' || brandName === 'Mitsubishi Electric' ? 'Япония' :
                              brandName === 'LG' ? 'Южная Корея' :
                              brandName === 'Hisense' ? 'Китай' :
                              brandName === 'Electrolux' ? 'Швеция' : 'Китай',

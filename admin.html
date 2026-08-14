@@ -51,14 +51,9 @@
             flex-wrap: wrap;
         }
         .product-row .name { flex: 2; min-width: 150px; font-weight: 500; }
-        .product-row .price { flex: 1; min-width: 100px; }
         .product-row .image-upload { flex: 2; min-width: 200px; }
         .product-row .image-preview { max-width: 80px; max-height: 80px; border-radius: 8px; object-fit: cover; }
         .btn-sm { padding: 4px 12px; border-radius: 60px; }
-        .gallery-item { border: 1px solid #e8f0ec; border-radius: 16px; padding: 15px; text-align: center; background: #fafdfb; }
-        .gallery-item img { max-width: 100%; height: 150px; object-fit: cover; border-radius: 12px; }
-        .gallery-item .title { font-weight: 600; margin-top: 8px; }
-        .gallery-item .desc { font-size: 13px; color: #5a7a6e; }
         .status-msg { margin-top: 15px; font-weight: 500; }
         .status-msg.success { color: #2ecc71; }
         .status-msg.error { color: #e74c3c; }
@@ -68,6 +63,12 @@
             .product-row { flex-direction: column; align-items: stretch; }
             .product-row .name { text-align: center; }
         }
+        #priceList table { width: 100%; }
+        #priceList td, #priceList th { padding: 8px; vertical-align: middle; }
+        #priceList .price-input { width: 120px; }
+        #productImageList .product-row { padding: 10px 0; }
+        #productManageList table { width: 100%; }
+        #productManageList td, #productManageList th { padding: 8px; vertical-align: middle; }
     </style>
 </head>
 <body>
@@ -100,7 +101,6 @@
     <ul class="nav nav-tabs" role="tablist">
         <li role="presentation" class="active"><a href="#tabPrices" aria-controls="tabPrices" role="tab" data-toggle="tab">Цены</a></li>
         <li role="presentation"><a href="#tabProducts" aria-controls="tabProducts" role="tab" data-toggle="tab">Фото товаров</a></li>
-        <li role="presentation"><a href="#tabGallery" aria-controls="tabGallery" role="tab" data-toggle="tab">Галерея</a></li>
         <li role="presentation"><a href="#tabManage" aria-controls="tabManage" role="tab" data-toggle="tab">Управление товарами</a></li>
     </ul>
 
@@ -119,29 +119,9 @@
             <div id="productImageList"></div>
         </div>
 
-        <!-- Вкладка Галерея -->
-        <div role="tabpanel" class="tab-pane" id="tabGallery">
-            <h3>Управление галереей работ</h3>
-            <form id="galleryForm" class="form-inline" style="margin-bottom:20px;">
-                <div class="form-group">
-                    <input type="file" id="galleryFile" accept="image/*" required>
-                </div>
-                <div class="form-group">
-                    <input type="text" class="form-control" id="galleryTitle" placeholder="Заголовок">
-                </div>
-                <div class="form-group">
-                    <input type="text" class="form-control" id="galleryDesc" placeholder="Описание">
-                </div>
-                <button type="submit" class="btn btn-primary"><i class="fa fa-upload"></i> Добавить</button>
-            </form>
-            <div id="galleryList" class="row"></div>
-            <div id="galleryStatus" class="status-msg"></div>
-        </div>
-
         <!-- Вкладка Управление товарами -->
         <div role="tabpanel" class="tab-pane" id="tabManage">
             <h3>Управление товарами</h3>
-            <!-- Форма добавления -->
             <div class="add-product-form">
                 <h4><i class="fa fa-plus-circle"></i> Добавить новый товар</h4>
                 <form id="addProductForm" class="row">
@@ -182,7 +162,6 @@
                     </div>
                 </form>
             </div>
-            <!-- Список товаров -->
             <div id="productManageList"></div>
             <div id="manageStatus" class="status-msg"></div>
         </div>
@@ -192,6 +171,7 @@
 <script>
     // ==================== НАСТРОЙКИ ====================
     const ADMIN_PASSWORD = 'admin123';
+    const STORAGE_KEY = 'products_full';
     // ===================================================
 
     // ------------------ Вход / Выход ------------------
@@ -222,112 +202,20 @@
         checkAuth();
     });
 
-    // ------------------ БАЗОВЫЙ МАССИВ ТОВАРОВ (все товары с сайта) ------------------
+    // ------------------ БАЗОВЫЙ МАССИВ ТОВАРОВ (заглушка) ------------------
+    // ВАЖНО: замените этот массив на свой реальный массив из сайта.
+    // В примере я оставляю несколько товаров для демонстрации.
     function getDefaultProducts() {
         return [
-            // ===== СПЛИТ-СИСТЕМЫ =====
-            { id: 'ballu1', name: 'Ballu Tessey DC BSTI-07HN8', brand: 'ballu', category: 'split', price: 31490, area: 25, type: 'inverter', features: ['wifi'], specs: { 'Мощность охлаждения': '2.72 кВт', 'Площадь': '25 м²', 'Уровень шума': '22 дБ', 'Тип': 'Инвертор', 'Хладагент': 'R32' } },
-            { id: 'ballu2', name: 'Ballu Tessey DC BSTI-09HN8', brand: 'ballu', category: 'split', price: 32990, area: 25, type: 'inverter', features: ['wifi'], specs: { 'Мощность охлаждения': '3.19 кВт', 'Площадь': '25 м²', 'Уровень шума': '24 дБ', 'Тип': 'Инвертор', 'Хладагент': 'R32' } },
-            { id: 'ballu3', name: 'Ballu Tessey DC BSTI-12HN8', brand: 'ballu', category: 'split', price: 40490, area: 35, type: 'inverter', features: ['wifi'], specs: { 'Мощность охлаждения': '3.6 кВт', 'Площадь': '35 м²', 'Уровень шума': '26 дБ', 'Тип': 'Инвертор', 'Хладагент': 'R32' } },
-            { id: 'ballu4', name: 'Ballu Tessey DC BSTI-18HN8', brand: 'ballu', category: 'split', price: 74490, area: 50, type: 'inverter', features: ['wifi'], specs: { 'Мощность охлаждения': '5.3 кВт', 'Площадь': '50 м²', 'Уровень шума': '28 дБ', 'Тип': 'Инвертор', 'Хладагент': 'R32' } },
-            { id: 'ballu5', name: 'Ballu Tessey DC BSTI-24HN8', brand: 'ballu', category: 'split', price: 91490, area: 70, type: 'inverter', features: ['wifi'], specs: { 'Мощность охлаждения': '7.4 кВт', 'Площадь': '70 м²', 'Уровень шума': '30 дБ', 'Тип': 'Инвертор', 'Хладагент': 'R32' } },
-            { id: 'hisense1', name: 'Hisense CITY 2.0 AS-07UW4RYRKA01', brand: 'hisense', category: 'split', price: 31590, area: 23, type: 'inverter', features: ['wifi'], specs: { 'Мощность охлаждения': '2.2 кВт', 'Площадь': '23 м²', 'Уровень шума': '22 дБ', 'Тип': 'Инвертор' } },
-            { id: 'hisense2', name: 'Hisense CITY 2.0 AS-09UW4RYRKA06', brand: 'hisense', category: 'split', price: 35990, area: 27, type: 'inverter', features: ['wifi'], specs: { 'Мощность охлаждения': '2.7 кВт', 'Площадь': '27 м²', 'Уровень шума': '23 дБ', 'Тип': 'Инвертор' } },
-            { id: 'hisense3', name: 'Hisense Zoom DC Inverter AS-13UW4RYRKB05', brand: 'hisense', category: 'split', price: 42900, area: 35, type: 'inverter', features: [], specs: { 'Мощность охлаждения': '3.5 кВт', 'Площадь': '35 м²', 'Уровень шума': '24 дБ', 'Тип': 'Инвертор' } },
-            { id: 'hisense4', name: 'Hisense Zoom DC Inverter AS-18UW4RMSKB02', brand: 'hisense', category: 'split', price: 54900, area: 50, type: 'inverter', features: [], specs: { 'Мощность охлаждения': '5.0 кВт', 'Площадь': '50 м²', 'Уровень шума': '26 дБ', 'Тип': 'Инвертор' } },
-            { id: 'hisense5', name: 'Hisense Zoom DC Inverter AS-24UW4RBTKB01', brand: 'hisense', category: 'split', price: 69900, area: 70, type: 'inverter', features: [], specs: { 'Мощность охлаждения': '6.5 кВт', 'Площадь': '70 м²', 'Уровень шума': '28 дБ', 'Тип': 'Инвертор' } },
-            { id: 'hisense6', name: 'Hisense VIBE DC Inverter AS-07UW4RYRHB00', brand: 'hisense', category: 'split', price: 28900, area: 20, type: 'inverter', features: [], specs: { 'Мощность охлаждения': '2.0 кВт', 'Площадь': '20 м²', 'Уровень шума': '21 дБ', 'Тип': 'Инвертор' } },
-            { id: 'hisense7', name: 'Hisense Era Classic A AS-18HW4RMSKC00', brand: 'hisense', category: 'split', price: 49900, area: 50, type: 'standard', features: [], specs: { 'Мощность охлаждения': '5.0 кВт', 'Площадь': '50 м²', 'Уровень шума': '28 дБ', 'Тип': 'Стандартный' } },
-            { id: 'lg1', name: 'LG A09AW1', brand: 'lg', category: 'split', price: 39900, area: 25, type: 'inverter', features: [], specs: { 'Мощность охлаждения': '2.7 кВт', 'Площадь': '25 м²', 'Уровень шума': '25 дБ', 'Тип': 'Инвертор', 'Хладагент': 'R410A' } },
-            { id: 'lg2', name: 'LG H09S1D', brand: 'lg', category: 'split', price: 35100, area: 25, type: 'inverter', features: ['wifi'], specs: { 'Мощность охлаждения': '2.6 кВт', 'Площадь': '25 м²', 'Уровень шума': '24 дБ', 'Тип': 'Инвертор' } },
-            { id: 'lg3', name: 'LG H12S1D', brand: 'lg', category: 'split', price: 40900, area: 35, type: 'inverter', features: ['wifi'], specs: { 'Мощность охлаждения': '3.5 кВт', 'Площадь': '35 м²', 'Уровень шума': '26 дБ', 'Тип': 'Инвертор' } },
-            { id: 'lg4', name: 'LG H18S1D', brand: 'lg', category: 'split', price: 59200, area: 50, type: 'inverter', features: ['wifi'], specs: { 'Мощность охлаждения': '5.0 кВт', 'Площадь': '50 м²', 'Уровень шума': '28 дБ', 'Тип': 'Инвертор' } },
-            { id: 'lg5', name: 'LG H24S1D', brand: 'lg', category: 'split', price: 72900, area: 70, type: 'inverter', features: ['wifi'], specs: { 'Мощность охлаждения': '7.0 кВт', 'Площадь': '70 м²', 'Уровень шума': '30 дБ', 'Тип': 'Инвертор' } },
-            { id: 'lg6', name: 'LG A09GA1', brand: 'lg', category: 'split', price: 45900, area: 25, type: 'inverter', features: [], specs: { 'Мощность охлаждения': '2.7 кВт', 'Площадь': '25 м²', 'Уровень шума': '24 дБ', 'Тип': 'Инвертор' } },
-            { id: 'lg7', name: 'LG A12GA1', brand: 'lg', category: 'split', price: 52900, area: 35, type: 'inverter', features: [], specs: { 'Мощность охлаждения': '3.5 кВт', 'Площадь': '35 м²', 'Уровень шума': '26 дБ', 'Тип': 'Инвертор' } },
-            { id: 'electrolux1', name: 'Electrolux Skandi EACS-09HSK/N3_24Y', brand: 'electrolux', category: 'split', price: 36900, area: 27, type: 'inverter', features: [], specs: { 'Мощность охлаждения': '2.7 кВт', 'Площадь': '27 м²', 'Уровень шума': '24 дБ', 'Тип': 'Инвертор', 'Класс': 'A' } },
-            { id: 'electrolux2', name: 'Electrolux EACS/I-09HVI/N8_21Y', brand: 'electrolux', category: 'split', price: 39900, area: 25, type: 'inverter', features: [], specs: { 'Мощность охлаждения': '2.5 кВт', 'Площадь': '25 м²', 'Уровень шума': '23 дБ', 'Тип': 'Инвертор' } },
-            { id: 'electrolux3', name: 'Electrolux EACS/I-12HVI/N8_21Y', brand: 'electrolux', category: 'split', price: 45900, area: 35, type: 'inverter', features: [], specs: { 'Мощность охлаждения': '3.5 кВт', 'Площадь': '35 м²', 'Уровень шума': '25 дБ', 'Тип': 'Инвертор' } },
-            { id: 'electrolux4', name: 'Electrolux Loft EACS-18HAL/N3', brand: 'electrolux', category: 'split', price: 52900, area: 50, type: 'standard', features: [], specs: { 'Мощность охлаждения': '5.0 кВт', 'Площадь': '50 м²', 'Уровень шума': '30 дБ', 'Тип': 'Стандартный' } },
-            { id: 'electrolux5', name: 'Electrolux Smartline EACS-07HSM/N3', brand: 'electrolux', category: 'split', price: 25900, area: 20, type: 'standard', features: [], specs: { 'Мощность охлаждения': '2.29 кВт', 'Площадь': '20 м²', 'Уровень шума': '26 дБ', 'Тип': 'Стандартный' } },
-            { id: 'electrolux6', name: 'Electrolux Smartline EACS-18HSM/N3', brand: 'electrolux', category: 'split', price: 49900, area: 50, type: 'standard', features: [], specs: { 'Мощность охлаждения': '5.28 кВт', 'Площадь': '50 м²', 'Уровень шума': '30 дБ', 'Тип': 'Стандартный' } },
-            { id: 'electrolux7', name: 'Electrolux EACS/I-24HVI/N8_21Y', brand: 'electrolux', category: 'split', price: 69900, area: 70, type: 'inverter', features: ['wifi'], specs: { 'Мощность охлаждения': '6.5 кВт', 'Площадь': '70 м²', 'Уровень шума': '28 дБ', 'Тип': 'Инвертор' } },
-            { id: 'zanussi1', name: 'Zanussi ZACS-07 HPF/A22/N1', brand: 'zanussi', category: 'split', price: 28900, area: 20, type: 'standard', features: [], specs: { 'Мощность охлаждения': '2.05 кВт', 'Площадь': '20 м²', 'Уровень шума': '26 дБ', 'Тип': 'Стандартный' } },
-            { id: 'zanussi2', name: 'Zanussi ZACS-09 HPF/A22/N1', brand: 'zanussi', category: 'split', price: 32900, area: 25, type: 'standard', features: [], specs: { 'Мощность охлаждения': '2.5 кВт', 'Площадь': '25 м²', 'Уровень шума': '27 дБ', 'Тип': 'Стандартный' } },
-            { id: 'zanussi3', name: 'Zanussi ZACS-12 HPF/A22/N1', brand: 'zanussi', category: 'split', price: 38900, area: 35, type: 'standard', features: [], specs: { 'Мощность охлаждения': '3.3 кВт', 'Площадь': '35 м²', 'Уровень шума': '28 дБ', 'Тип': 'Стандартный' } },
-            { id: 'zanussi4', name: 'Zanussi ZACS-18 HPF/A22/N1', brand: 'zanussi', category: 'split', price: 49900, area: 50, type: 'standard', features: [], specs: { 'Мощность охлаждения': '5.0 кВт', 'Площадь': '50 м²', 'Уровень шума': '30 дБ', 'Тип': 'Стандартный' } },
-            { id: 'zanussi5', name: 'Zanussi ZACS-24 HPF/A22/N1', brand: 'zanussi', category: 'split', price: 62900, area: 70, type: 'standard', features: [], specs: { 'Мощность охлаждения': '6.5 кВт', 'Площадь': '70 м²', 'Уровень шума': '32 дБ', 'Тип': 'Стандартный' } },
-            { id: 'zanussi6', name: 'Zanussi ZACS/I-18 HPF/A22/N8', brand: 'zanussi', category: 'split', price: 54900, area: 50, type: 'inverter', features: [], specs: { 'Мощность охлаждения': '5.0 кВт', 'Площадь': '50 м²', 'Уровень шума': '28 дБ', 'Тип': 'Инвертор' } },
-            { id: 'bimatek1', name: 'Bimatek AM400 (мобильный)', brand: 'bimatek', category: 'split', price: 18990, area: 20, type: 'standard', features: [], specs: { 'Мощность охлаждения': '2.0 кВт', 'Площадь': '20 м²', 'Тип': 'Мобильный моноблок' } },
-            { id: 'bimatek2', name: 'Bimatek AM401 (мобильный)', brand: 'bimatek', category: 'split', price: 20990, area: 25, type: 'standard', features: [], specs: { 'Мощность охлаждения': '2.3 кВт', 'Площадь': '25 м²', 'Тип': 'Мобильный моноблок' } },
-            { id: 'bimatek3', name: 'Bimatek AM402 (мобильный)', brand: 'bimatek', category: 'split', price: 22990, area: 28, type: 'standard', features: [], specs: { 'Мощность охлаждения': '2.5 кВт', 'Площадь': '28 м²', 'Тип': 'Мобильный моноблок' } },
-            { id: 'bimatek4', name: 'Bimatek AM410 (мобильный)', brand: 'bimatek', category: 'split', price: 26990, area: 30, type: 'standard', features: [], specs: { 'Мощность охлаждения': '3.0 кВт', 'Площадь': '30 м²', 'Тип': 'Мобильный моноблок' } },
-            { id: 'bimatek5', name: 'Bimatek AM310 (мобильный)', brand: 'bimatek', category: 'split', price: 15990, area: 20, type: 'standard', features: [], specs: { 'Мощность охлаждения': '2.3 кВт', 'Площадь': '20 м²', 'Тип': 'Мобильный моноблок' } },
-            { id: 'bimatek6', name: 'Bimatek AM403 (мобильный)', brand: 'bimatek', category: 'split', price: 24990, area: 30, type: 'standard', features: [], specs: { 'Мощность охлаждения': '2.8 кВт', 'Площадь': '30 м²', 'Тип': 'Мобильный моноблок' } },
-            { id: 'mitsubishi1', name: 'Mitsubishi Electric MSZ-EF50VGKB / MUZ-EF50VG', brand: 'mitsubishi', category: 'split', price: 264450, area: 50, type: 'inverter', features: ['wifi', 'silent'], specs: { 'Мощность охлаждения': '5.0 кВт', 'Площадь': '50 м²', 'Уровень шума': '30 дБ', 'Тип': 'Инвертор', 'Класс': 'A++', 'Хладагент': 'R32' } },
-            { id: 'mitsubishi2', name: 'Mitsubishi Electric MSZ-LN25VGV / MUZ-LN25VG', brand: 'mitsubishi', category: 'split', price: 0, area: 25, type: 'inverter', features: ['silent'], specs: { 'Мощность охлаждения': '2.5 кВт', 'Площадь': '25 м²', 'Уровень шума': '19 дБ', 'Тип': 'Инвертор', 'Хладагент': 'R32' } },
-            { id: 'mitsubishi3', name: 'Mitsubishi Electric MS-GF20VA / MU-GF20VA', brand: 'mitsubishi', category: 'split', price: 45900, area: 20, type: 'inverter', features: [], specs: { 'Мощность охлаждения': '2.0 кВт', 'Площадь': '20 м²', 'Уровень шума': '22 дБ', 'Тип': 'Инвертор' } },
-            { id: 'mitsubishi4', name: 'Mitsubishi Electric MS-GF25VA / MU-GF25VA', brand: 'mitsubishi', category: 'split', price: 49900, area: 25, type: 'inverter', features: [], specs: { 'Мощность охлаждения': '2.5 кВт', 'Площадь': '25 м²', 'Уровень шума': '23 дБ', 'Тип': 'Инвертор' } },
-            { id: 'mitsubishi5', name: 'Mitsubishi Electric MS-GF35VA / MU-GF35VA', brand: 'mitsubishi', category: 'split', price: 59900, area: 35, type: 'inverter', features: [], specs: { 'Мощность охлаждения': '3.5 кВт', 'Площадь': '35 м²', 'Уровень шума': '24 дБ', 'Тип': 'Инвертор' } },
-            { id: 'mitsubishi6', name: 'Mitsubishi Electric MSZ-FH50VE / MUZ-FH50VE', brand: 'mitsubishi', category: 'split', price: 149900, area: 50, type: 'inverter', features: ['silent'], specs: { 'Мощность охлаждения': '5.0 кВт', 'Площадь': '50 м²', 'Уровень шума': '28 дБ', 'Тип': 'Инвертор' } },
-            { id: 'mitsubishi7', name: 'Mitsubishi Electric MSZ-GF71VE / MUZ-GF71VE', brand: 'mitsubishi', category: 'split', price: 199900, area: 70, type: 'inverter', features: ['silent'], specs: { 'Мощность охлаждения': '7.1 кВт', 'Площадь': '70 м²', 'Уровень шума': '30 дБ', 'Тип': 'Инвертор' } },
-
-            // ===== ENERGOLUX: VRF, фанкойлы, ККБ, чиллеры, обвязка =====
-            { id: 'vrf1', name: 'SMZ1U30V2AI', brand: 'energolux', category: 'vrf', price: 0, area: null, type: 'inverter', features: [], specs: { 'Мощность охлаждения': '8 кВт', 'Мощность нагрева': '9 кВт', 'Электропитание': '230/50/1', 'Габариты': '790*980*360 мм', 'Вес': '80 кг', 'Уровень шума': '57 дБ(А)' } },
-            { id: 'vrf2', name: 'SMZ1U36V2AI', brand: 'energolux', category: 'vrf', price: 0, area: null, type: 'inverter', features: [], specs: { 'Мощность охлаждения': '10 кВт', 'Мощность нагрева': '11 кВт', 'Электропитание': '230/50/1', 'Габариты': '790*980*360 мм', 'Вес': '80 кг', 'Уровень шума': '58 дБ(А)' } },
-            { id: 'vrf3', name: 'SMZ1U45V3AI', brand: 'energolux', category: 'vrf', price: 0, area: null, type: 'inverter', features: [], specs: { 'Мощность охлаждения': '12.1 кВт', 'Мощность нагрева': '14 кВт', 'Электропитание': '230/50/1', 'Габариты': '790*980*360 мм', 'Вес': '85 кг', 'Уровень шума': '57 дБ(А)' } },
-            { id: 'vrf4', name: 'SMZ1U54V3AI', brand: 'energolux', category: 'vrf', price: 0, area: null, type: 'inverter', features: [], specs: { 'Мощность охлаждения': '14 кВт', 'Мощность нагрева': '16.5 кВт', 'Электропитание': '230/50/1', 'Габариты': '820*940*460 мм', 'Вес': '98 кг', 'Уровень шума': '58 дБ(А)' } },
-            { id: 'vrf5', name: 'SMZ1U60V2AI', brand: 'energolux', category: 'vrf', price: 0, area: null, type: 'inverter', features: [], specs: { 'Мощность охлаждения': '16 кВт', 'Мощность нагрева': '18.5 кВт', 'Электропитание': '230/50/1', 'Габариты': '1345*900*340 мм', 'Вес': '122 кг', 'Уровень шума': '58 дБ(А)' } },
-            { id: 'vrf6', name: 'SMZUi75V2AI', brand: 'energolux', category: 'vrf', price: 0, area: null, type: 'inverter', features: [], specs: { 'Мощность охлаждения': '22.2 кВт', 'Мощность нагрева': '24 кВт', 'Электропитание': '380/50/3', 'Габариты': '1430*940*320 мм', 'Вес': '133 кг', 'Уровень шума': '60 дБ(А)' } },
-            { id: 'vrf7', name: 'SMZUi96V2AI', brand: 'energolux', category: 'vrf', price: 0, area: null, type: 'inverter', features: [], specs: { 'Мощность охлаждения': '27.9 кВт', 'Мощность нагрева': '30 кВт', 'Электропитание': '380/50/3', 'Габариты': '1615*940*460 мм', 'Вес': '166 кг', 'Уровень шума': '62 дБ(А)' } },
-            { id: 'vrf8', name: 'SMZUi120V2AI', brand: 'energolux', category: 'vrf', price: 0, area: null, type: 'inverter', features: [], specs: { 'Мощность охлаждения': '33.3 кВт', 'Мощность нагрева': '35.1 кВт', 'Электропитание': '380/50/3', 'Габариты': '1615*940*460 мм', 'Вес': '177 кг', 'Уровень шума': '63 дБ(А)' } },
-            { id: 'vrf9', name: 'SMZUm135V2AI', brand: 'energolux', category: 'vrf', price: 0, area: null, type: 'inverter', features: [], specs: { 'Мощность охлаждения': '40 кВт', 'Мощность нагрева': '45 кВт', 'Электропитание': '380/50/3', 'Габариты': '1745*1250*460 мм', 'Вес': '210 кг', 'Уровень шума': '59 дБ(А)' } },
-            { id: 'vrf10', name: 'SMZUm150V2AI', brand: 'energolux', category: 'vrf', price: 0, area: null, type: 'inverter', features: [], specs: { 'Мощность охлаждения': '40.5 кВт', 'Мощность нагрева': '50 кВт', 'Электропитание': '380/50/3', 'Габариты': '1745*1250*460 мм', 'Вес': '210 кг', 'Уровень шума': '60 дБ(А)' } },
-            { id: 'vrf11', name: 'SMZUm175V2AI', brand: 'energolux', category: 'vrf', price: 0, area: null, type: 'inverter', features: [], specs: { 'Мощность охлаждения': '50.4 кВт', 'Мощность нагрева': '56.5 кВт', 'Электропитание': '380/50/3', 'Габариты': '1745*1250*460 мм', 'Вес': '235 кг', 'Уровень шума': '60 дБ(А)' } },
-            { id: 'vrf_in1', name: 'SMZS05V4AI', brand: 'energolux', category: 'vrf', price: 0, area: null, type: 'inverter', features: [], specs: { 'Мощность охлаждения': '1.5 кВт', 'Мощность нагрева': '1.8 кВт', 'Электропитание': '230/50/1', 'Габариты': '276*867*206 мм', 'Вес': '9.5 кг', 'Уровень шума': '30-33-35 дБ(А)' } },
-            { id: 'vrf_in2', name: 'SMZS07V3AI', brand: 'energolux', category: 'vrf', price: 0, area: null, type: 'inverter', features: [], specs: { 'Мощность охлаждения': '2.2 кВт', 'Мощность нагрева': '2.5 кВт', 'Электропитание': '230/50/1', 'Габариты': '289*845*209 мм', 'Вес': '10.5 кг', 'Уровень шума': '30-33-35 дБ(А)' } },
-            { id: 'vrf_in3', name: 'SMZS09V3AI', brand: 'energolux', category: 'vrf', price: 0, area: null, type: 'inverter', features: [], specs: { 'Мощность охлаждения': '2.8 кВт', 'Мощность нагрева': '3.2 кВт', 'Электропитание': '230/50/1', 'Габариты': '289*845*209 мм', 'Вес': '10.5 кг', 'Уровень шума': '30-33-35 дБ(А)' } },
-            { id: 'vrf_in4', name: 'SMZS12V3AI', brand: 'energolux', category: 'vrf', price: 0, area: null, type: 'inverter', features: [], specs: { 'Мощность охлаждения': '3.6 кВт', 'Мощность нагрева': '4 кВт', 'Электропитание': '230/50/1', 'Габариты': '289*845*209 мм', 'Вес': '10.5 кг', 'Уровень шума': '31-35-38 дБ(А)' } },
-            { id: 'vrf_in5', name: 'SMZCC07V3AI', brand: 'energolux', category: 'vrf', price: 0, area: null, type: 'inverter', features: [], specs: { 'Мощность охлаждения': '2.2 кВт', 'Мощность нагрева': '2.5 кВт', 'Электропитание': '230/50/1', 'Габариты': '265*570*570 мм', 'Вес': '17.5 кг', 'Уровень шума': '25-30-33 дБ(А)' } },
-            { id: 'vrf_in6', name: 'SMZCC09V3AI', brand: 'energolux', category: 'vrf', price: 0, area: null, type: 'inverter', features: [], specs: { 'Мощность охлаждения': '2.8 кВт', 'Мощность нагрева': '3.2 кВт', 'Электропитание': '230/50/1', 'Габариты': '265*570*570 мм', 'Вес': '17.5 кг', 'Уровень шума': '25-31-36 дБ(А)' } },
-            { id: 'kkb1', name: 'SCCU18C2BF', brand: 'energolux', category: 'kkb', price: 0, area: null, type: 'standard', features: [], specs: { 'Мощность охлаждения': '5.3 кВт', 'Потребляемая мощность': '2.2 кВт', 'Электропитание': '230/50/1', 'Габариты': '761×256×548 мм', 'Вес': '49 кг', 'Длина трассы': '25 м' } },
-            { id: 'kkb2', name: 'SCCU24C2BF', brand: 'energolux', category: 'kkb', price: 0, area: null, type: 'standard', features: [], specs: { 'Мощность охлаждения': '7.5 кВт', 'Потребляемая мощность': '2.8 кВт', 'Электропитание': '230/50/1', 'Габариты': '892×340×698 мм', 'Вес': '60 кг', 'Длина трассы': '30 м' } },
-            { id: 'kkb3', name: 'SCCU36C2BF', brand: 'energolux', category: 'kkb', price: 0, area: null, type: 'standard', features: [], specs: { 'Мощность охлаждения': '10.5 кВт', 'Потребляемая мощность': '4.3 кВт', 'Электропитание': '380/50/3', 'Габариты': '920×370×790 мм', 'Вес': '71 кг', 'Длина трассы': '30 м' } },
-            { id: 'fc1', name: 'SFW07A3', brand: 'energolux', category: 'fan_coil', price: 0, area: null, type: 'standard', features: [], specs: { 'Мощность охлаждения': '2.7 кВт', 'Мощность нагрева': '3.5 кВт', 'Электропитание': '230/50/1', 'Габариты': '230*965*325 мм', 'Вес': '12 кг', 'Уровень шума': '32/26/24 дБ(А)' } },
-            { id: 'fc2', name: 'SFW10A3', brand: 'energolux', category: 'fan_coil', price: 0, area: null, type: 'standard', features: [], specs: { 'Мощность охлаждения': '2.91 кВт', 'Мощность нагрева': '4.1 кВт', 'Электропитание': '230/50/1', 'Габариты': '230*965*325 мм', 'Вес': '12 кг', 'Уровень шума': '32/26/24 дБ(А)' } },
-            { id: 'fc3', name: 'SFC400A1', brand: 'energolux', category: 'fan_coil', price: 84138.60, area: null, type: 'standard', features: [], specs: { 'Мощность охлаждения': '3.7 кВт', 'Мощность нагрева': '5.1 кВт', 'Электропитание': '230/50/1', 'Габариты': '261*575*575 мм', 'Вес': '16.5 кг', 'Уровень шума': '42/39/32 дБ(А)' } },
-            { id: 'fc4', name: 'SFC500A1', brand: 'energolux', category: 'fan_coil', price: 91588.00, area: null, type: 'standard', features: [], specs: { 'Мощность охлаждения': '4.5 кВт', 'Мощность нагрева': '6 кВт', 'Электропитание': '230/50/1', 'Габариты': '261*575*575 мм', 'Вес': '16.5 кг', 'Уровень шума': '45/42/34 дБ(А)' } },
-            { id: 'fc5', name: 'SFC600A1', brand: 'energolux', category: 'fan_coil', price: 92559.60, area: null, type: 'standard', features: [], specs: { 'Мощность охлаждения': '5.7 кВт', 'Мощность нагрева': '9.96 кВт', 'Электропитание': '230/50/1', 'Габариты': '230*840*840 мм', 'Вес': '30 кг', 'Уровень шума': '45/41/36 дБ(А)' } },
-            { id: 'fc6', name: 'SFC750A1', brand: 'energolux', category: 'fan_coil', price: 97551.30, area: null, type: 'standard', features: [], specs: { 'Мощность охлаждения': '7 кВт', 'Мощность нагрева': '11.55 кВт', 'Электропитание': '230/50/1', 'Габариты': '230*840*840 мм', 'Вес': '30 кг', 'Уровень шума': '46/42/37 дБ(А)' } },
-            { id: 'ch1', name: 'SCAW-M66ZCT', brand: 'energolux', category: 'chiller', price: 0, area: null, type: 'standard', features: [], specs: { 'Мощность охлаждения': '66 кВт', 'EER': '3.1', 'Габариты': '2000*860*2200 мм', 'Вес': '570 кг' } },
-            { id: 'ch2', name: 'SCAW-M66ZCT/CWK', brand: 'energolux', category: 'chiller', price: 0, area: null, type: 'standard', features: [], specs: { 'Мощность охлаждения': '66 кВт', 'EER': '3.1', 'Габариты': '2005*1100*2200 мм', 'Вес': '570 кг' } },
-            { id: 'ch3', name: 'SCAW-M33ZHT', brand: 'energolux', category: 'chiller', price: 0, area: null, type: 'standard', features: [], specs: { 'Мощность охлаждения': '30 кВт', 'Мощность нагрева': '33 кВт', 'EER': '3.19', 'COP': '3.3', 'Габариты': '1880*1000*950 мм', 'Вес': '310 кг' } },
-            { id: 'ob1', name: 'EFMU-3P-K2,5-D3/4"', brand: 'energolux', category: 'obvyazka', price: 0, area: null, type: 'standard', features: [], specs: { 'Назначение': 'Узел обвязки для фанкойлов (Qх до 7,5 кВт) без гибких подводок', 'Kvs клапана': '2.5', 'Присоединение': '3/4"' } },
-            { id: 'ob2', name: 'EFMU-3P-K4,5-D1"', brand: 'energolux', category: 'obvyazka', price: 0, area: null, type: 'standard', features: [], specs: { 'Назначение': 'Узел обвязки для фанкойлов (Qх до 15 кВт) без гибких подводок', 'Kvs клапана': '4.5', 'Присоединение': '1"' } },
-            { id: 'ob3', name: 'EFMU-3P-K2,5-D3/4"-FH (400)', brand: 'energolux', category: 'obvyazka', price: 0, area: null, type: 'standard', features: [], specs: { 'Назначение': 'Узел обвязки для фанкойлов (Qх до 7,5 кВт) c гибкими подводками', 'Kvs клапана': '2.5', 'Присоединение': '3/4"', 'Длина подводок': '400 мм' } },
-
-            // ===== ВЕНТИЛЯЦИОННОЕ ОБОРУДОВАНИЕ (основные позиции) =====
-            { id: 'СК00003360', name: 'Energy E 2000-5,0 M1', brand: 'energolux', category: 'ventilation', price: 48900, area: null, type: 'standard', features: [], specs: { 'Количество': '1 шт.', 'РРЦ': '131017.30 ₽' } },
-            { id: 'СК00003363', name: 'Energy E 2000-9,0 M3', brand: 'energolux', category: 'ventilation', price: 50270.997, area: null, type: 'standard', features: [], specs: { 'Количество': '1 шт.', 'РРЦ': '129250.97 ₽' } },
-            { id: 'СК00003412', name: 'Energy E 4000-22.5 M3', brand: 'energolux', category: 'ventilation', price: 79780.909, area: null, type: 'standard', features: [], specs: { 'Количество': '2 шт.', 'РРЦ': '205881.47 ₽' } },
-            { id: 'СК00003380', name: 'Energy W 2000 M1', brand: 'energolux', category: 'ventilation', price: 44003.934, area: null, type: 'standard', features: [], specs: { 'Количество': '5 шт.', 'РРЦ': '118867.15 ₽' } },
-            { id: 'СК00003381', name: 'Energy W 2000 M3', brand: 'energolux', category: 'ventilation', price: 46427.13, area: null, type: 'standard', features: [], specs: { 'Количество': '2 шт.', 'РРЦ': '119080.29 ₽' } },
-            { id: 'СК00011352', name: 'Energy Smart E 160-5,0 M1 G', brand: 'energolux', category: 'ventilation', price: 66500, area: null, type: 'standard', features: [], specs: { 'Количество': '1 шт.', 'РРЦ': '168914.44 ₽' } },
-            { id: 'СК00011362', name: 'Energy Smart E 315-9,0 M1 G', brand: 'energolux', category: 'ventilation', price: 89700, area: null, type: 'standard', features: [], specs: { 'Количество': '3 шт.', 'РРЦ': '222246.15 ₽' } },
-            { id: 'СК00006703', name: 'Energy Smart Slim E 350-5,0 M1 G', brand: 'energolux', category: 'ventilation', price: 73201.061, area: null, type: 'standard', features: [], specs: { 'Количество': '2 шт.', 'РРЦ': '197762.75 ₽' } },
-            { id: 'СК00006706', name: 'Energy Smart Slim E 1100-9,0 M1 G', brand: 'energolux', category: 'ventilation', price: 90218.655, area: null, type: 'standard', features: [], specs: { 'Количество': '3 шт.', 'РРЦ': '239037.02 ₽' } },
-            { id: 'СК00011345', name: 'Energy Smart Slim E 700-2,4 M1 G', brand: 'energolux', category: 'ventilation', price: 76204.821, area: null, type: 'standard', features: [], specs: { 'Количество': '2 шт.', 'РРЦ': '206159.38 ₽' } },
-            { id: 'СК00011370', name: 'Brissago CPW 450 G', brand: 'energolux', category: 'ventilation', price: 160991.635, area: null, type: 'standard', features: [], specs: { 'Количество': '1 шт.', 'РРЦ': '404199.75 ₽' } },
-            { id: 'СК00011397', name: 'Brissago HPE 800 G', brand: 'energolux', category: 'ventilation', price: 161073.981, area: null, type: 'standard', features: [], specs: { 'Количество': '1 шт.', 'РРЦ': '412561.84 ₽' } },
-            { id: 'СК00011393', name: 'Brissago HPE 1000 G', brand: 'energolux', category: 'ventilation', price: 225980.034, area: null, type: 'standard', features: [], specs: { 'Количество': '1 шт.', 'РРЦ': '578806.95 ₽' } },
-            { id: 'СК00017868', name: 'AF-R-300-F-E-R', brand: 'energolux', category: 'ventilation', price: 165785, area: null, type: 'standard', features: [], specs: { 'Количество': '1 шт.', 'РРЦ': '395000 ₽' } },
-            // ... здесь могут быть добавлены остальные вентиляционные позиции, если нужно
+            { id: 'ballu1', name: 'Ballu Tessey DC BSTI-07HN8', brand: 'ballu', category: 'split', price: 31490, area: 25, type: 'inverter', features: ['wifi'], specs: { 'Мощность охлаждения': '2.72 кВт' } },
+            { id: 'ballu2', name: 'Ballu Tessey DC BSTI-09HN8', brand: 'ballu', category: 'split', price: 32990, area: 25, type: 'inverter', features: ['wifi'], specs: { 'Мощность охлаждения': '3.19 кВт' } },
+            { id: 'hisense1', name: 'Hisense CITY 2.0 AS-07UW4RYRKA01', brand: 'hisense', category: 'split', price: 31590, area: 23, type: 'inverter', features: ['wifi'], specs: { 'Мощность охлаждения': '2.2 кВт' } },
+            { id: 'lg1', name: 'LG A09AW1', brand: 'lg', category: 'split', price: 39900, area: 25, type: 'inverter', features: [], specs: { 'Мощность охлаждения': '2.7 кВт' } },
+            // ... добавьте сюда ВСЕ свои товары (скопируйте массив из index.html)
         ];
     }
 
     // ------------------ РАБОТА С ДАННЫМИ ------------------
-    const STORAGE_KEY = 'products_full';
-
     function getProducts() {
         const stored = localStorage.getItem(STORAGE_KEY);
         if (stored) {
@@ -371,23 +259,11 @@
         localStorage.setItem('productImages', JSON.stringify(images));
     }
 
-    function getGallery() {
-        const stored = localStorage.getItem('galleryImages');
-        if (stored) {
-            try { return JSON.parse(stored); } catch(e) {}
-        }
-        return [];
-    }
-
-    function saveGallery(gallery) {
-        localStorage.setItem('galleryImages', JSON.stringify(gallery));
-    }
-
     // ------------------ РЕНДЕРИНГ ------------------
     function renderPrices() {
         const products = getProducts();
         const container = document.getElementById('priceList');
-        let html = '<table class="table"><thead><tr><th>Товар</th><th>Текущая цена</th><th>Новая цена</th></tr></thead><tbody>';
+        let html = '<table><thead><tr><th>Товар</th><th>Текущая цена</th><th>Новая цена</th></tr></thead><tbody>';
         products.forEach(p => {
             html += `<tr>
                         <td><strong>${p.name}</strong> <span class="text-muted">(${p.id})</span></td>
@@ -421,25 +297,6 @@
         container.innerHTML = html;
     }
 
-    function renderGallery() {
-        const gallery = getGallery();
-        const container = document.getElementById('galleryList');
-        if (gallery.length === 0) {
-            container.innerHTML = '<p class="text-muted">Нет изображений в галерее.</p>';
-            return;
-        }
-        let html = '';
-        gallery.forEach((item, index) => {
-            html += `<div class="col-sm-6 col-md-4 gallery-item" style="margin-bottom:20px;">
-                        <img src="${item.image}" alt="${item.title || 'Фото'}">
-                        <div class="title">${item.title || ''}</div>
-                        <div class="desc">${item.description || ''}</div>
-                        <button class="btn btn-danger btn-sm delete-gallery-item" data-index="${index}"><i class="fa fa-trash"></i> Удалить</button>
-                    </div>`;
-        });
-        container.innerHTML = html;
-    }
-
     function renderProductManage() {
         const products = getProducts();
         const container = document.getElementById('productManageList');
@@ -447,7 +304,7 @@
             container.innerHTML = '<p class="text-muted">Нет товаров.</p>';
             return;
         }
-        let html = '<table class="table"><thead><tr><th>Название</th><th>Цена</th><th>Категория</th><th>Действия</th></tr></thead><tbody>';
+        let html = '<table><thead><tr><th>Название</th><th>Цена</th><th>Категория</th><th>Действия</th></tr></thead><tbody>';
         products.forEach((p, index) => {
             html += `<tr>
                         <td>${p.name}</td>
@@ -462,13 +319,18 @@
         container.innerHTML = html;
     }
 
-    // ------------------ ИНИЦИАЛИЗАЦИЯ ------------------
-    function initAdmin() {
+    // ------------------ ОБНОВЛЕНИЕ ВСЕХ ВКЛАДОК ------------------
+    function refreshAll() {
         renderPrices();
         renderProductImages();
-        renderGallery();
         renderProductManage();
+    }
 
+    // ------------------ ИНИЦИАЛИЗАЦИЯ ------------------
+    function initAdmin() {
+        refreshAll();
+
+        // Сохранение цен
         document.getElementById('savePricesBtn').addEventListener('click', function() {
             const inputs = document.querySelectorAll('.price-input');
             const prices = {};
@@ -485,10 +347,12 @@
             setTimeout(() => {
                 document.getElementById('priceStatus').textContent = '';
             }, 3000);
-            renderProductManage();
+            refreshAll();
         });
 
+        // Обработчики кликов (загрузка фото, удаление фото, удаление товара)
         document.addEventListener('click', function(e) {
+            // Загрузка фото
             if (e.target.classList.contains('upload-product-image')) {
                 const id = e.target.dataset.id;
                 const input = document.querySelector(`.product-image-input[data-id="${id}"]`);
@@ -508,6 +372,7 @@
                 reader.readAsDataURL(file);
             }
 
+            // Удаление фото
             if (e.target.classList.contains('delete-product-image')) {
                 const id = e.target.dataset.id;
                 if (confirm('Удалить фото для этого товара?')) {
@@ -518,60 +383,19 @@
                 }
             }
 
-            if (e.target.classList.contains('delete-gallery-item')) {
-                const index = parseInt(e.target.dataset.index);
-                if (confirm('Удалить изображение из галереи?')) {
-                    const gallery = getGallery();
-                    gallery.splice(index, 1);
-                    saveGallery(gallery);
-                    renderGallery();
-                }
-            }
-
+            // Удаление товара
             if (e.target.classList.contains('delete-product')) {
                 const index = parseInt(e.target.dataset.index);
                 if (confirm('Удалить этот товар?')) {
                     const products = getProducts();
                     products.splice(index, 1);
                     saveProducts(products);
-                    renderProductManage();
-                    renderPrices();
-                    renderProductImages();
+                    refreshAll();
                 }
             }
         });
 
-        document.getElementById('galleryForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const fileInput = document.getElementById('galleryFile');
-            const title = document.getElementById('galleryTitle').value.trim();
-            const desc = document.getElementById('galleryDesc').value.trim();
-
-            if (!fileInput.files || fileInput.files.length === 0) {
-                alert('Выберите изображение!');
-                return;
-            }
-            const file = fileInput.files[0];
-            const reader = new FileReader();
-            reader.onload = function(ev) {
-                const base64 = ev.target.result;
-                const gallery = getGallery();
-                gallery.push({
-                    id: Date.now(),
-                    image: base64,
-                    title: title,
-                    description: desc
-                });
-                saveGallery(gallery);
-                renderGallery();
-                document.getElementById('galleryForm').reset();
-                document.getElementById('galleryStatus').textContent = '✅ Изображение добавлено!';
-                document.getElementById('galleryStatus').className = 'status-msg success';
-                setTimeout(() => { document.getElementById('galleryStatus').textContent = ''; }, 3000);
-            };
-            reader.readAsDataURL(file);
-        });
-
+        // Добавление товара
         document.getElementById('addProductForm').addEventListener('submit', function(e) {
             e.preventDefault();
             const name = document.getElementById('newProductName').value.trim();
@@ -598,6 +422,16 @@
                 specs: {}
             };
 
+            const processAdd = function() {
+                products.push(newProduct);
+                saveProducts(products);
+                refreshAll();
+                document.getElementById('addProductForm').reset();
+                document.getElementById('manageStatus').textContent = '✅ Товар добавлен!';
+                document.getElementById('manageStatus').className = 'status-msg success';
+                setTimeout(() => { document.getElementById('manageStatus').textContent = ''; }, 3000);
+            };
+
             if (fileInput.files && fileInput.files.length > 0) {
                 const file = fileInput.files[0];
                 const reader = new FileReader();
@@ -606,39 +440,24 @@
                     const images = getProductImages();
                     images[newId] = base64;
                     saveProductImages(images);
-                    products.push(newProduct);
-                    saveProducts(products);
-                    renderProductManage();
-                    renderPrices();
-                    renderProductImages();
-                    document.getElementById('addProductForm').reset();
-                    document.getElementById('manageStatus').textContent = '✅ Товар добавлен!';
-                    document.getElementById('manageStatus').className = 'status-msg success';
-                    setTimeout(() => { document.getElementById('manageStatus').textContent = ''; }, 3000);
+                    processAdd();
                 };
                 reader.readAsDataURL(file);
             } else {
-                products.push(newProduct);
-                saveProducts(products);
-                renderProductManage();
-                renderPrices();
-                renderProductImages();
-                document.getElementById('addProductForm').reset();
-                document.getElementById('manageStatus').textContent = '✅ Товар добавлен!';
-                document.getElementById('manageStatus').className = 'status-msg success';
-                setTimeout(() => { document.getElementById('manageStatus').textContent = ''; }, 3000);
+                processAdd();
             }
         });
 
+        // При переключении вкладок обновляем содержимое (на случай, если данные изменились)
         $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
             const target = $(e.target).attr('href');
             if (target === '#tabPrices') renderPrices();
             if (target === '#tabProducts') renderProductImages();
-            if (target === '#tabGallery') renderGallery();
             if (target === '#tabManage') renderProductManage();
         });
     }
 
+    // Запуск
     checkAuth();
 </script>
 </body>

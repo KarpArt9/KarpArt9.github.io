@@ -1171,33 +1171,25 @@
     }
 
     // ============================================================
-    // ПОЛНЫЙ МАССИВ ТОВАРОВ (объединённый)
+    // ЗАГРУЗКА ТОВАРОВ ИЗ products.json
     // ============================================================
-    // Глобальный массив товаров (заполнится из products.json)
-let products = [];
+    let products = [];
 
-// Загрузка товаров из products.json
-async function loadProducts() {
-    try {
-        const response = await fetch('products.json');
-        if (!response.ok) {
-            throw new Error(`HTTP error: ${response.status}`);
+    async function loadProducts() {
+        try {
+            const response = await fetch('products.json');
+            if (!response.ok) {
+                throw new Error(`HTTP error: ${response.status}`);
+            }
+            products = await response.json();
+            renderProducts(products);
+        } catch (err) {
+            console.error('Ошибка загрузки товаров:', err);
+            document.getElementById('productsContainer').innerHTML = 
+                '<div class="text-center" style="padding:60px 0; color:#888;">Ошибка загрузки товаров. Проверьте консоль (F12).</div>';
         }
-        products = await response.json();
-        renderProducts(products);
-    } catch (err) {
-        console.error('Ошибка загрузки товаров:', err);
-        document.getElementById('productsContainer').innerHTML = 
-            '<div class="text-center" style="padding:60px 0; color:#888;">Ошибка загрузки товаров. Проверьте консоль (F12).</div>';
     }
-}
 
-    // В реальном коде здесь будет объединение массивов из двух частей:
-    // const products = [...oldProducts, ...newProducts];
-
-    // ============================================================
-    // ФУНКЦИИ РЕНДЕРИНГА И ФИЛЬТРАЦИИ
-    // ============================================================
     function generateFullSpecs(product) {
         const brandName = product.brand.charAt(0).toUpperCase() + product.brand.slice(1);
         const isInverter = product.type === 'inverter';
@@ -1260,7 +1252,6 @@ async function loadProducts() {
             specs['Вес, кг'] = '18';
         }
 
-        // Дополнительные спецификации из объекта specs
         for (let key in product.specs) {
             if (!specs[key]) {
                 specs[key] = product.specs[key];
@@ -1405,7 +1396,7 @@ async function loadProducts() {
 
         let filtered = products.filter(p => {
             const matchBrand = brand === 'all' || p.brand === brand;
-            const matchArea = p.area ? p.area <= area : true; // если нет площади, пропускаем
+            const matchArea = p.area ? p.area <= area : true;
             const matchType = type === 'all' || p.type === type;
             const matchFeatures = features === 'all' || p.features.includes(features);
             const matchPrice = p.price >= minPrice && p.price <= maxPrice;
@@ -1429,7 +1420,6 @@ async function loadProducts() {
         const phone = $('#callbackPhone').val().trim();
         const name = $('#callbackName').val().trim() || 'Не указано';
         if (!phone) { alert('Введите номер телефона'); return; }
-        // Отправка в Telegram (токен и ID оставлены как в вашем коде)
         const token = '7896261573:AAF4a2hP2gC2Y-8Ebyi9Vx86Z1J4m9Fv3_E';
         const chatId = '1504704541';
         const message = `📞 Запрос обратного звонка\n\n👤 Имя: ${name}\n📱 Телефон: ${phone}`;
@@ -1468,7 +1458,7 @@ async function loadProducts() {
         const hash = window.location.hash;
         if (hash && hash.startsWith('#page-')) switchPage(hash);
         else $('#page-main').addClass('active');
-        renderProducts(products);
+        loadProducts();
     });
 
     $(window).on('hashchange', function() {

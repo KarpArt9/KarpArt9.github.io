@@ -1,0 +1,712 @@
+<!DOCTYPE HTML>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Админ-панель – Райский холод</title>
+    <style>
+        :root {
+            --emerald-900: #064e3b;
+            --emerald-700: #0d4a3a;
+            --emerald-600: #059669;
+            --emerald-500: #10b981;
+            --emerald-100: #d1fae5;
+            --bg: #f0f7f4;
+            --card: #ffffff;
+            --text: #1f2937;
+            --muted: #6b7280;
+            --danger: #e74c3c;
+        }
+        * { box-sizing: border-box; }
+        body {
+            margin: 0; background: var(--bg); color: var(--text);
+            font-family: 'Segoe UI', Roboto, Arial, sans-serif; font-size: 15px;
+        }
+        a { color: var(--emerald-600); text-decoration: none; }
+
+        .login-wrap { display: flex; justify-content: center; padding-top: 110px; }
+        .login-box {
+            background: var(--card); border-radius: 24px; padding: 40px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.08); width: 380px; max-width: 92vw; text-align: center;
+        }
+        .login-box h2 { color: var(--emerald-700); margin: 0 0 20px; font-weight: 600; }
+
+        .panel { display: none; max-width: 1200px; margin: 24px auto 60px; padding: 0 16px; }
+        .header {
+            background: var(--emerald-700); color: #fff; border-radius: 20px 20px 0 0;
+            padding: 18px 28px; display: flex; align-items: center; justify-content: space-between;
+        }
+        .header h2 { margin: 0; font-size: 22px; font-weight: 300; }
+        .header .actions span { cursor: pointer; margin-left: 20px; opacity: .9; }
+        .header .actions span:hover { opacity: 1; text-decoration: underline; }
+
+        .tabs { display: flex; gap: 6px; background: #fff; padding: 8px 12px 0; border-bottom: 2px solid var(--emerald-500); }
+        .tabs button {
+            border: none; background: transparent; padding: 12px 22px; font-size: 15px; cursor: pointer;
+            color: var(--emerald-700); border-radius: 14px 14px 0 0;
+        }
+        .tabs button.active { background: var(--emerald-500); color: #fff; }
+        .tabs button:not(.active):hover { background: var(--emerald-100); }
+        .tab-body { background: var(--card); padding: 26px 30px 34px; border-radius: 0 0 20px 20px; box-shadow: 0 8px 30px rgba(0,0,0,0.04); min-height: 320px; }
+
+        input[type=text], input[type=password], input[type=number], select, textarea {
+            width: 100%; padding: 10px 14px; border: 1px solid #d5e3dc; border-radius: 12px;
+            font-size: 14px; outline: none; background: #fff; color: var(--text);
+        }
+        input:focus, select:focus, textarea:focus { border-color: var(--emerald-500); }
+        label { display: block; font-size: 13px; color: var(--muted); margin: 0 0 6px 2px; }
+
+        .btn {
+            display: inline-block; border: none; cursor: pointer; font-size: 14px; font-weight: 600;
+            background: linear-gradient(135deg, var(--emerald-600), var(--emerald-500));
+            color: #fff; padding: 10px 24px; border-radius: 60px; transition: filter .15s;
+        }
+        .btn:hover { filter: brightness(1.08); }
+        .btn.secondary { background: #eef4f1; color: var(--emerald-700); }
+        .btn.danger { background: #fdecea; color: var(--danger); }
+        .btn.sm { padding: 6px 14px; font-size: 13px; }
+        .btn:disabled { opacity: .6; cursor: default; }
+
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 16px; margin-bottom: 26px; }
+        .stat-card { background: #fafdfb; border: 1px solid #e2efe8; border-radius: 18px; padding: 20px 22px; }
+        .stat-card .num { font-size: 32px; font-weight: 700; color: var(--emerald-700); }
+        .stat-card .lbl { font-size: 13px; color: var(--muted); margin-top: 2px; }
+
+        table { width: 100%; border-collapse: collapse; font-size: 14px; }
+        th { text-align: left; color: var(--muted); font-weight: 600; font-size: 12.5px; text-transform: uppercase; letter-spacing: .4px; padding: 10px 10px; border-bottom: 2px solid #e8f0ec; white-space: nowrap; }
+        td { padding: 10px; border-bottom: 1px solid #edf3ef; vertical-align: middle; }
+        tr:hover td { background: #fafdfb; }
+        td img.thumb { width: 54px; height: 42px; object-fit: cover; border-radius: 10px; background: #eef4f1; display: block; }
+        .table-scroll { overflow-x: auto; }
+        .price-input { width: 120px; }
+
+        .toolbar { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; margin-bottom: 18px; }
+        .toolbar input, .toolbar select { width: auto; }
+        .spacer { flex: 1; }
+
+        .badge { display: inline-block; padding: 3px 12px; border-radius: 20px; font-size: 12px; background: var(--emerald-100); color: var(--emerald-700); }
+        .badge.gray { background: #eef0f2; color: var(--muted); }
+        .status-new { background: #fef3c7; color: #92400e; }
+        .status-in_progress { background: #dbeafe; color: #1e40af; }
+        .status-done { background: var(--emerald-100); color: var(--emerald-700); }
+
+        .modal-backdrop {
+            position: fixed; inset: 0; background: rgba(6, 40, 31, .55); z-index: 100;
+            display: none; align-items: flex-start; justify-content: center; overflow-y: auto; padding: 40px 14px;
+        }
+        .modal-backdrop.open { display: flex; }
+        .modal-card {
+            background: #fff; border-radius: 22px; width: 720px; max-width: 100%; padding: 30px 34px;
+            box-shadow: 0 20px 60px rgba(0,0,0,.25);
+        }
+        .modal-card h3 { margin: 0 0 22px; color: var(--emerald-700); }
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 18px; }
+        .form-grid .full { grid-column: 1 / -1; }
+        .check-row { display: flex; gap: 18px; align-items: center; padding-top: 4px; }
+        .check-row label { display: flex; align-items: center; gap: 7px; margin: 0; color: var(--text); font-size: 14px; cursor: pointer; }
+        .check-row input { width: auto; }
+        .modal-footer { display: flex; justify-content: flex-end; gap: 10px; margin-top: 24px; }
+        .img-preview-row { display: flex; gap: 14px; align-items: center; }
+        .img-preview-row img { width: 84px; height: 64px; object-fit: cover; border-radius: 12px; background: #eef4f1; border: 1px solid #e2efe8; }
+
+        .toast {
+            position: fixed; top: 20px; right: 20px; z-index: 300; padding: 13px 26px; border-radius: 60px;
+            color: #fff; font-weight: 600; display: none; box-shadow: 0 8px 24px rgba(0,0,0,.2);
+        }
+        .toast.ok { background: var(--emerald-500); }
+        .toast.err { background: var(--danger); }
+
+        .empty-note { color: var(--muted); text-align: center; padding: 50px 0; }
+
+        details.specs-block { border: 1px solid #e2efe8; border-radius: 14px; padding: 12px 16px; background: #fafdfb; }
+        details.specs-block summary { cursor: pointer; font-weight: 600; color: var(--emerald-700); user-select: none; }
+        details.specs-block .specs-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px 14px; margin-top: 16px; }
+        details.specs-block .specs-grid label { font-size: 11.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
+        details.specs-block .specs-grid input { padding: 7px 10px; font-size: 13px; border-radius: 9px; }
+        @media (max-width: 900px) { details.specs-block .specs-grid { grid-template-columns: 1fr 1fr; } }
+        @media (max-width: 640px) { .form-grid { grid-template-columns: 1fr; } .tab-body { padding: 18px; } details.specs-block .specs-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+
+<div class="toast" id="toast"></div>
+
+<div class="login-wrap" id="loginWrap">
+    <div class="login-box">
+        <h2>❄️ Вход в админку</h2>
+        <form id="loginForm">
+            <label style="text-align:left">Логин</label>
+            <input type="text" id="loginUser" autocomplete="username" required style="margin-bottom:14px">
+            <label style="text-align:left">Пароль</label>
+            <input type="password" id="loginPass" autocomplete="current-password" required>
+            <button type="submit" class="btn" style="width:100%; margin-top:20px;">Войти</button>
+        </form>
+    </div>
+</div>
+
+<div class="panel" id="panel">
+    <div class="header">
+        <h2>❄️ Панель управления «Райский холод»</h2>
+        <div class="actions">
+            <span onclick="openSite()">Открыть сайт ↗</span>
+            <span onclick="logout()">Выйти ✕</span>
+        </div>
+    </div>
+    <div class="tabs">
+        <button data-tab="dashboard" class="active">Дашборд</button>
+        <button data-tab="products">Товары</button>
+        <button data-tab="leads">Заявки</button>
+    </div>
+    <div class="tab-body">
+        <div id="tab-dashboard"></div>
+        <div id="tab-products" style="display:none"></div>
+        <div id="tab-leads" style="display:none"></div>
+    </div>
+</div>
+
+<div class="modal-backdrop" id="productModalBackdrop">
+    <div class="modal-card">
+        <h3 id="pmTitle">Добавить товар</h3>
+        <form id="productForm" onsubmit="return submitProduct(event)">
+            <div class="form-grid">
+                <div class="full">
+                    <label>Название *</label>
+                    <input type="text" id="pfName" required>
+                </div>
+                <div>
+                    <label>Бренд *</label>
+                    <input type="text" id="pfBrand" placeholder="ballu, lg, hisense…" required>
+                </div>
+                <div>
+                    <label>Категория *</label>
+                    <select id="pfCategory">
+                        <option value="split">Сплит-системы</option>
+                        <option value="vrf">VRF-системы</option>
+                        <option value="fan_coil">Фанкойлы</option>
+                        <option value="kkb">ККБ</option>
+                        <option value="chiller">Чиллеры</option>
+                        <option value="obvyazka">Обвязка</option>
+                        <option value="ventilation">Вентиляция</option>
+                    </select>
+                </div>
+                <div>
+                    <label>Цена, ₽ *</label>
+                    <input type="number" id="pfPrice" step="0.01" min="0" required>
+                </div>
+                <div>
+                    <label>Площадь, м² (для сплитов)</label>
+                    <input type="number" id="pfArea" min="0">
+                </div>
+                <div>
+                    <label>Тип</label>
+                    <select id="pfType">
+                        <option value="inverter">Инверторный</option>
+                        <option value="standard">Стандартный</option>
+                    </select>
+                </div>
+                <div>
+                    <label>Опции</label>
+                    <div class="check-row">
+                        <label><input type="checkbox" id="pfWifi" value="wifi"> Wi-Fi</label>
+                        <label><input type="checkbox" id="pfSilent" value="silent"> Бесшумный</label>
+                        <label><input type="checkbox" id="pfActive" checked> Показывать на сайте</label>
+                    </div>
+                </div>
+                <div class="full">
+                    <label>Дополнительные характеристики (по одной в строке, формат «Ключ: значение»)</label>
+                    <textarea id="pfSpecs" rows="3" placeholder="Мощность охлаждения: 2.7 кВт&#10;Хладагент: R32"></textarea>
+                </div>
+                <div class="full">
+                    <details class="specs-block" id="pfFullSpecsBlock">
+                        <summary>Полные характеристики карточки товара (пустое поле — значение по умолчанию)</summary>
+                        <div class="specs-grid" id="pfSpecsGrid"></div>
+                    </details>
+                </div>
+                <div class="full">
+                    <label>Фото товара</label>
+                    <div class="img-preview-row">
+                        <img id="pfPreview" src="" alt="" style="display:none">
+                        <input type="hidden" id="pfImage">
+                        <input type="file" id="pfFile" accept=".jpg,.jpeg,.png,.webp" style="font-size:13px">
+                        <button type="button" class="btn secondary sm" onclick="clearImage()" style="display:none" id="pfClearBtn">Убрать фото</button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn secondary" onclick="closeProductModal()">Отмена</button>
+                <button type="submit" class="btn" id="pfSubmit">Сохранить</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    const API = '/api';
+    let TOKEN = localStorage.getItem('ra_token') || '';
+    let productsCache = [];
+    let editingId = null;
+
+    function showToast(text, ok = true) {
+        const t = document.getElementById('toast');
+        t.textContent = (ok ? '✅ ' : '❌ ') + text;
+        t.className = 'toast ' + (ok ? 'ok' : 'err');
+        t.style.display = 'block';
+        setTimeout(() => { t.style.display = 'none'; }, 3000);
+    }
+
+    async function api(path, options = {}) {
+        if (!options.headers) options.headers = {};
+        if (!(options.body instanceof FormData)) options.headers['Content-Type'] = 'application/json';
+        if (TOKEN) options.headers['Authorization'] = 'Bearer ' + TOKEN;
+        const res = await fetch(API + path, options);
+        if (res.status === 401) { showLogin(); throw new Error('unauthorized'); }
+        if (!res.ok) {
+            let detail = 'Ошибка ' + res.status;
+            try { detail = (await res.json()).detail || detail; } catch (e) {}
+            throw new Error(detail);
+        }
+        return res.status === 204 ? null : res.json();
+    }
+
+    function fmtPrice(v) {
+        if (!v) return '—';
+        return Number(v).toLocaleString('ru-RU') + ' ₽';
+    }
+    function fmtDate(iso) {
+        const d = new Date(iso + (iso.endsWith('Z') || iso.includes('+') ? '' : 'Z'));
+        return d.toLocaleDateString('ru-RU') + ' ' + d.toLocaleTimeString('ru-RU', {hour: '2-digit', minute: '2-digit'});
+    }
+    function esc(s) {
+        return String(s == null ? '' : s).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+    }
+    const CATEGORY_LABELS = {split:'Сплит', vrf:'VRF', fan_coil:'Фанкойл', kkb:'ККБ', chiller:'Чиллер', obvyazka:'Обвязка', ventilation:'Вентиляция'};
+    const STATUS_LABELS = {new:'Новая', in_progress:'В работе', done:'Выполнена'};
+
+    const SPEC_KEYS = [
+        'На площадь (м²)',
+        'Инвертор',
+        'Производитель',
+        'Мин. уровень шума (дБ)',
+        'Управление по Wi-Fi',
+        'Цвет',
+        'Гарантия',
+        'Max длина трассы, м',
+        'Max перепад высот, м',
+        'ø газовой трубы, дюйм',
+        'ø жидкостной трубы, дюйм',
+        'Авто режим',
+        'Автомат токовой защиты, А',
+        'Авторестарт',
+        'Вес, кг',
+        'Высота, см',
+        'Габариты (ВхШхГ), см',
+        'Глубина, см',
+        'Горизонтальная регулировка потока',
+        'Диапазон t на обогрев, С',
+        'Диапазон t на охлаждение, С',
+        'Дисплей',
+        'Напряжение, В',
+        'Непрерывное движение заслонок',
+        'Ночной режим',
+        'Обогрев, кВт',
+        'Охлаждающая способность, тыс. BTU',
+        'Подключение питания',
+        'Предварительный фильтр',
+        'Пульт Д/У',
+        'Расход воздуха, м³/ч',
+        'Режим вентиляции',
+        'Режим осушения',
+        'Рекомендуемая площадь (м²)',
+        'Самодиагностика',
+        'Самоочистка внут. блока',
+        'Сенсор движения',
+        'Страна бренда',
+        'Таймер',
+        'Турборежим',
+        'Хладагент',
+        'Ширина, см',
+        'Энергоэффективность'
+    ];
+
+    function buildSpecsInputs() {
+        const grid = document.getElementById('pfSpecsGrid');
+        grid.innerHTML = SPEC_KEYS.map(k =>
+            `<div><label title="${esc(k)}">${esc(k)}</label><input type="text" data-spec="${esc(k)}"></div>`
+        ).join('');
+    }
+    buildSpecsInputs();
+
+    function resetSpecsInputs() {
+        document.querySelectorAll('#pfSpecsGrid input').forEach(inp => { inp.value = ''; });
+        document.getElementById('pfFullSpecsBlock').open = false;
+    }
+
+    function showLogin() {
+        document.getElementById('loginWrap').style.display = 'flex';
+        document.getElementById('panel').style.display = 'none';
+    }
+    function showPanel() {
+        document.getElementById('loginWrap').style.display = 'none';
+        document.getElementById('panel').style.display = 'block';
+    }
+    function logout() {
+        TOKEN = '';
+        localStorage.removeItem('ra_token');
+        showLogin();
+    }
+    function openSite() { window.open('/', '_blank'); }
+
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        try {
+            const data = await api('/auth/login', {
+                method: 'POST',
+                body: JSON.stringify({
+                    username: document.getElementById('loginUser').value.trim(),
+                    password: document.getElementById('loginPass').value
+                })
+            });
+            TOKEN = data.access_token;
+            localStorage.setItem('ra_token', TOKEN);
+            initPanel();
+        } catch (err) {
+            showToast(err.message === 'unauthorized' ? 'Неверный логин или пароль' : err.message, false);
+        }
+    });
+
+    document.querySelectorAll('.tabs button').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.tabs button').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            ['dashboard','products','leads'].forEach(tab => {
+                document.getElementById('tab-' + tab).style.display = tab === btn.dataset.tab ? 'block' : 'none';
+            });
+            if (btn.dataset.tab === 'dashboard') loadDashboard();
+            if (btn.dataset.tab === 'products') loadProducts();
+            if (btn.dataset.tab === 'leads') loadLeads();
+        });
+    });
+
+    async function initPanel() {
+        showPanel();
+        await Promise.all([loadDashboard(), loadProducts(), loadLeads()]);
+    }
+
+    async function loadDashboard() {
+        const box = document.getElementById('tab-dashboard');
+        try {
+            const s = await api('/stats/dashboard');
+            const cards = [
+                [s.products_active, 'Товаров на сайте'],
+                [s.leads_new, 'Новых заявок'],
+                [s.leads_today, 'Заявок сегодня'],
+                [s.leads_week, 'Заявок за неделю'],
+                [s.leads_total, 'Заявок всего']
+            ];
+            box.innerHTML =
+                '<div class="stats-grid">' +
+                cards.map(([n, l]) => `<div class="stat-card"><div class="num">${n}</div><div class="lbl">${l}</div></div>`).join('') +
+                '</div>' +
+                '<p style="color:#6b7280; font-size:13px">Новые заявки автоматически приходят в Telegram-бот администратора.</p>';
+        } catch (err) { box.innerHTML = '<div class="empty-note">' + esc(err.message) + '</div>'; }
+    }
+
+    async function loadProducts() {
+        const box = document.getElementById('tab-products');
+        box.innerHTML = '<div class="empty-note">Загрузка…</div>';
+        try {
+            const [list] = await Promise.all([
+                api('/products?include_inactive=true'),
+                api('/leads?limit=1').catch(() => null)
+            ]);
+            productsCache = list;
+            renderProducts();
+        } catch (err) { box.innerHTML = '<div class="empty-note">' + esc(err.message) + '</div>'; }
+    }
+
+    function renderProducts(filterText = '') {
+        const box = document.getElementById('tab-products');
+        const q = filterText.trim().toLowerCase();
+        const items = q
+            ? productsCache.filter(p => p.name.toLowerCase().includes(q) || p.brand.includes(q))
+            : productsCache;
+        let html =
+            '<div class="toolbar">' +
+            '<input type="text" id="prodSearch" placeholder="Поиск по названию или бренду…" oninput="renderProducts(this.value)" value="' + esc(q) + '">' +
+            '<div class="spacer"></div>' +
+            '<span class="badge">' + items.length + ' товаров</span>' +
+            '<button class="btn" onclick="openProductModal()">＋ Добавить товар</button>' +
+            '</div>';
+        if (!items.length) {
+            html += '<div class="empty-note">Товары не найдены.</div>';
+            box.innerHTML = html;
+            return;
+        }
+        html += '<div class="table-scroll"><table><thead><tr>' +
+            '<th></th><th>Название</th><th>Бренд</th><th>Категория</th><th>Цена, ₽</th><th>На сайте</th><th></th>' +
+            '</tr></thead><tbody>';
+        items.forEach(p => {
+            const catLabel = CATEGORY_LABELS[p.category] || p.category;
+            html += `<tr data-id="${esc(p.id)}">` +
+                `<td>${p.image ? `<img class="thumb" src="${esc(p.image)}" onerror="this.style.visibility='hidden'">` : '<img class="thumb" src="/images/' + esc(p.brand) + '/' + esc(p.id) + '.jpg" onerror="this.src=brandPlaceholder();">'}</td>` +
+                `<td><strong>${esc(p.name)}</strong><br><small style="color:#9ca3af">${esc(p.id)}</small></td>` +
+                `<td>${esc(p.brand)}</td>` +
+                `<td><span class="badge gray">${catLabel}</span></td>` +
+                `<td><input class="price-input" type="number" step="0.01" min="0" value="${p.price}" onchange="quickPrice('${esc(p.id)}', this.value)"></td>` +
+                `<td style="text-align:center"><input type="checkbox" ${p.is_active ? 'checked' : ''} onchange="toggleActive('${esc(p.id)}', this.checked)"></td>` +
+                `<td style="white-space:nowrap">` +
+                `<button class="btn secondary sm" onclick="editProduct('${esc(p.id)}')">✎</button> ` +
+                `<button class="btn danger sm" onclick="deleteProduct('${esc(p.id)}')">🗑</button></td>` +
+                '</tr>';
+        });
+        html += '</tbody></table></div>';
+        box.innerHTML = html;
+        const search = document.getElementById('prodSearch');
+        search.focus();
+        search.setSelectionRange(search.value.length, search.value.length);
+    }
+
+    function brandPlaceholder() {
+        const svg = '<svg xmlns="http://www.w3.org/2000/svg" width="80" height="64"><rect width="80" height="64" rx="10" fill="#e8f2ec"/></svg>';
+        return 'data:image/svg+xml,' + encodeURIComponent(svg);
+    }
+
+    async function quickPrice(id, value) {
+        const p = productsCache.find(x => x.id === id);
+        if (!p || Number(value) === Number(p.price)) return;
+        try {
+            await api('/products/' + encodeURIComponent(id), {
+                method: 'PUT',
+                body: JSON.stringify({ ...p, price: Number(value) })
+            });
+            p.price = Number(value);
+            showToast('Цена обновлена: ' + p.name);
+        } catch (err) { showToast(err.message, false); }
+    }
+
+    async function toggleActive(id, active) {
+        const p = productsCache.find(x => x.id === id);
+        if (!p) return;
+        try {
+            await api('/products/' + encodeURIComponent(id), {
+                method: 'PUT',
+                body: JSON.stringify({ ...p, is_active: active })
+            });
+            p.is_active = active;
+            showToast(active ? 'Товар показан на сайте' : 'Товар скрыт с сайта');
+        } catch (err) { showToast(err.message, false); loadProducts(); }
+    }
+
+    async function deleteProduct(id) {
+        const p = productsCache.find(x => x.id === id);
+        if (!confirm('Удалить товар «' + (p ? p.name : id) + '»?')) return;
+        try {
+            await api('/products/' + encodeURIComponent(id), { method: 'DELETE' });
+            showToast('Товар удалён');
+            loadProducts();
+            loadDashboard();
+        } catch (err) { showToast(err.message, false); }
+    }
+
+    function openProductModal(product = null) {
+        editingId = product ? product.id : null;
+        document.getElementById('pmTitle').textContent = product ? 'Редактировать товар' : 'Добавить товар';
+        document.getElementById('pfName').value = product ? product.name : '';
+        document.getElementById('pfBrand').value = product ? product.brand : '';
+        document.getElementById('pfCategory').value = product ? product.category : 'split';
+        document.getElementById('pfType').value = product ? product.type : 'inverter';
+        document.getElementById('pfPrice').value = product ? product.price : '';
+        document.getElementById('pfArea').value = product && product.area != null ? product.area : '';
+        document.getElementById('pfWifi').checked = !!product && product.features.includes('wifi');
+        document.getElementById('pfSilent').checked = !!product && product.features.includes('silent');
+        document.getElementById('pfActive').checked = product ? product.is_active : true;
+        resetSpecsInputs();
+
+        const stdSet = new Set(SPEC_KEYS);
+        const customPairs = [];
+        Object.entries(product && product.specs || {}).forEach(([k, v]) => {
+            if (stdSet.has(k)) {
+                const inp = document.querySelector('#pfSpecsGrid input[data-spec="' + CSS.escape(k) + '"]');
+                if (inp) inp.value = v;
+            } else {
+                customPairs.push(k + ': ' + v);
+            }
+        });
+        document.getElementById('pfSpecs').value = customPairs.join('\n');
+        document.getElementById('pfImage').value = product && product.image ? product.image : '';
+        updatePreview();
+        document.getElementById('productModalBackdrop').classList.add('open');
+    }
+
+    function closeProductModal() {
+        document.getElementById('productModalBackdrop').classList.remove('open');
+        document.getElementById('pfFile').value = '';
+    }
+
+    function clearImage() {
+        document.getElementById('pfImage').value = '';
+        updatePreview();
+    }
+
+    function updatePreview() {
+        const url = document.getElementById('pfImage').value;
+        const preview = document.getElementById('pfPreview');
+        const clearBtn = document.getElementById('pfClearBtn');
+        if (url) {
+            preview.src = url;
+            preview.style.display = 'block';
+            clearBtn.style.display = 'inline-block';
+        } else {
+            preview.style.display = 'none';
+            clearBtn.style.display = 'none';
+        }
+    }
+
+    document.getElementById('pfFile').addEventListener('change', async (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+        const fd = new FormData();
+        fd.append('file', file);
+        try {
+            const data = await api('/upload', { method: 'POST', body: fd });
+            document.getElementById('pfImage').value = data.url;
+            updatePreview();
+            showToast('Фото загружено');
+        } catch (err) { showToast(err.message, false); }
+        e.target.value = '';
+    });
+
+    async function submitProduct(e) {
+        e.preventDefault();
+        const features = [];
+        if (document.getElementById('pfWifi').checked) features.push('wifi');
+        if (document.getElementById('pfSilent').checked) features.push('silent');
+
+        const specs = {};
+        document.getElementById('pfSpecs').value.split('\n').forEach(line => {
+            const idx = line.indexOf(':');
+            if (idx > 0) {
+                const key = line.slice(0, idx).trim();
+                const val = line.slice(idx + 1).trim();
+                if (key && val) specs[key] = val;
+            }
+        });
+        document.querySelectorAll('#pfSpecsGrid input').forEach(inp => {
+            const v = inp.value.trim();
+            if (v) specs[inp.dataset.spec] = v;
+        });
+
+        const areaRaw = document.getElementById('pfArea').value;
+        const payload = {
+            name: document.getElementById('pfName').value.trim(),
+            brand: document.getElementById('pfBrand').value.trim(),
+            category: document.getElementById('pfCategory').value,
+            type: document.getElementById('pfType').value,
+            price: Number(document.getElementById('pfPrice').value),
+            area: areaRaw === '' ? null : Number(areaRaw),
+            features: features,
+            specs: specs,
+            image: document.getElementById('pfImage').value || null,
+            is_active: document.getElementById('pfActive').checked
+        };
+
+        const btn = document.getElementById('pfSubmit');
+        btn.disabled = true;
+        try {
+            if (editingId) {
+                await api('/products/' + encodeURIComponent(editingId), { method: 'PUT', body: JSON.stringify(payload) });
+                showToast('Изменения сохранены');
+            } else {
+                await api('/products', { method: 'POST', body: JSON.stringify(payload) });
+                showToast('Товар добавлен на сайт');
+            }
+            closeProductModal();
+            loadProducts();
+        } catch (err) { showToast(err.message, false); }
+        btn.disabled = false;
+        return false;
+    }
+
+    function editProduct(id) {
+        const p = productsCache.find(x => x.id === id);
+        if (p) openProductModal(p);
+    }
+
+    let leadsCache = [];
+    let leadsFilter = 'all';
+
+    async function loadLeads() {
+        const box = document.getElementById('tab-leads');
+        box.innerHTML = '<div class="empty-note">Загрузка…</div>';
+        try {
+            leadsCache = await api('/leads?limit=500&status_filter=' + leadsFilter);
+            renderLeads();
+        } catch (err) { box.innerHTML = '<div class="empty-note">' + esc(err.message) + '</div>'; }
+    }
+
+    function renderLeads() {
+        const box = document.getElementById('tab-leads');
+        let html =
+            '<div class="toolbar">' +
+            '<select onchange="leadsFilter=this.value; loadLeads()">' +
+            ['all', 'new', 'in_progress', 'done'].map(s =>
+                `<option value="${s}" ${leadsFilter === s ? 'selected' : ''}>${s === 'all' ? 'Все статусы' : STATUS_LABELS[s]}</option>`
+            ).join('') +
+            '</select><div class="spacer"></div>' +
+            '<button class="btn secondary sm" onclick="loadLeads()">⟳ Обновить</button>' +
+            '<span class="badge">' + leadsCache.length + ' заявок</span>' +
+            '</div>';
+        if (!leadsCache.length) {
+            html += '<div class="empty-note">Заявок пока нет.</div>';
+            box.innerHTML = html;
+            return;
+        }
+        html += '<div class="table-scroll"><table><thead><tr>' +
+            '<th>#</th><th>Дата</th><th>Тип</th><th>Имя</th><th>Телефон</th><th>Товар</th><th>Комментарий</th><th>Статус</th>' +
+            '</tr></thead><tbody>';
+        leadsCache.forEach(l => {
+            html += `<tr>` +
+                `<td>${l.id}</td>` +
+                `<td style="white-space:nowrap">${fmtDate(l.created_at)}</td>` +
+                `<td><span class="badge gray">${l.kind === 'order' ? '🛒 Заказ' : '📞 Звонок'}</span></td>` +
+                `<td><strong>${esc(l.name)}</strong></td>` +
+                `<td><a href="tel:${esc(l.phone)}">${esc(l.phone)}</a></td>` +
+                `<td>${l.product_id ? esc((productsCache.find(p => p.id === l.product_id) || {}).name || l.product_id) : '—'}</td>` +
+                `<td style="max-width:260px"><small>${esc(l.comment || '')}</small></td>` +
+                `<td><select onchange="changeLeadStatus(${l.id}, this.value)" class="${'status-' + l.status}" style="border-radius:60px; font-size:13px">` +
+                ['new', 'in_progress', 'done'].map(s =>
+                    `<option value="${s}" ${l.status === s ? 'selected' : ''}>${STATUS_LABELS[s]}</option>`
+                ).join('') +
+                '</select></td>' +
+                '</tr>';
+        });
+        html += '</tbody></table></div>';
+        box.innerHTML = html;
+    }
+
+    async function changeLeadStatus(id, status) {
+        try {
+            await api('/leads/' + id, { method: 'PATCH', body: JSON.stringify({ status }) });
+            const lead = leadsCache.find(l => l.id === id);
+            if (lead) lead.status = status;
+            showToast('Статус заявки #' + id + ': ' + STATUS_LABELS[status]);
+        } catch (err) {
+            showToast(err.message, false);
+            loadLeads();
+        }
+    }
+
+    window.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeProductModal();
+    });
+
+    if (TOKEN) {
+        api('/stats/dashboard')
+            .then(() => initPanel())
+            .catch(() => showLogin());
+    } else {
+        showLogin();
+    }
+</script>
+</body>
+</html>

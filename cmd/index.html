@@ -1072,7 +1072,7 @@
                             </div>
                         </div>
 
-                        <a href="#" class="btn btn-primary" style="width:100%; text-align:center; padding:12px; margin-top:10px;" data-dismiss="modal" onclick="alert('Заявка отправлена!')">Заказать</a>
+                        <a href="#" class="btn btn-primary" style="width:100%; text-align:center; padding:12px; margin-top:10px;" onclick="openOrderModal(window.currentDetailId)">Заказать</a>
                     </div>
                 </div>
             </div>
@@ -1146,6 +1146,7 @@
     $('#callbackPhone').mask('+7 (000) 000-00-00');
 
     function getProductImageUrl(product) {
+        if (product.image) return product.image;
         return `images/${product.brand}/${product.id}.jpg`;
     }
 
@@ -1175,13 +1176,23 @@
     // ============================================================
     let products = [];
 
-    async function loadProducts() {
+    async function fetchProducts() {
         try {
+            const apiResponse = await fetch('/api/products');
+            if (!apiResponse.ok) throw new Error(`HTTP error: ${apiResponse.status}`);
+            return await apiResponse.json();
+        } catch (apiErr) {
             const response = await fetch('products.json');
             if (!response.ok) {
                 throw new Error(`HTTP error: ${response.status}`);
             }
-            products = await response.json();
+            return await response.json();
+        }
+    }
+
+    async function loadProducts() {
+        try {
+            products = await fetchProducts();
             renderProducts(products);
         } catch (err) {
             console.error('Ошибка загрузки товаров:', err);
@@ -1253,9 +1264,7 @@
         }
 
         for (let key in product.specs) {
-            if (!specs[key]) {
-                specs[key] = product.specs[key];
-            }
+            specs[key] = product.specs[key];
         }
 
         return specs;
@@ -1345,6 +1354,8 @@
         const product = products.find(p => p.id === productId);
         if (!product) return;
 
+        window.currentDetailId = productId;
+
         const brandLabel = product.brand.charAt(0).toUpperCase() + product.brand.slice(1);
         const placeholder = brandPlaceholderSvg(brandLabel);
 
@@ -1415,25 +1426,43 @@
         renderProducts(products);
     }
 
-    $('#callbackForm').on('submit', function(e) {
+    let pendingProductId = null;
+
+    function openOrderModal(productId) {
+        pendingProductId = productId || null;
+        $('#productModal').modal('hide');
+        $('#callbackModal').modal('show');
+    }
+
+    $('#callbackForm').on('submit', async function(e) {
         e.preventDefault();
         const phone = $('#callbackPhone').val().trim();
         const name = $('#callbackName').val().trim() || 'Не указано';
         if (!phone) { alert('Введите номер телефона'); return; }
-        const token = '7896261573:AAF4a2hP2gC2Y-8Ebyi9Vx86Z1J4m9Fv3_E';
-        const chatId = '1504704541';
-        const message = `📞 Запрос обратного звонка\n\n👤 Имя: ${name}\n📱 Телефон: ${phone}`;
-        $.ajax({
-            url: `https://api.telegram.org/bot${token}/sendMessage`,
-            method: 'POST',
-            data: { chat_id: chatId, text: message, parse_mode: 'HTML' }
-        })
-        .done(function() {
+        const submitBtn = $(this).find('button[type="submit"]');
+        submitBtn.prop('disabled', true);
+        try {
+            const response = await fetch('/api/leads', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    kind: pendingProductId ? 'order' : 'callback',
+                    name: name,
+                    phone: phone,
+                    product_id: pendingProductId
+                })
+            });
+            if (!response.ok) throw new Error(`HTTP error: ${response.status}`);
             alert('✅ Мы перезвоним вам в ближайшее время!');
             $('#callbackForm')[0].reset();
             $('#callbackModal').modal('hide');
-        })
-        .fail(function() { alert('❌ Ошибка отправки. Пожалуйста, позвоните нам по телефону.'); });
+            pendingProductId = null;
+        } catch (err) {
+            console.error(err);
+            alert('❌ Ошибка отправки. Пожалуйста, позвоните нам по телефону.');
+        } finally {
+            submitBtn.prop('disabled', false);
+        }
     });
 
     function switchPage(hash) {
